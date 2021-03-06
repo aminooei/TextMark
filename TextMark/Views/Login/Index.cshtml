@@ -1,0 +1,30 @@
+﻿@model TextMark.Models.Login
+@{
+    ViewBag.Title = "Login";
+}
+<h2>Login</h2>
+
+<form method="post" asp-controller="Login" asp-action="Check_UserName_Password">
+    <div>
+        <div>
+            <label class="col-3" asp-for="Username"></label>
+            <input class="col-3" asp-for="Username" value="" />
+            <span asp-validation-for="Username"></span>
+        </div>
+
+    </div>
+
+    <div>
+        <div>
+            <label class="col-3" asp-for="Password"></label>
+            <input class="col-3" asp-for="Password" value="" />
+            <span asp-validation-for="Password"></span>
+        </div>
+
+    </div>
+    <div>
+        <input class="col-6" type="submit" value="Login" />
+    </div>
+
+</form>
+<a asp-action="Register" asp-controller="Login">Register</a>   

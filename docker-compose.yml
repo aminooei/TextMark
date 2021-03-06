@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  ms-sql-server:
+    image:  mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Amin3420"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+  textmark:
+    image: ${DOCKER_REGISTRY-}textmark
+    build:
+      context: .
+      dockerfile: TextMark/Dockerfile    
+    ports:
+      - "80:80"
+
+
+

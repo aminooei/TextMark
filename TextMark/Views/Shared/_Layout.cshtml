@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TextMark</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+          crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/css/Forum.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
+    <!-- favicon settings -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/images/favicons/apple-icon-57x57.8a1176835bdc.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/images/favicons/apple-icon-60x60.f6d2109f7b7a.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/favicons/apple-icon-72x72.303b25968886.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/images/favicons/apple-icon-76x76.4755cc9048ed.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/favicons/apple-icon-114x114.b78bf539f981.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/images/favicons/apple-icon-120x120.a3e265586842.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/images/favicons/apple-icon-144x144.6e46e25fec16.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/images/favicons/apple-icon-152x152.fcc497cae68e.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicons/apple-icon-180x180.4638d05a17a1.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicons/android-icon-192x192.84e3fb4da7e7.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicons/favicon-32x32.61bbc480a0cc.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicons/favicon-96x96.55c5bde0bf86.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicons/favicon-16x16.804ac198e26b.png">
+    <link rel="manifest" href="~/js/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/static/images/favicons/ms-icon-144x144.6e46e25fec16.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="~/css/annotation.css">
+    <script src="https://unpkg.com/marked@0.3.6/lib/marked.js"></script>
+    <script src="https://unpkg.com/lodash@4.16.0/lodash.js"></script>
+   
+
+    <style>
+        html, body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Roboto", sans-serif
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TextMark</a>
+                @{ if (TempData.Peek("Loggedin_User") != null)
+                    {
+                        <label class="col-md-4 text-right">Loggedin User : @TempData.Peek("Loggedin_User")</label>
+                    }
+                }
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        @{ if (TempData.Peek("Loggedin_User") == null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="~/js/demo_named_entity.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
+    <script>
+        var mySwiper = new Swiper('.swiper-container', {
+            // Optional parameters
+            loop: true,
+            autoplay: {
+                delay: 5000,
+            },
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        })
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

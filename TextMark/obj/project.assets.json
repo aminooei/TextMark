@@ -2,6 +2,33 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "Cloudmersive.APIClient.NET.NLP/4.1.0": {
+        "type": "package",
+        "dependencies": {
+          "JsonSubTypes": "1.2.0",
+          "NewtonSoft.Json": "10.0.3",
+          "RestSharp": "106.6.10"
+        },
+        "compile": {
+          "lib/net452/Cloudmersive.APIClient.NET.NLP.dll": {}
+        },
+        "runtime": {
+          "lib/net452/Cloudmersive.APIClient.NET.NLP.dll": {}
+        }
+      },
+      "JsonSubTypes/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.3"
+        },
+        "compile": {
+          "lib/netstandard1.6/JsonSubTypes.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.6/JsonSubTypes.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -864,6 +891,15 @@
         },
         "runtime": {
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
+        }
+      },
+      "RestSharp/106.6.10": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RestSharp.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -2574,6 +2610,85 @@
     }
   },
   "libraries": {
+    "Cloudmersive.APIClient.NET.NLP/4.1.0": {
+      "sha512": "llbrVaYHS0GYeC0BgouIFUxCHTbNuE2an6gdmjydAPOPC5aiwXyQGGap6okoZpD8fRyz2LmvKftxcONgWSCzFg==",
+      "type": "package",
+      "path": "cloudmersive.apiclient.net.nlp/4.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "cloudmersive.apiclient.net.nlp.4.1.0.nupkg.sha512",
+        "cloudmersive.apiclient.net.nlp.nuspec",
+        "docs/AnalyticsApi.md",
+        "docs/CheckSentenceRequest.md",
+        "docs/CheckSentenceResponse.md",
+        "docs/CheckWordRequest.md",
+        "docs/CheckWordResponse.md",
+        "docs/CorrectWordInSentence.md",
+        "docs/Entity.md",
+        "docs/ExtractEntitiesApi.md",
+        "docs/ExtractEntitiesRequest.md",
+        "docs/ExtractEntitiesResponse.md",
+        "docs/GetWordsRequest.md",
+        "docs/GetWordsResponse.md",
+        "docs/HateSpeechAnalysisRequest.md",
+        "docs/HateSpeechAnalysisResponse.md",
+        "docs/LanguageDetectionApi.md",
+        "docs/LanguageDetectionRequest.md",
+        "docs/LanguageDetectionResponse.md",
+        "docs/LanguageTranslationApi.md",
+        "docs/LanguageTranslationRequest.md",
+        "docs/LanguageTranslationResponse.md",
+        "docs/ParseApi.md",
+        "docs/ParseRequest.md",
+        "docs/ParseResponse.md",
+        "docs/PosRequest.md",
+        "docs/PosResponse.md",
+        "docs/PosSentence.md",
+        "docs/PosTaggedWord.md",
+        "docs/PosTaggerApi.md",
+        "docs/ProfanityAnalysisRequest.md",
+        "docs/ProfanityAnalysisResponse.md",
+        "docs/RephraseApi.md",
+        "docs/RephraseRequest.md",
+        "docs/RephraseResponse.md",
+        "docs/RephrasedSentence.md",
+        "docs/RephrasedSentenceOption.md",
+        "docs/SegmentationApi.md",
+        "docs/SentenceSegmentationRequest.md",
+        "docs/SentenceSegmentationResponse.md",
+        "docs/SentimentAnalysisRequest.md",
+        "docs/SentimentAnalysisResponse.md",
+        "docs/SimilarityAnalysisRequest.md",
+        "docs/SimilarityAnalysisResponse.md",
+        "docs/SpellcheckApi.md",
+        "docs/SubjectivityAnalysisRequest.md",
+        "docs/SubjectivityAnalysisResponse.md",
+        "docs/WordPosition.md",
+        "lib/net452/Cloudmersive.APIClient.NET.NLP.dll"
+      ]
+    },
+    "JsonSubTypes/1.2.0": {
+      "sha512": "XY9yuNIl9LmHhC/Vz+u35lB7Dyj/H/biKsNybJI9XLUyabBIHPF1PQ3PY/ffADn/LdjiQOhx/ry+ZsuEO4mBnw==",
+      "type": "package",
+      "path": "jsonsubtypes/1.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jsonsubtypes.1.2.0.nupkg.sha512",
+        "jsonsubtypes.nuspec",
+        "lib/net35/JsonSubTypes.dll",
+        "lib/net40/JsonSubTypes.dll",
+        "lib/net45/JsonSubTypes.dll",
+        "lib/net46/JsonSubTypes.dll",
+        "lib/net47/JsonSubTypes.dll",
+        "lib/netstandard1.3/JsonSubTypes.dll",
+        "lib/netstandard1.4/JsonSubTypes.dll",
+        "lib/netstandard1.5/JsonSubTypes.dll",
+        "lib/netstandard1.6/JsonSubTypes.dll"
+      ]
+    },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "sha512": "Y4rs5aMEXY8G7wJo5S3EEt6ltqyOTr/qOeZzfn+hw/fuQj5GppGckMY5psGLETo1U9hcT5MmAhaT5xtusM1b5g==",
       "type": "package",
@@ -3991,6 +4106,21 @@
         "lib/netstandard1.6/NuGet.Frameworks.xml",
         "nuget.frameworks.4.7.0.nupkg.sha512",
         "nuget.frameworks.nuspec"
+      ]
+    },
+    "RestSharp/106.6.10": {
+      "sha512": "x1FM32hjnVOIn+DKtCs2Y4Q2DCUE5KW08NUXUd4GjgKjE+5PE0F6e9XfUg7nILo05M0TA/HRkRD/SeQ8+duOUA==",
+      "type": "package",
+      "path": "restsharp/106.6.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net452/RestSharp.dll",
+        "lib/net452/RestSharp.xml",
+        "lib/netstandard2.0/RestSharp.dll",
+        "lib/netstandard2.0/RestSharp.xml",
+        "restsharp.106.6.10.nupkg.sha512",
+        "restsharp.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -8499,6 +8629,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Cloudmersive.APIClient.NET.NLP >= 4.1.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.3",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5"
     ]
@@ -8540,6 +8671,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "Cloudmersive.APIClient.NET.NLP": {
+            "target": "Package",
+            "version": "[4.1.0, )"
+          },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[5.0.3, )"
@@ -8570,5 +8705,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.400\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Cloudmersive.APIClient.NET.NLP 4.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Cloudmersive.APIClient.NET.NLP",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

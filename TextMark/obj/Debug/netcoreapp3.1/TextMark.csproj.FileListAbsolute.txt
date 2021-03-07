@@ -144,8 +144,6 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\ru\Microsof
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Login\Check_UserName_Password.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Login\Register.cshtml.g.cs

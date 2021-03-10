@@ -149,3 +149,8 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Login\Register.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index1.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csprojAssemblyReference.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Cloudmersive.APIClient.NET.NLP.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\JsonSubTypes.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\RestSharp.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache

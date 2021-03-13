@@ -47,6 +47,13 @@ namespace TextMark
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            using (var srvc = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = srvc.ServiceProvider.GetService<TextMarkContext>();
+                context.Database.Migrate();
+            }
+
+
             app.UseRouting();
 
             app.UseAuthorization();

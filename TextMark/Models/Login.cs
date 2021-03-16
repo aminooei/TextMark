@@ -21,5 +21,6 @@ namespace TextMark.Models
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
+        public int UserType { get; set; }
     }
 }

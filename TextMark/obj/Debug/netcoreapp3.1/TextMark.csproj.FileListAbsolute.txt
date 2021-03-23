@@ -9,8 +9,10 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\TextMark.dl
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\TextMark.Views.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\TextMark.Views.pdb
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Ductus.FluentDocker.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\EntityFramework.SqlServer.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\EntityFramework.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Humanizer.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
@@ -18,8 +20,10 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.C
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.Workspaces.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
@@ -27,6 +31,7 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.E
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
@@ -47,6 +52,7 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.V
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\SharpCompress.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\System.CodeDom.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
@@ -132,6 +138,8 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\wi
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.TagHelpers.input.cache
@@ -158,7 +166,3 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dl
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csprojAssemblyReference.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Humanizer.dll
-C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache

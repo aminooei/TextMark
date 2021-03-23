@@ -48,11 +48,11 @@ namespace TextMark.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_context.Add(login);
-                //await _context.SaveChangesAsync();
-                ////return RedirectToAction(nameof(Index));
-                //TempData["Loggedin_Username"] = login.Username;
-                //return RedirectToAction("Index", "Home");
+                _context.Add(login);
+                await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+                TempData["Loggedin_Username"] = login.Username;
+                return RedirectToAction("Index", "Home");
             }
             return View(login);
         }

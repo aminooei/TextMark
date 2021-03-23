@@ -1,0 +1,47 @@
+services:
+  ms-sql-server:
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      SA_PASSWORD: Amin3420
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    ports:
+    - published: 1433
+      target: 1433
+  textmark:
+    build:
+      context: C:\Users\Amin\source\repos\TextMark
+      dockerfile: TextMark\Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: TextMark
+      target: base
+    container_name: TextMark
+    entrypoint: tail -f /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      DOTNET_USE_POLLING_FILE_WATCHER: '1'
+      NUGET_FALLBACK_PACKAGES: ''
+    image: textmark:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/netcoreapp3.1/TextMark.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    ports:
+    - target: 80
+    - target: 443
+    - published: 44318
+      target: 4832
+    tty: true
+    volumes:
+    - C:\Users\Amin\source\repos\TextMark\TextMark:/app:rw
+    - C:\Users\Amin\vsdbg\vs2017u5:/remote_debugger:rw
+    - C:\Users\Amin\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\Amin\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+    - C:\Users\Amin\.nuget\packages:/root/.nuget/packages:ro
+    - C:\Users\Amin\source\repos\TextMark:/src:rw
+version: '3.9'

@@ -1,225 +1,274 @@
-﻿@model TextMark.Models.Login
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
 
 
-@{ if (TempData.Peek("Loggedin_Username") != null)
-    {
-        <p>Welcome to your page @TempData.Peek("Loggedin_Username") </p>
-    }
-}
-
-
-<body class="w3-light-grey">
-
-     Page Container 
-    <div class="w3-content w3-margin-top" style="max-width:1400px;">
-     The Grid 
-    <div class="w3-row-padding">
-     Left Column 
-    <div class="w3-third">
-
-        <div class="w3-display-container">
-            <div class="w3-white w3-text-grey w3-card-4">
-                 <img src="https://www.w3schools.com/w3images/avatar_hat.jpg" style="width:100%" alt="Avatar">
-                <div class="w3-display-bottomleft w3-container w3-text-black">
-                    <h2>Jane Doe</h2>
-                </div>
-            </div>
-            <div class="w3-container">
-                <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Designer</p>
-                <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>London, UK</p>
-                <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>ex@mail.com</p>
-                <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>1224435534</p>
-                <hr>
-
-                <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Skills</b></p>
-                <p>Adobe Photoshop</p>
-                <div class="w3-light-grey w3-round-xlarge w3-small">
-                    <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90%</div>
-                </div>
-                <p>Photography</p>
-                <div class="w3-light-grey w3-round-xlarge w3-small">
-                    <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:80%">
-                        <div class="w3-center w3-text-white">80%</div>
-                    </div>
-                </div>
-                <p>Illustrator</p>
-                <div class="w3-light-grey w3-round-xlarge w3-small">
-                    <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:75%">75%</div>
-                </div>
-                <p>Media</p>
-                <div class="w3-light-grey w3-round-xlarge w3-small">
-                    <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:50%">50%</div>
-                </div>
-                <br>
-
-                <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Languages</b></p>
-                <p>English</p>
-                <div class="w3-light-grey w3-round-xlarge">
-                    <div class="w3-round-xlarge w3-teal" style="height:24px;width:100%"></div>
-                </div>
-                <p>Spanish</p>
-                <div class="w3-light-grey w3-round-xlarge">
-                    <div class="w3-round-xlarge w3-teal" style="height:24px;width:55%"></div>
-                </div>
-                <p>German</p>
-                <div class="w3-light-grey w3-round-xlarge">
-                    <div class="w3-round-xlarge w3-teal" style="height:24px;width:25%"></div>
-                </div>
-                <br>
-            </div>
-        </div><br>
-     End Left Column 
+    <!--Error-->
+    <div id="error_message" class="ui floating negative message" style="display: none">
+        <div class="header"></div>
+        <p class="message"></p>
     </div>
-     Right Column 
-    <div class="card">
-        <header class="card-header">
-            <div class="card-header-title has-background-royalblue" style="padding: 1.5rem;">
-                <div class="field is-grouped is-grouped-multiline">
-                    <div class="control">
-                        <div class="tags has-addons">
-                            <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(32, 156, 238);">
-                                Person
-                            </a> <span class="tag is-medium">p</span>
-                        </div>
-                    </div><div class="control">
-                        <div class="tags has-addons">
-                            <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color: rgb(255, 204, 0);">
-                                Loc
-                            </a> <span class="tag is-medium">l</span>
-                        </div>
-                    </div><div class="control">
-                        <div class="tags has-addons">
-                            <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">
-                                Org
-                            </a> <span class="tag is-medium">o</span>
-                        </div>
-                    </div><div class="control">
-                        <div class="tags has-addons">
-                            <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(51, 204, 153);">
-                                Event
-                            </a> <span class="tag is-medium">e</span>
-                        </div>
-                    </div><div class="control">
-                        <div class="tags has-addons">
-                            <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">
-                                Date
-                            </a> <span class="tag is-medium">d</span>
-                        </div>
-                    </div><div class="control">
-                        <div class="tags has-addons">
-                            <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">
-                                Other
-                            </a> <span class="tag is-medium">z</span>
+    <!--Page Header-->
+    <div class="ui tall stacked segment">
+        <h4 class="ui header">
+            <i class="yellow color tag icon"></i>
+            <div class="content">
+                Annotator.js Example
+                <div class="sub header">
+                    Annotate/mark a certain fragment of text with different tags and displays the corresponding note cards in the sidebar.
+                </div>
+            </div>
+        </h4>
+    </div>
+    <!--Body-->
+    <div class="ui grid container">
+        <div class="two column row">
+            <!--Saved Annotations-->
+            <div class="six wide column">
+                <div class="ui fluid card">
+                    <div class="content">
+                        <!--Header-->
+                        <h5 class="ui header">
+                            <i class="green color tags icon"></i>
+                            <div class="content">
+                                Saved Annotations
+                                <div class="meta">
+                                    <span>Try deleting a saved annotation</span>
+                                </div>
+                            </div>
+                        </h5>
+                        <!--Annotations List-->
+                        <div id="annotations_list">
+
+                            <div class="ui raised segment">
+                                <a class="ui blue ribbon label">Internal</a>
+
+                                <p class="p-around_small">euismod, ac facilisis </p>
+
+                                <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
+                            </div>
+
+                            <div class="ui raised segment">
+                                <a class="ui orange ribbon label">Requirement</a>
+
+                                <p class="p-around_small">llicitudin non. P</p>
+
+                                <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_2' )">Delete</div>
+                            </div>
+
+                            <div class="ui raised segment">
+                                <a class="ui orange ribbon label">Requirement</a>
+
+                                <p class="p-around_small">per enim euismod,</p>
+
+                                <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_3' )">Delete</div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        </header>
-        <div class="card-content">
-        <div class="content">
-            <div>
-            <span class="">
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(32, 156, 238);">
-        Barack Hussein Obama II
-        <button class="
-                is-small"></button>
-    </span><span class="">
-        (born
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">
-        August 4, 1961
-        <button class="delete is-small"></button>
-        </span>
-    <span class="">) is an
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">
-        American
-        <button class="delete is-small"></button>
-        </span>
-    <span class=""> attorney and politician who served as the 44th President of
-    
-    </span>
-    <span class="tag" style="color: rgb(51, 51, 51); background-color: rgb(255, 204, 0);">
-        the United States
-        <button class="delete is-small"></button>
-        </span>
-    <span class="">
-        from
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">
-        January 20, 2009
-        <button class="delete is-small"></button>
-        </span>
-    <span class="">, to
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">
-        January 20, 2017
-        <button class="delete is-small"></button>
-        </span>
-    <span class="">. A member of the
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">
-        Democratic Party
-        <button class="delete is-small"></button>
-        </span>
-    <span class="">, he was the first
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">
-        African American
-        <button class="delete is-small"></button>
-        </span>
-    <span class=""> to serve as president. He was previously a
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">
-        United States Senator
-        <button class="delete is-small"></button>
-        </span>
-    <span class=""> from
-    
-    </span>
-    <span class="tag" style="color: rgb(51, 51, 51); background-color: rgb(255, 204, 0);">
-        Illinois
-        <button class="delete is-small"></button>
-        </span>
-    <span class=""> and a member of the
-    
-    </span>
-    <span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">
-        Illinois State Senate<button class="delete is-small"></button>
-        </span>
-    <span class="">.
-    
-    </span>
+            <!--Transcript-->
+            <div class="ten wide column">
+                <div class="ui fluid card">
+                    <div class="content">
+                        <!--Header-->
+                        <h5 class="ui header">
+                            <i class="violet color phone square icon"></i>
+                            <div class="content">
+                                Transcript
+                                <div class="meta">
+                                    <span>Try selecting a block of text</span>
+                                </div>
+                            </div>
+                        </h5>
+                        <!--Feed-->
+                        <div class="ui feed">
+                            <div class="event">
+                                <div class="label">
+                                    <i class="olive color user icon"></i>
+                                </div>
+                                <div class="content">
+                                    <div class="summary">
+                                        <a>Joe Henderson</a> spoke at
+                                        <div class="date">
+                                            02:03
+                                        </div>
+                                    </div>
+                                    <div class="example text" spellcheck="false" contenteditable="true">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim <annotation id="annotation_1" notes="euismod, ac facilisis " type="Internal">euismod, ac facilisis </annotation>tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event">
+                                <div class="label">
+                                    <i class="olive color user icon"></i>
+                                </div>
+                                <div class="content">
+                                    <div class="summary">
+                                        <a>Jane Doe</a> spoke at
+                                        <div class="date">
+                                            05:13
+                                        </div>
+                                    </div>
+                                    <div class="example text" spellcheck="false" contenteditable="true">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcor<annotation id="annotation_3" notes="per enim euismod," type="Requirement">per enim euismod,</annotation> ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc so<annotation id="annotation_2" notes="llicitudin non. P" type="Requirement">llicitudin non. P</annotation>hasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event">
+                                <div class="label">
+                                    <i class="olive color user icon"></i>
+                                </div>
+                                <div class="content">
+                                    <div class="summary">
+                                        <a>John Doe</a> spoke at
+                                        <div class="date">
+                                            08:40
+                                        </div>
+                                    </div>
+                                    <div class="example text" spellcheck="false" contenteditable="true">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim euismod, ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event">
+                                <div class="label">
+                                    <i class="olive color user icon"></i>
+                                </div>
+                                <div class="content">
+                                    <div class="summary">
+                                        <a>Mike Wright</a> spoke at
+                                        <div class="date">
+                                            15:00
+                                        </div>
+                                    </div>
+                                    <div class="example text" spellcheck="false" contenteditable="true">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim euismod, ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-     End Grid 
+    <!--Annotator Popover Contents-->
+    <div id="annotate_settings" class="ui form raised segments" style="margin: 0px; display: none;">
+        <!--Notes-->
+        <div class="required field p-around_small">
+            <label>Type some notes</label>
+            <textarea rows="5" onchange="App.handlers.captureNotes( this )"></textarea>
+        </div>
+        <!--Tags-->
+        <div class="p-around_small m-bottom_medium">
+            <div class="ui dropdown labeled icon fluid button upward" tabindex="0">
+                <i class="tag icon"></i>
+                <span class="text">Select Tag</span>
+                <div class="menu transition hidden" tabindex="-1">
+                    <div class="ui icon search input">
+                        <i class="search icon"></i>
+                        <input type="text" placeholder="Search tags...">
+                    </div>
+                    <div class="divider"></div>
+                    <div class="header">
+                        <i class="tags icon"></i>
+                        Tag Label
+                    </div>
+                    <div class="scrolling menu">
+                        <div name="Requirement" class="item">
+                            <div class="ui orange empty circular label"></div>
+                            Requirement
+                        </div>
+                        <div name="Backlog" class="item">
+                            <div class="ui teal empty circular label"></div>
+                            Backlog
+                        </div>
+                        <div name="Internal" class="item">
+                            <div class="ui blue empty circular label"></div>
+                            Internal
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Action Buttons-->
+        <div class="field p-around_small m-bottom_medium">
+            <button class="ui right floated olive button" onclick="App.handlers.saveAnnotation();">Save</button>
+            <button class="ui left floated button" onclick="App.handlers.cancelAnnotation();">Cancel</button>
+        </div>
+        <!--Placeholder-->
+        <div class="field p-around_small m-bottom_medium">
+        </div>
+        <!--Arrow-->
+        <div id="arrow" data-popper-arrow="" style=""></div>
     </div>
-     End Page Container 
-    </div>
+    <!--Footer-->
+    <h4 class="ui horizontal divider header">
+        Built with <span class="love">♥</span> by Deepak
+    </h4>
+    <!--Backdrop-->
+    <div class="ui dimmer page active backdrop" style="display: none;"></div>
+    <!--Template-->
 
-    <footer class="w3-container w3-teal w3-center w3-margin-top">
-        <p>Find me on social media.</p>
-        <i class="fa fa-facebook-official w3-hover-opacity"></i>
-        <i class="fa fa-instagram w3-hover-opacity"></i>
-        <i class="fa fa-snapchat w3-hover-opacity"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-        <i class="fa fa-twitter w3-hover-opacity"></i>
-        <i class="fa fa-linkedin w3-hover-opacity"></i>
-    </footer>
 
-</body>
 
+
+
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Annotator.js Example</title>
+<!--Favicon-->
+<link rel="icon" type="image/png" href="img/favicon.png">
+<!--Semantic UI CSS-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<!--Annotator CSS-->
+<link rel="stylesheet" href="~/css/annotator.css">
+<!--Custom Styles-->
+<link rel="stylesheet" href="~/css/styles.css">
+
+@section Scripts
+{
+    <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script>
+    <script id="annotations_tmpl" type="text/x-jsrender" data-jsv-tmpl="jsvTmpl">
+        {{for annotations}}
+        <div class="ui raised segment">
+            <a class="ui {{:color}} ribbon label">{{:type}}</a>
+
+            <p class="p-around_small">{{:notes}}</p>
+
+            <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( '{{:id}}' )">Delete</div>
+        </div>
+        {{/for}}
+    </script>
+    <!--Scripts-->
+    <!--Required for Annotator.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Required for Annotator.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/umd/popper.min.js"></script>
+    <!--Optional (used for Templating)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.6/jsrender.min.js"></script>
+    <!--Optional (used for Semantic UI)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <!--Annotator jQuery Plugin-->
+    <script type="text/javascript" src="~/js/annotator.js"></script>
+    <!--Custom Script for the App-->
+    <script type="text/javascript" src="~/js/app.js"></script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+}

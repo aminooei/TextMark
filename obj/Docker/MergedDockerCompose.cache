@@ -15,6 +15,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
+      localhost: ms-sql-server
     image: textmark
     ports:
     - target: 80

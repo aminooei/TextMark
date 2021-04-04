@@ -1,744 +1,748 @@
-html,
+﻿html,
 body {
-  /*font-family: 'Open Sans', serif;*/
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
-  background: #F9F9F9;
+    /*font-family: 'Open Sans', serif;*/
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo, sans-serif;
+    background: #F9F9F9;
 }
 
 footer {
-  background-color: #2a2e2f !important;
-  padding: 2rem 1.5rem 3rem !important;
+    background-color: #2a2e2f !important;
+    padding: 2rem 1.5rem 3rem !important;
 }
 
 .footer a {
-  color: white;
+    color: white;
 }
 
 .footer h2 {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .footer p,
 strong {
-  color: lemonchiffon;
+    color: lemonchiffon;
 }
 
 .navbar {
-  background-color: #2a2e2f;
+    background-color: #2a2e2f;
 }
 
-.navbar.has-shadow {
-  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
-}
+    .navbar.has-shadow {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+    }
 
 .navbar-item {
-  color: white;
+    color: white;
 }
 
 .topNav {
-  border-top: 5px solid #3498DB;
+    border-top: 5px solid #3498DB;
 }
 
-.topNav .container {
-  border-bottom: 1px solid #E6EAEE;
-}
+    .topNav .container {
+        border-bottom: 1px solid #E6EAEE;
+    }
 
 .container .columns {
-  margin: 2rem 0;
+    margin: 2rem 0;
 }
 
 aside.menu {
-  padding-top: 3rem;
+    padding-top: 3rem;
 }
 
-aside.menu .menu-list {
-  line-height: 1.5;
-}
+    aside.menu .menu-list {
+        line-height: 1.5;
+    }
 
-aside.menu .menu-label {
-  padding-left: 10px;
-  font-weight: 700;
-}
+    aside.menu .menu-label {
+        padding-left: 10px;
+        font-weight: 700;
+    }
 
 .button.is-primary.is-alt {
-  background: #00c6ff;
-  background: -webkit-linear-gradient(to bottom, #0072ff, #00c6ff);
-  background: linear-gradient(to bottom, #0072ff, #00c6ff);
-  font-weight: 700;
-  font-size: 14px;
-  height: 3rem;
-  line-height: 2.8;
+    background: #00c6ff;
+    background: -webkit-linear-gradient(to bottom, #0072ff, #00c6ff);
+    background: linear-gradient(to bottom, #0072ff, #00c6ff);
+    font-weight: 700;
+    font-size: 14px;
+    height: 3rem;
+    line-height: 2.8;
 }
 
 .media-left img {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .media-content p {
-  font-size: 14px;
-  line-height: 2.3;
-  font-weight: 700;
-  color: #8F99A3;
+    font-size: 14px;
+    line-height: 2.3;
+    font-weight: 700;
+    color: #8F99A3;
 }
 
 article.post {
-  margin: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #E6EAEE;
+    margin: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #E6EAEE;
 }
 
-article.post:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
-}
+    article.post:last-child {
+        padding-bottom: 0;
+        border-bottom: none;
+    }
 
 .menu-list li {
-  padding: 5px;
+    padding: 5px;
 }
 
 .tag:not(body).is-grey {
-  background-color: #eee;
-  color: #666;
+    background-color: #eee;
+    color: #666;
 }
 
 .button-margin {
-  width: 5cm; /* Set a width for alignment */
-  margin-bottom: 15px;
+    width: 5cm; /* Set a width for alignment */
+    margin-bottom: 15px;
 }
 
 p {
-  font-family: "游ゴシック体", YuGothic, "YuGothic M", sans-serif;
+    font-family: "游ゴシック体", YuGothic, "YuGothic M", sans-serif;
 }
 
 .tabs-details {
-  margin-right: 1px;
+    margin-right: 1px;
 }
 
 .project-image {
-  background-image: url("/static/images/cat.6d777ba2550f.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+    background-image: url("/static/images/cat.6d777ba2550f.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .is-shady {
-  animation: flyintoright .4s backwards;
-  background: #fff;
-  box-shadow: rgba(0, 0, 0, .1) 0 1px 0;
-  border-radius: 4px;
-  /*display: inline-block;*/
-  /*margin: 10px;*/
-  position: relative;
-  transition: all .2s ease-in-out;
+    animation: flyintoright .4s backwards;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, .1) 0 1px 0;
+    border-radius: 4px;
+    /*display: inline-block;*/
+    /*margin: 10px;*/
+    position: relative;
+    transition: all .2s ease-in-out;
 }
 
-.is-shady:hover {
-  box-shadow: 0 10px 16px rgba(0, 0, 0, .13), 0 6px 6px rgba(0, 0, 0, .19);
-}
+    .is-shady:hover {
+        box-shadow: 0 10px 16px rgba(0, 0, 0, .13), 0 6px 6px rgba(0, 0, 0, .19);
+    }
 
 .menu-list a.active {
-  background-color: #3273dc;
-  color: #fff;
+    background-color: #3273dc;
+    color: #fff;
 }
 
 .select-height {
-  height: 100% !important;
-  max-height: 200px !important;
+    height: 100% !important;
+    max-height: 200px !important;
 }
 
 .pagination-link,
 .pagination-next,
 .pagination-previous {
-  background-color: white;
-  margin-top: 20px;
+    background-color: white;
+    margin-top: 20px;
 }
 
 .card-header-title {
-  padding: 1.5rem;
+    padding: 1.5rem;
 }
 
 .navbar-link::after {
-  border-color: white;
+    border-color: white;
 }
 
 .navbar-link {
-  color: white;
+    color: white;
 }
 
 .navbar-dropdown {
-  background-color: #2a2e2f;
-  border-top: 0;
+    background-color: #2a2e2f;
+    border-top: 0;
 }
 
-.navbar-dropdown .navbar-item {
-  color: white;
-
-}
+    .navbar-dropdown .navbar-item {
+        color: white;
+    }
 
 .has-background-royalblue {
-  background-color:royalblue !important;
+    background-color: royalblue !important;
 }
 
 /* Padding Zero */
 
 .p0 {
-	padding: 0!important
+    padding: 0 !important
 }
 
 
 /* Padding Top */
 
 .pt10 {
-	padding-top: 10px!important
+    padding-top: 10px !important
 }
 
 .pt15 {
-	padding-top: 15px!important
+    padding-top: 15px !important
 }
 
 .pt20 {
-	padding-top: 20px!important
+    padding-top: 20px !important
 }
 
 .pt30 {
-	padding-top: 30px!important
+    padding-top: 30px !important
 }
 
 .pt40 {
-	padding-top: 40px!important
+    padding-top: 40px !important
 }
 
 .pt50 {
-	padding-top: 50px!important
+    padding-top: 50px !important
 }
 
 .pt60 {
-	padding-top: 60px!important
+    padding-top: 60px !important
 }
 
 .pt70 {
-	padding-top: 70px!important
+    padding-top: 70px !important
 }
 
 .pt80 {
-	padding-top: 80px!important
+    padding-top: 80px !important
 }
 
 .pt90 {
-	padding-top: 90px!important
+    padding-top: 90px !important
 }
 
 .pt100 {
-	padding-top: 100px!important
+    padding-top: 100px !important
 }
 
 .pt110 {
-	padding-top: 110px!important
+    padding-top: 110px !important
 }
 
 .pt120 {
-	padding-top: 120px!important
+    padding-top: 120px !important
 }
 
 .pt130 {
-	padding-top: 130px!important
+    padding-top: 130px !important
 }
 
 .pt140 {
-	padding-top: 140px!important
+    padding-top: 140px !important
 }
 
 
 /* Padding Bottom */
 
 .pb0 {
-	padding-bottom: 0px!important
+    padding-bottom: 0px !important
 }
 
 .pb10 {
-	padding-bottom: 10px!important
+    padding-bottom: 10px !important
 }
 
 .pb15 {
-	padding-bottom: 15px!important
+    padding-bottom: 15px !important
 }
 
 .pb20 {
-	padding-bottom: 20px!important
+    padding-bottom: 20px !important
 }
 
 .pb30 {
-	padding-bottom: 30px!important
+    padding-bottom: 30px !important
 }
 
 .pb40 {
-	padding-bottom: 40px!important
+    padding-bottom: 40px !important
 }
 
 .pb50 {
-	padding-bottom: 50px!important
+    padding-bottom: 50px !important
 }
 
 .pb60 {
-	padding-bottom: 60px!important
+    padding-bottom: 60px !important
 }
 
 .pb70 {
-	padding-bottom: 70px!important
+    padding-bottom: 70px !important
 }
 
 .pb80 {
-	padding-bottom: 80px!important
+    padding-bottom: 80px !important
 }
 
 .pb90 {
-	padding-bottom: 90px!important
+    padding-bottom: 90px !important
 }
 
 .pb100 {
-	padding-bottom: 100px!important
+    padding-bottom: 100px !important
 }
 
 .pb110 {
-	padding-bottom: 110px!important
+    padding-bottom: 110px !important
 }
 
 .pb120 {
-	padding-bottom: 120px!important
+    padding-bottom: 120px !important
 }
 
 .pb130 {
-	padding-bottom: 130px!important
+    padding-bottom: 130px !important
 }
 
 .pb140 {
-	padding-bottom: 140px!important
+    padding-bottom: 140px !important
 }
 
 
 /* Padding Left */
 
 .pl0 {
-	padding-left: 0px!important
+    padding-left: 0px !important
 }
 
 .pl3 {
-	padding-left: 3px!important
+    padding-left: 3px !important
 }
 
 .pl5 {
-	padding-left: 5px!important
+    padding-left: 5px !important
 }
 
 .pl10 {
-	padding-left: 10px!important
+    padding-left: 10px !important
 }
 
 .pl20 {
-	padding-left: 20px!important
+    padding-left: 20px !important
 }
 
 .pl30 {
-	padding-left: 30px;
+    padding-left: 30px;
 }
 
 .pl40 {
-	padding-left: 40px;
+    padding-left: 40px;
 }
 
 .pl50 {
-	padding-left: 50px;
+    padding-left: 50px;
 }
 
 .pl60 {
-	padding-left: 60px;
+    padding-left: 60px;
 }
 
 .pl70 {
-	padding-left: 70px;
+    padding-left: 70px;
 }
 
 .pl80 {
-	padding-left: 80px;
+    padding-left: 80px;
 }
 
 .pl90 {
-	padding-left: 90px;
+    padding-left: 90px;
 }
 
 .pl100 {
-	padding-left: 100px;
+    padding-left: 100px;
 }
 
 .pl15r {
-	padding-left: 1.5rem !important;
+    padding-left: 1.5rem !important;
 }
 
 
 /* Padding Right */
 
 .pr0 {
-	padding-right: 0px!important
+    padding-right: 0px !important
 }
 
 .pr5 {
-	padding-right: 5px!important
+    padding-right: 5px !important
 }
 
 .pr10 {
-	padding-right: 10px!important
+    padding-right: 10px !important
 }
 
 .pr20 {
-	padding-right: 20px!important
+    padding-right: 20px !important
 }
 
 .pr30 {
-	padding-right: 30px!important
+    padding-right: 30px !important
 }
 
 .pr40 {
-	padding-right: 40px;
+    padding-right: 40px;
 }
 
 .pr50 {
-	padding-right: 50px;
+    padding-right: 50px;
 }
 
 .pr60 {
-	padding-right: 60px;
+    padding-right: 60px;
 }
 
 .pr70 {
-	padding-right: 70px;
+    padding-right: 70px;
 }
 
 .pr80 {
-	padding-right: 80px;
+    padding-right: 80px;
 }
 
 .pr90 {
-	padding-right: 90px;
+    padding-right: 90px;
 }
 
 .pr100 {
-	padding-right: 100px;
+    padding-right: 100px;
 }
 
 .pr110 {
-	padding-right: 110px;
+    padding-right: 110px;
 }
 
 .pr120 {
-	padding-right: 120px;
+    padding-right: 120px;
 }
 
 @media (min-width:1200px) {
-	.pl-lg-50 {
-		padding-left: 50px;
-	}
-	.pl-lg-80 {
-		padding-left: 80px;
-	}
+    .pl-lg-50 {
+        padding-left: 50px;
+    }
+
+    .pl-lg-80 {
+        padding-left: 80px;
+    }
 }
 
 @media (min-width:992px) {
-	.pt-md-50 {
-		padding-top: 50px;
-	}
+    .pt-md-50 {
+        padding-top: 50px;
+    }
 }
 
 .pbrem075 {
-  padding-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 
 .tweaked-margin {
-  margin-left: -0.4rem !important;
-  margin-right: 0.3rem !important;
+    margin-left: -0.4rem !important;
+    margin-right: 0.3rem !important;
 }
 
 /* Margin Auto */
 
 .mr-auto {
-	margin: auto;
-	float: none;
+    margin: auto;
+    float: none;
 }
 
 
 /* Margin Top */
 
 .mt0 {
-	margin-top: 0!important
+    margin-top: 0 !important
 }
 
 .mt5 {
-	margin-top: 5px!important
+    margin-top: 5px !important
 }
 
 .mt10 {
-	margin-top: 10px!important
+    margin-top: 10px !important
 }
 
 .mt20 {
-	margin-top: 20px!important
+    margin-top: 20px !important
 }
 
 .mt30 {
-	margin-top: 30px!important
+    margin-top: 30px !important
 }
 
 .mt40 {
-	margin-top: 40px!important
+    margin-top: 40px !important
 }
 
 .mt50 {
-	margin-top: 50px!important
+    margin-top: 50px !important
 }
 
 .mt60 {
-	margin-top: 60px!important
+    margin-top: 60px !important
 }
 
 .mt70 {
-	margin-top: 70px!important
+    margin-top: 70px !important
 }
 
 .mt80 {
-	margin-top: 80px!important
+    margin-top: 80px !important
 }
 
 .mt90 {
-	margin-top: 90px!important
+    margin-top: 90px !important
 }
 
 .mt100 {
-	margin-top: 100px!important
+    margin-top: 100px !important
 }
 
 .mt110 {
-	margin-top: 110px!important
+    margin-top: 110px !important
 }
 
 .mt120 {
-	margin-top: 120px!important
+    margin-top: 120px !important
 }
 
 
 /* Margin Bottom */
 
 .mb0 {
-	margin-bottom: 0!important
+    margin-bottom: 0 !important
 }
 
 .mb5 {
-	margin-bottom: 5px!important
+    margin-bottom: 5px !important
 }
 
 .mb10 {
-	margin-bottom: 10px!important
+    margin-bottom: 10px !important
 }
 
 .mb15 {
-	margin-bottom: 15px!important
+    margin-bottom: 15px !important
 }
 
 .mb20 {
-	margin-bottom: 20px!important
+    margin-bottom: 20px !important
 }
 
 .mb30 {
-	margin-bottom: 30px!important
+    margin-bottom: 30px !important
 }
 
 .mb40 {
-	margin-bottom: 40px!important
+    margin-bottom: 40px !important
 }
 
 .mb50 {
-	margin-bottom: 50px
+    margin-bottom: 50px
 }
 
 .mb60 {
-	margin-bottom: 60px
+    margin-bottom: 60px
 }
 
 .mb70 {
-	margin-bottom: 70px
+    margin-bottom: 70px
 }
 
 .mb80 {
-	margin-bottom: 80px
+    margin-bottom: 80px
 }
 
 .mb90 {
-	margin-bottom: 90px
+    margin-bottom: 90px
 }
 
 .mb100 {
-	margin-bottom: 100px
+    margin-bottom: 100px
 }
 
 .mb110 {
-	margin-bottom: 110px
+    margin-bottom: 110px
 }
 
 .mb120 {
-	margin-bottom: 120px
+    margin-bottom: 120px
 }
 
 
 /* Margin Left */
 
 .ml0 {
-	margin-left: 0!important;
+    margin-left: 0 !important;
 }
 
 .ml15 {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 
 .ml10 {
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 .ml20 {
-	margin-left: 20px;
+    margin-left: 20px;
 }
 
 .ml30 {
-	margin-left: 30px;
+    margin-left: 30px;
 }
 
 .ml40 {
-	margin-left: 40px;
+    margin-left: 40px;
 }
 
 .ml50 {
-	margin-left: 50px;
+    margin-left: 50px;
 }
 
 .ml60 {
-	margin-left: 60px;
+    margin-left: 60px;
 }
 
 .ml70 {
-	margin-left: 70px;
+    margin-left: 70px;
 }
 
 .ml80 {
-	margin-left: 80px;
+    margin-left: 80px;
 }
 
 .ml90 {
-	margin-left: 90px;
+    margin-left: 90px;
 }
 
 .ml100 {
-	margin-left: 100px;
+    margin-left: 100px;
 }
 
 .ml110 {
-	margin-left: 110px;
+    margin-left: 110px;
 }
 
 
 /* Margin Right */
 
 .mr0 {
-	margin-right: 0!important
+    margin-right: 0 !important
 }
 
 .mr5 {
-	margin-left: 5px!important
+    margin-left: 5px !important
 }
 
 .mr10 {
-	margin-right: 10px!important
+    margin-right: 10px !important
 }
 
 .mr20 {
-	margin-right: 20px!important
+    margin-right: 20px !important
 }
 
 .mr30 {
-	margin-right: 30px!important
+    margin-right: 30px !important
 }
 
 .mr40 {
-	margin-right: 40px!important
+    margin-right: 40px !important
 }
 
 .mr50 {
-	margin-right: 50px!important
+    margin-right: 50px !important
 }
 
 .mr60 {
-	margin-right: 60px!important
+    margin-right: 60px !important
 }
 
 .mr70 {
-	margin-right: 70px!important
+    margin-right: 70px !important
 }
 
 .mr80 {
-	margin-right: 80px!important
+    margin-right: 80px !important
 }
 
 .mr90 {
-	margin-right: 90px!important
+    margin-right: 90px !important
 }
 
 .mr100 {
-	margin-right: 100px;
+    margin-right: 100px;
 }
 
 .mr110 {
-	margin-right: 110px;
+    margin-right: 110px;
 }
 
 .dataset-item__main {
-	display: inline-block;
-	-webkit-box-flex: 2;
-	-ms-flex: 2 2 66%;
-	flex: 2 2 66%;
-	overflow: hidden;
-	margin: 0 8px 0 8px;
+    display: inline-block;
+    -webkit-box-flex: 2;
+    -ms-flex: 2 2 66%;
+    flex: 2 2 66%;
+    overflow: hidden;
+    margin: 0 8px 0 8px;
 }
+
 .dataset-item__main-title {
-	font-size: 16px;
-	font-weight: 500;
-	line-height: 22px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
 }
+
 .dataset-item__main-subtitle {
-	color: rgba(0,0,0,.55);
-	font-size: 12px;
-	font-weight: 400;
-	line-height: 22px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+    color: rgba(0,0,0,.55);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .dataset-item__main-info {
-	color: rgba(0,0,0,.4);
-	font-size: 12px;
-	font-weight: 400;
-	line-height: 22px;
+    color: rgba(0,0,0,.4);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
 }
 
 .is-vertical {
-	vertical-align:middle !important;
+    vertical-align: middle !important;
 }
 
 .project-thumbnail {
-	border-radius: 4px;
+    border-radius: 4px;
 }
 
 .thumbnail-wrapper {
-	width:66px;
-	height:66px;
-	display:inline-block;
+    width: 66px;
+    height: 66px;
+    display: inline-block;
 }
 
 
-[v-cloak] { display: none; }
+[v-cloak] {
+    display: none;
+}

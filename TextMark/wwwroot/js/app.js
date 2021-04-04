@@ -55,6 +55,9 @@
         applyTag: function (tagName) {
             $.Annotator.api.tagActiveAnnotation(tagName);
         },
+        applyOnclickAnnotation: function (annotationID) {
+            $.Annotator.api.onclickAnnotation(annotationID);
+        },
         cancelAnnotation: function () {
             App.helpers.resetControls();
             App.helpers.showBackdrop(false);
@@ -118,7 +121,10 @@
                 direction: "upward",
                 onChange: function (value, text, $choice) {
                     if ($choice)
+                    {
                         App.handlers.applyTag($choice.attr("name"));
+                      //  App.handlers.applyTag($choice.attr("name"));
+                    }
                 }
             });
     }

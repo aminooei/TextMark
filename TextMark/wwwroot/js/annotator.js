@@ -19,7 +19,7 @@
 
         this.defaults = {
             surroundWith: "annotation",
-            minimumCharacters: 10,
+            minimumCharacters: 8,
             makeTextEditable: true
         };
 
@@ -55,13 +55,19 @@
             captureActiveAnnotationNotes: function (notes) {
                 var cache = jQuery.Annotator.cache;
 
-                jQuery(`#${cache.activeAnnotation.id}`).attr("notes", notes);
+                jQuery(`#${cache.activeAnnotation.id}`).attr("notes", notes);                
+                jQuery(`#${cache.activeAnnotation.id}`).attr("ondblclick", "App.handlers.deleteAnnotation('" + cache.activeAnnotation.id+"')");
             },
             tagActiveAnnotation: function (tagType) {
                 var cache = jQuery.Annotator.cache;
 
                 jQuery(`#${cache.activeAnnotation.id}`).attr("type", tagType);
             },
+            //onclickAnnotation: function () {
+            //    var cache = jQuery.Annotator.cache;
+
+            //    jQuery(`#${cache.activeAnnotation.id}`).attr("ondblclick", "App.handlers.deleteAnnotation('annotation_1')");
+            //},
             destroyActiveAnnotation: function () {
                 var cache = jQuery.Annotator.cache;
                 var api = jQuery.Annotator.api;
@@ -97,7 +103,8 @@
 
                 cache.activeAnnotation.attributes = {
                     type: $activeAnnotation.attr("type"),
-                    notes: $activeAnnotation.attr("notes")
+                    notes: $activeAnnotation.attr("notes"),
+                   // ondblclick: $activeAnnotation.attr("ondblclick")
                 };
 
                 if (!api.validateAttributes(cache.activeAnnotation.attributes)) {
@@ -221,6 +228,8 @@
                         jQuery($annotation).attr("current", "true");
                         jQuery($annotation).attr("onselectstart", "return false;");
 
+
+                      
                         range.deleteContents();
 
                         range.insertNode($annotation);

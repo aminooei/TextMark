@@ -67,6 +67,7 @@
         saveAnnotation: function () {
             var result = $.Annotator.api.saveActiveAnnotation();
 
+
             if (!result.isSaved) {
                 App.helpers.showError(App.constants.errors[result.errorCode]);
             } else {
@@ -92,21 +93,42 @@
             $("#annotations_list").html(html);
         },
         deleteAnnotation: function (annotationId) {
+            //Added new
+            $("#BtnClosing_" + annotationId).hide();
+            ///######
+
+
+
             var remainingAnnotations =
                 $.Annotator.api.deleteAnnotation(annotationId);
 
             App.handlers.renderSavedAnnotations(remainingAnnotations);
+        },
+        destroyClosingIcon: function () {  
+           
+         //   $.annotator.App.handlers.deleteAnnotation('annotation_1');
+         //   alert("ok1");
+         //   $("#BtnClosing_annotation_1").hide();
+         //   alert("ok2");
         }
     },
     init: function () {
         $(".example").annotator({
             popoverContents: "#annotate_settings",
-            minimumCharacters: 10,
+            minimumCharacters: 1,
             makeTextEditable: true,
             onannotationsaved: function () {
-                App.handlers.renderSavedAnnotations(this.annotations);
+                //this.annotations.outerText = this.annotations.outerText + " <div class=\"fluid ui button\" onclick=\"App.handlers.deleteAnnotation('annotation_1')\">X</div>";
+             //   this.annotations.outerText = this.annotations.outerText + " <button class=\"delete is - small\"></button>";
+                //<button class="delete is-small"></button>
+
+                App.handlers.renderSavedAnnotations(this.annotations);  
             },
             onselectioncomplete: function () {
+                //alert("this.outerText = " + this.outerText);
+                //+ " <div class=\"fluid ui button\" onclick=\"App.handlers.deleteAnnotation('annotation_1')\">Delete</div>"
+               // this.outerText = this.outerText + " <div class=\"fluid ui button\" onclick=\"App.handlers.deleteAnnotation('annotation_1')\">X</div>";
+                //this.innerText = this.innerText + " <button class=\"delete is - small\"></button>";
                 App.handlers.fillNotes(this.outerText);
                 App.helpers.showBackdrop(true);
             },
@@ -122,8 +144,7 @@
                 onChange: function (value, text, $choice) {
                     if ($choice)
                     {
-                        App.handlers.applyTag($choice.attr("name"));
-                      //  App.handlers.applyTag($choice.attr("name"));
+                        App.handlers.applyTag($choice.attr("name"));                    
                     }
                 }
             });

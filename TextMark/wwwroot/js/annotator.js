@@ -54,20 +54,17 @@
         jQuery.Annotator.api = {
             captureActiveAnnotationNotes: function (notes) {
                 var cache = jQuery.Annotator.cache;
-
+              
                 jQuery(`#${cache.activeAnnotation.id}`).attr("notes", notes);                
-                jQuery(`#${cache.activeAnnotation.id}`).attr("ondblclick", "App.handlers.deleteAnnotation('" + cache.activeAnnotation.id+"')");
+        //      jQuery(`#${cache.activeAnnotation.id}`).attr("ondblclick", "App.handlers.deleteAnnotation('" + cache.activeAnnotation.id + "')");
+                
+
             },
             tagActiveAnnotation: function (tagType) {
                 var cache = jQuery.Annotator.cache;
 
                 jQuery(`#${cache.activeAnnotation.id}`).attr("type", tagType);
             },
-            //onclickAnnotation: function () {
-            //    var cache = jQuery.Annotator.cache;
-
-            //    jQuery(`#${cache.activeAnnotation.id}`).attr("ondblclick", "App.handlers.deleteAnnotation('annotation_1')");
-            //},
             destroyActiveAnnotation: function () {
                 var cache = jQuery.Annotator.cache;
                 var api = jQuery.Annotator.api;
@@ -116,6 +113,15 @@
 
                 $activeAnnotation.removeAttr("current");
                 $activeAnnotation.removeAttr("onselectstart", "return false;");
+                
+               
+               // ## Added by Amin- it adds the closing icon to each annotation
+                var cache = jQuery.Annotator.cache;
+
+                var id = `annotation_${Object.keys(cache.annotations).length }`;
+                alert("$activeAnnotation = " + id);
+                jQuery($activeAnnotation).append("<button id=\"BtnClosing_"+id+"\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('"+id+"')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
+                //##############################################
 
                 cache.annotations[cache.activeAnnotation.id].attributes =
                     cache.activeAnnotation.attributes;
@@ -191,6 +197,8 @@
 
             return id;
         };
+
+       
 
         var getPopoverContents = function () {
             return jQuery(settings.popoverContents)[0];

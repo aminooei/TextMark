@@ -2,6 +2,8 @@
 
 
 <!--Error-->
+<button onclick="App.handlers.deleteAnnotation('annotation_1')">OO</button>
+@*<button class="delete is-small" onclick="App.handlers.deleteAnnotation('annotation_1')">X close</button>*@
 <div id="error_message" class="ui floating negative message" style="display: none">
     <div class="header"></div>
     <p class="message"></p>
@@ -36,32 +38,7 @@
                         </div>
                     </h5>
                     <!--Annotations List-->
-                    <div id="annotations_list">
-
-                        <div class="ui raised segment">
-                            <a class="ui blue ribbon label">Internal</a>
-
-                            <p class="p-around_small">euismod, ac facilisis </p>
-
-                            <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
-                        </div>
-
-                        <div class="ui raised segment">
-                            <a class="ui orange ribbon label">Requirement</a>
-
-                            <p class="p-around_small">llicitudin non. P</p>
-
-                            <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_2' )">Delete</div>
-                        </div>
-
-                        <div class="ui raised segment">
-                            <a class="ui orange ribbon label">Requirement</a>
-
-                            <p class="p-around_small">per enim euismod,</p>
-
-                            <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_3' )">Delete</div>
-                        </div>
-
+                    <div id="annotations_list">                      
                     </div>
                 </div>
             </div>
@@ -141,8 +118,9 @@
                                 </div>
 
                                 <div class="example text" spellcheck="false" contenteditable="true">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim <annotation id="annotation_1" notes="euismod, ac facilisis " type="Internal">euismod, ac facilisis </annotation>tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim euismod, ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
                                 </div>
+                                
                             </div>
                         </div>
                         @*<div class="event">
@@ -204,7 +182,7 @@
     <!--Notes-->
     <div class="required field p-around_small">
         <label>Type some notes</label>
-        <textarea rows="5" onchange="App.handlers.captureNotes( this )"></textarea>
+        <textarea rows="5" onchange="App.handlers.captureNotes( this )"></textarea>       
     </div>
     <!--Tags-->
     <div class="p-around_small m-bottom_medium">
@@ -271,7 +249,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="~/css/forum.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
-<link rel="stylesheet" href="/static/css/annotation.74810e6d0214.css">
+@*<link rel="stylesheet" href="~/css/annotation.css">*@
 
 <title>Annotator.js Example</title>
 <!--Favicon-->

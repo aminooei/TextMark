@@ -2,14 +2,12 @@
 
 
 <!--Error-->
-<button onclick="App.handlers.deleteAnnotation('annotation_1')">OO</button>
-@*<button class="delete is-small" onclick="App.handlers.deleteAnnotation('annotation_1')">X close</button>*@
 <div id="error_message" class="ui floating negative message" style="display: none">
     <div class="header"></div>
     <p class="message"></p>
 </div>
 <!--Page Header-->
-<div class="ui tall stacked segment">
+@*<div class="ui tall stacked segment">
     <h4 class="ui header">
         <i class="yellow color tag icon"></i>
         <div class="content">
@@ -19,7 +17,7 @@
             </div>
         </div>
     </h4>
-</div>
+</div>*@
 <!--Body-->
 <div class="ui grid container">
     <div class="two column row">
@@ -28,7 +26,7 @@
             <div class="ui fluid card">
                 <div class="content">
                     <!--Header-->
-                    <h5 class="ui header">
+                    <!--<h5 class="ui header">
                         <i class="green color tags icon"></i>
                         <div class="content">
                             Saved Annotations
@@ -36,16 +34,16 @@
                                 <span>Try deleting a saved annotation</span>
                             </div>
                         </div>
-                    </h5>
+                    </h5>-->
                     <!--Annotations List-->
-                    <div id="annotations_list">                      
+                    <!--<div id="annotations_list">                      
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!--Transcript-->
         <div class="ten wide column">
-            <div class="ui fluid card">
+           
                 <div class="content">
                     <!--Header-->
                     <h5 class="ui header">
@@ -70,110 +68,40 @@
                                         02:03
                                     </div>
                                 </div>
-                                <div class="example text card">
+                                <div class="text card">
                                     <header class="card-header">
                                         <div class="card-header-title has-background-royalblue" style="padding: 1.5rem;">
                                             <div class="field is-grouped is-grouped-multiline">
-                                                <div class="control">
-                                                    @*<div class="tags has-addons">*@
-                                                    <div name="Requirement" class="item tags has-addons">
-                                                        <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(32, 156, 238);">
-                                                            Person
+                                                <div class="control">                                                   
+                                                    <div name="Internal" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Internal');">
+                                                        <a class="tag is-medium" style="        color: rgb(255, 255, 255); background-color: blue;">
+                                                            Internal
                                                         </a> <span class="tag is-medium">p</span>
                                                     </div>
-                                                </div><div class="control">
-                                                    <div class="tags has-addons">
-                                                        <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color: rgb(255, 204, 0);">
-                                                            Loc
-                                                        </a> <span class="tag is-medium">l</span>
+                                                </div><div class="control" >
+                                                    <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
+                                                        <a class="tag is-medium" style="        color: rgb(51, 51, 51);  background-color: orange;">
+                                                            Requirement
+                                                        </a> <span class="tag is-medium">R</span>
                                                     </div>
                                                 </div><div class="control">
-                                                    <div class="tags has-addons">
-                                                        <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">
-                                                            Org
+                                                    <div name="Backlog" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Backlog');">
+                                                        <a class="tag is-medium" style="        color: rgb(255, 255, 255);  background-color: teal;">
+                                                            Backlog
                                                         </a> <span class="tag is-medium">o</span>
-                                                    </div>
-                                                </div><div class="control">
-                                                    <div class="tags has-addons">
-                                                        <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(51, 204, 153);">
-                                                            Event
-                                                        </a> <span class="tag is-medium">e</span>
-                                                    </div>
-                                                </div><div class="control">
-                                                    <div class="tags has-addons">
-                                                        <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">
-                                                            Date
-                                                        </a> <span class="tag is-medium">d</span>
-                                                    </div>
-                                                </div><div class="control">
-                                                    <div class="tags has-addons">
-                                                        <a class="tag is-medium" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">
-                                                            Other
-                                                        </a> <span class="tag is-medium">z</span>
-                                                    </div>
-                                                </div>
+                                                    </div>                                              
                                             </div>
                                         </div>
-                                    </header> <div class="card-content"><div class="content"><div><span class=""><!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(32, 156, 238);">Barack Hussein Obama II<button class="delete is-small"></button></span><span class=""> (born <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">August 4, 1961<button class="delete is-small"></button></span><span class="">) is an American attorney and politician who served as the 44th President of <!----></span><span class="tag" style="color: rgb(51, 51, 51); background-color: rgb(255, 204, 0);">the United States<button class="delete is-small"></button></span><span class=""> from <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">January 20, 2009<button class="delete is-small"></button></span><span class="">, to <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(255, 51, 51);">January 20, 2017<button class="delete is-small"></button></span><span class="">. A member of the <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">Democratic Party<button class="delete is-small"></button></span><span class="">, he was the first <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">African American<button class="delete is-small"></button></span><span class=""> to serve as president. He was previously a <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(153, 51, 255);">United States Senator<button class="delete is-small"></button></span><span class=""> from <!----></span><span class="tag" style="color: rgb(51, 51, 51); background-color: rgb(255, 204, 0);">Illinois<button class="delete is-small"></button></span><span class=""> and a member of the <!----></span><span class="tag" style="color: rgb(255, 255, 255); background-color: rgb(51, 51, 51);">Illinois State Senate<button class="delete is-small"></button></span><span class="">.<!----></span></div></div></div>
+                                    </header> <div class="example card-content"><div class="content"><div>Barack Hussein Obama II (born August 4, 1961) is an American attorney and politician who served as the 44th President of the United States from January 20, 2009, to January 20, 2017. A member of the Democratic Party, he was the first African American to serve as president. He was previously a United States Senator from Illinois and a member of the Illinois State Senate.</div></div></div>
                                 </div>
 
-                                <div class="example text" spellcheck="false" contenteditable="true">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim euismod, ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
-                                </div>
+                               
                                 
                             </div>
-                        </div>
-                        @*<div class="event">
-                                <div class="label">
-                                    <i class="olive color user icon"></i>
-                                </div>
-                                <div class="content">
-                                    <div class="summary">
-                                        <a>Jane Doe</a> spoke at
-                                        <div class="date">
-                                            05:13
-                                        </div>
-                                    </div>
-                                    <div class="example text" spellcheck="false" contenteditable="true">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcor<annotation id="annotation_3" notes="per enim euismod," type="Requirement">per enim euismod,</annotation> ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc so<annotation id="annotation_2" notes="llicitudin non. P" type="Requirement">llicitudin non. P</annotation>hasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="event">
-                                <div class="label">
-                                    <i class="olive color user icon"></i>
-                                </div>
-                                <div class="content">
-                                    <div class="summary">
-                                        <a>John Doe</a> spoke at
-                                        <div class="date">
-                                            08:40
-                                        </div>
-                                    </div>
-                                    <div class="example text" spellcheck="false" contenteditable="true">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim euismod, ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="event">
-                                <div class="label">
-                                    <i class="olive color user icon"></i>
-                                </div>
-                                <div class="content">
-                                    <div class="summary">
-                                        <a>Mike Wright</a> spoke at
-                                        <div class="date">
-                                            15:00
-                                        </div>
-                                    </div>
-                                    <div class="example text" spellcheck="false" contenteditable="true">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultricies est ullamcorper enim euismod, ac facilisis tortor ultricies. Quisque interdum enim tortor, hendrerit efficitur nunc sollicitudin non. Phasellus diam ligula, consequat sollicitudin quam vel, laoreet ultrices quam. Etiam varius lectus sagittis placerat finibus.
-                                    </div>
-                                </div>
-                            </div>*@
+                        </div>                       
                     </div>
                 </div>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -228,9 +156,9 @@
     <div id="arrow" data-popper-arrow="" style=""></div>
 </div>
 <!--Footer-->
-<h4 class="ui horizontal divider header">
+@*<h4 class="ui horizontal divider header">
     Built with <span class="love">♥</span> by Deepak
-</h4>
+</h4>*@
 <!--Backdrop-->
 <div class="ui dimmer page active backdrop" style="display: none;"></div>
 <!--Template-->
@@ -288,7 +216,7 @@
     <script type="text/javascript" src="~/js/annotator.js"></script>
     <!--Custom Script for the App-->
     <script type="text/javascript" src="~/js/app.js"></script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
 
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-36251023-1']);
@@ -303,7 +231,7 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
 
-    </script>
+    </script>*@
 
 
     <script>

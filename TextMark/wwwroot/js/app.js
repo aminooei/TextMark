@@ -10,7 +10,7 @@
             },
             INSUFFICIENT_CHARS: {
                 heading: "Insufficient Characters",
-                message: "Please select atleast 10 characters"
+                message: "Please select atleast 1 characters"
             }
         }
     },
@@ -55,8 +55,10 @@
         applyTag: function (tagName) {
             $.Annotator.api.tagActiveAnnotation(tagName);
         },
-        applyOnclickAnnotation: function (annotationID) {
-            $.Annotator.api.onclickAnnotation(annotationID);
+        applyOnclickAnnotation: function (type) {
+            //alert("OK2222");
+            $.Annotator.api.clickAction1(type);
+            
         },
         cancelAnnotation: function () {
             App.helpers.resetControls();
@@ -65,6 +67,8 @@
             $.Annotator.api.destroyActiveAnnotation();
         },
         saveAnnotation: function () {
+          //  alert("saveAnnotation begin");
+
             var result = $.Annotator.api.saveActiveAnnotation();
 
 
@@ -74,8 +78,10 @@
                 App.helpers.resetControls();
                 App.helpers.showBackdrop(false);
             }
+          //  alert("saveAnnotation end");
         },
-        renderSavedAnnotations: function (annotations) {
+        renderSavedAnnotations: function (annotations) {  //#3
+         //   alert("renderSavedAnnotations 1");
             var html = $.templates("#annotations_tmpl").render({
                 annotations: annotations.map((item) => {
                     if (item.type === "Requirement") {
@@ -93,8 +99,8 @@
             $("#annotations_list").html(html);
         },
         deleteAnnotation: function (annotationId) {
-            //Added new
-            $("#BtnClosing_" + annotationId).hide();
+            //############Added new
+            $("#BtnClosing_" + annotationId).remove();            
             ///######
 
 
@@ -103,34 +109,22 @@
                 $.Annotator.api.deleteAnnotation(annotationId);
 
             App.handlers.renderSavedAnnotations(remainingAnnotations);
-        },
-        destroyClosingIcon: function () {  
-           
-         //   $.annotator.App.handlers.deleteAnnotation('annotation_1');
-         //   alert("ok1");
-         //   $("#BtnClosing_annotation_1").hide();
-         //   alert("ok2");
-        }
+        }        
     },
-    init: function () {
+    init: function () {  //#2
         $(".example").annotator({
             popoverContents: "#annotate_settings",
+            
             minimumCharacters: 1,
             makeTextEditable: true,
-            onannotationsaved: function () {
-                //this.annotations.outerText = this.annotations.outerText + " <div class=\"fluid ui button\" onclick=\"App.handlers.deleteAnnotation('annotation_1')\">X</div>";
-             //   this.annotations.outerText = this.annotations.outerText + " <button class=\"delete is - small\"></button>";
-                //<button class="delete is-small"></button>
-
-                App.handlers.renderSavedAnnotations(this.annotations);  
+            onannotationsaved: function () {   
+             
+                App.handlers.renderSavedAnnotations(this.annotations);  //#3   OK
+                
             },
-            onselectioncomplete: function () {
-                //alert("this.outerText = " + this.outerText);
-                //+ " <div class=\"fluid ui button\" onclick=\"App.handlers.deleteAnnotation('annotation_1')\">Delete</div>"
-               // this.outerText = this.outerText + " <div class=\"fluid ui button\" onclick=\"App.handlers.deleteAnnotation('annotation_1')\">X</div>";
-                //this.innerText = this.innerText + " <button class=\"delete is - small\"></button>";
-                App.handlers.fillNotes(this.outerText);
-                App.helpers.showBackdrop(true);
+            onselectioncomplete: function () {              
+                //App.handlers.fillNotes(this.outerText);
+                //App.helpers.showBackdrop(true);
             },
             onerror: function () {
                 App.helpers.showError(App.constants.errors[this]);
@@ -144,7 +138,8 @@
                 onChange: function (value, text, $choice) {
                     if ($choice)
                     {
-                        App.handlers.applyTag($choice.attr("name"));                    
+                     //   App.handlers.applyTag($choice.attr("name"));    //# Removed by Amin
+                    
                     }
                 }
             });
@@ -152,3 +147,4 @@
 };
 
 App.init();
+

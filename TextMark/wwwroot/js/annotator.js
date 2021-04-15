@@ -19,7 +19,7 @@
 
         this.defaults = {
             surroundWith: "annotation",
-            minimumCharacters: 8,
+            minimumCharacters: 1,
             makeTextEditable: true
         };
 
@@ -51,14 +51,52 @@
             activePopper: {}
         };
 
-        jQuery.Annotator.api = {
-            captureActiveAnnotationNotes: function (notes) {
-                var cache = jQuery.Annotator.cache;
-              
-                jQuery(`#${cache.activeAnnotation.id}`).attr("notes", notes);                
-        //      jQuery(`#${cache.activeAnnotation.id}`).attr("ondblclick", "App.handlers.deleteAnnotation('" + cache.activeAnnotation.id + "')");
-                
+        jQuery.Annotator.api = {      
+            clickAction1: function (type) {
+               // alert("selection 2 = " + selection);
+                    if (selection.rangeCount) {
 
+                        range = selection.getRangeAt(0);
+
+                        if (range.toString().length > settings.minimumCharacters) {
+                            var $annotation = document.createElement(settings.surroundWith);
+
+                            jQuery($annotation).html(
+                                $("<div>").append(range.cloneContents()).html()
+                            );
+
+                            jQuery($annotation).attr("id", storeAnnotation());
+                            jQuery($annotation).attr("current", "true");
+                            jQuery($annotation).attr("onselectstart", "return false;");
+                            jQuery($annotation).attr("type", type);  //Added by Amin - After click on the annotation choice, the chosen attribute will be replaced here
+
+
+                            ////####################
+                            ////var cache = jQuery.Annotator.cache;
+
+                            ////var id = `annotation_${Object.keys(cache.annotations).length}`;
+
+                            ////jQuery($annotation).append("<button id=\"BtnClosing_" + id + "\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('" + id + "')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
+
+
+                            ////####################
+
+                            range.deleteContents();
+
+                            range.insertNode($annotation);
+
+                            showPopover($annotation);  //#1
+                        } else if (range.toString().length !== 0 && range.toString().length < settings.minimumCharacters) {
+                            if (settings.onerror) {
+                                settings.onerror.apply("INSUFFICIENT_CHARS");
+                            }
+                        }
+                    }      
+            },
+            captureActiveAnnotationNotes: function (notes) {
+                var cache = jQuery.Annotator.cache;              
+               /* jQuery(`#${cache.activeAnnotation.id}`).attr("notes", notes);*/                
+               /* jQuery(`#${cache.activeAnnotation.id}`).attr("class", "tag");*/             
             },
             tagActiveAnnotation: function (tagType) {
                 var cache = jQuery.Annotator.cache;
@@ -93,15 +131,16 @@
                 return dataValid;
             },
             saveActiveAnnotation: function () {
+              //  alert("saveActiveAnnotation begin");
+
                 var cache = jQuery.Annotator.cache;
                 var api = jQuery.Annotator.api;
 
                 var $activeAnnotation = jQuery(`#${cache.activeAnnotation.id}`);
 
                 cache.activeAnnotation.attributes = {
-                    type: $activeAnnotation.attr("type"),
-                    notes: $activeAnnotation.attr("notes"),
-                   // ondblclick: $activeAnnotation.attr("ondblclick")
+                    //  type: $activeAnnotation.attr("type")   //#deleted by Amin
+                    //notes: $activeAnnotation.attr("notes")  //#deleted by Amin
                 };
 
                 if (!api.validateAttributes(cache.activeAnnotation.attributes)) {
@@ -115,13 +154,13 @@
                 $activeAnnotation.removeAttr("onselectstart", "return false;");
                 
                
-               // ## Added by Amin- it adds the closing icon to each annotation
+               // ############################# Added by Amin- it adds the closing icon to each annotation
                 var cache = jQuery.Annotator.cache;
-
-                var id = `annotation_${Object.keys(cache.annotations).length }`;
-                alert("$activeAnnotation = " + id);
+                var id = `annotation_${Object.keys(cache.annotations).length}`;
+                           
                 jQuery($activeAnnotation).append("<button id=\"BtnClosing_"+id+"\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('"+id+"')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
-                //##############################################
+               
+                //#############################
 
                 cache.annotations[cache.activeAnnotation.id].attributes =
                     cache.activeAnnotation.attributes;
@@ -144,6 +183,7 @@
                 return {
                     isSaved: true
                 };
+              //  alert("saveActiveAnnotation end");
             },
             resetActiveAnnotation: function () {
                 var cache = jQuery.Annotator.cache;
@@ -204,55 +244,76 @@
             return jQuery(settings.popoverContents)[0];
         };
 
-        var showPopover = function ($annotation) {
+        var showPopover = function ($annotation) {  //#1
             var cache = jQuery.Annotator.cache;
 
             window.getSelection().empty();
 
-            jQuery(settings.popoverContents).show();
+            //jQuery(settings.popoverContents).show();   //#2 removed by Amin
 
-            cache.activePopper = Popper.createPopper($annotation, getPopoverContents());
+            //cache.activePopper = Popper.createPopper($annotation, getPopoverContents());  //removed by Amin
 
             if (settings.onselectioncomplete) {
                 settings.onselectioncomplete.apply($annotation);
             }
+
+
+            App.handlers.saveAnnotation(); //##Added by Amin
         };
+        var selection;
 
         var handleMouseUp = function () {
+            
             if (window.getSelection) {
+                
                 selection = window.getSelection();
+               // alert("Selection 1 = " + selection);
+               // alert("Selection 1.1 = " + selection);
+                //if (selection.rangeCount) {
+                    
+                //    range = selection.getRangeAt(0);
 
-                if (selection.rangeCount) {
-                    range = selection.getRangeAt(0);
+                //    if (range.toString().length > settings.minimumCharacters)
+                //    {
+                //        var $annotation = document.createElement(settings.surroundWith);
 
-                    if (range.toString().length > settings.minimumCharacters) {
-                        var $annotation = document.createElement(settings.surroundWith);
+                //        jQuery($annotation).html(
+                //            $("<div>").append(range.cloneContents()).html()
+                //        );
+                     
+                //        jQuery($annotation).attr("id", storeAnnotation());
+                //        jQuery($annotation).attr("current", "true");
+                //        jQuery($annotation).attr("onselectstart", "return false;");
+                //        jQuery($annotation).attr("type", "Backlog");  //Added by Amin - After click on the annotation choice, the chosen attribute will be replaced here
+                        
 
-                        jQuery($annotation).html(
-                            $("<div>").append(range.cloneContents()).html()
-                        );
+                //        ////####################
+                //        ////var cache = jQuery.Annotator.cache;
 
-                        jQuery($annotation).attr("id", storeAnnotation());
-                        jQuery($annotation).attr("current", "true");
-                        jQuery($annotation).attr("onselectstart", "return false;");
+                //        ////var id = `annotation_${Object.keys(cache.annotations).length}`;
+
+                //        ////jQuery($annotation).append("<button id=\"BtnClosing_" + id + "\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('" + id + "')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
 
 
+                //        ////####################
                       
-                        range.deleteContents();
+                //        range.deleteContents();
 
-                        range.insertNode($annotation);
+                //        range.insertNode($annotation);
 
-                        showPopover($annotation);
-                    } else if (range.toString().length !== 0 &&
-                        range.toString().length < settings.minimumCharacters
-                    ) {
-                        if (settings.onerror) {
-                            settings.onerror.apply("INSUFFICIENT_CHARS");
-                        }
-                    }
-                }
-            }
+                //        showPopover($annotation);  //#1
+                //    } else if (range.toString().length !== 0 && range.toString().length < settings.minimumCharacters)
+                //    {
+                //        if (settings.onerror)
+                //        {
+                //            settings.onerror.apply("INSUFFICIENT_CHARS");
+                //        }
+                //    }
+                //}
+            }            
         };
+
+       
 
         var init = function () {
             self.each(
@@ -262,6 +323,8 @@
                     }
 
                     jQuery(this).mouseup(handleMouseUp);
+                 
+                //    $("[name='Internal']").click(handleMouseUp);
                 }
             );
         };

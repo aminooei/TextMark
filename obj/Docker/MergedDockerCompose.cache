@@ -4,18 +4,17 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_PID: Express
       SA_PASSWORD: Amin3420
-    image: mcr.microsoft.com/mssql/server:2017-latest
+    image: microsoft/mssql-server-linux
     ports:
     - published: 1433
       target: 1433
   textmark:
     build:
       context: C:\Users\Amin\source\repos\TextMark
-      dockerfile: TextMark\Dockerfile
+      dockerfile: TextMark/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
-      localhost: ms-sql-server
     image: textmark
     ports:
     - target: 80

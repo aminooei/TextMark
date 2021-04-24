@@ -18,9 +18,11 @@ namespace TextMark.Controllers
         public HomeController(TextMarkContext context)
         {
             _context = context;
+
         }
         public IActionResult Index()
-        {  
+        {
+            
             return  View();
         }
 

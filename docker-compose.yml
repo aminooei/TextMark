@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  ms-sql-server:
+    image:  microsoft/mssql-server-linux
+    environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "Amin3420"
+        MSSQL_PID: Express
+    ports:
+        - "1433:1433"
+  textmark:
+    image: ${DOCKER_REGISTRY-}textmark
+    build:
+      context: .
+      dockerfile: TextMark/Dockerfile    
+
+
+
+

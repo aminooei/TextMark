@@ -32,7 +32,7 @@ namespace TextMark
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TextMarkContext db)
         {
             if (env.IsDevelopment())
             {
@@ -44,8 +44,16 @@ namespace TextMark
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            db.Database.EnsureCreated();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            using (var srvc = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                //var context = srvc.ServiceProvider.GetService<TextMarkContext>();
+                //context.Database.Migrate();
+            }
+
 
             app.UseRouting();
 

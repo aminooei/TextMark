@@ -17,6 +17,8 @@ services:
       ASPNETCORE_URLS: https://+:443;http://+:80
     image: textmark
     ports:
+    - published: 80
+      target: 80
     - target: 80
     - target: 443
     volumes:

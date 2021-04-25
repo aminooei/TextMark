@@ -56,9 +56,12 @@
             $.Annotator.api.tagActiveAnnotation(tagName);
         },
         applyOnclickAnnotation: function (type) {
-            //alert("OK2222");
-            $.Annotator.api.clickAction1(type);
             
+
+            $(".example").attr("contenteditable", true);  
+            $.Annotator.api.clickAction1(type);
+           
+         
         },
         cancelAnnotation: function () {
             App.helpers.resetControls();
@@ -97,6 +100,7 @@
             });
 
             $("#annotations_list").html(html);
+            
         },
         deleteAnnotation: function (annotationId) {
             //############Added new
@@ -125,10 +129,12 @@
             onselectioncomplete: function () {              
                 //App.handlers.fillNotes(this.outerText);
                 //App.helpers.showBackdrop(true);
+                
             },
             onerror: function () {
                 App.helpers.showError(App.constants.errors[this]);
-            }
+            },
+            
         });
 
         App.elements.tags = $(".ui.dropdown")

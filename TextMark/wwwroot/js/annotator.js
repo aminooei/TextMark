@@ -65,6 +65,8 @@
                                 $("<div>").append(range.cloneContents()).html()
                             );
 
+                         //   jQuery(this).attr("contenteditable", true);
+
                             jQuery($annotation).attr("id", storeAnnotation());
                             jQuery($annotation).attr("current", "true");
                             jQuery($annotation).attr("onselectstart", "return false;");
@@ -85,13 +87,17 @@
 
                             range.insertNode($annotation);
 
+                            //######Added by Amin                           
+                          //  $(".example").attr("contenteditable", false); 
+
                             showPopover($annotation);  //#1
                         } else if (range.toString().length !== 0 && range.toString().length < settings.minimumCharacters) {
                             if (settings.onerror) {
                                 settings.onerror.apply("INSUFFICIENT_CHARS");
                             }
                         }
-                    }      
+                }      
+                
             },
             captureActiveAnnotationNotes: function (notes) {
                 var cache = jQuery.Annotator.cache;              
@@ -319,7 +325,7 @@
             self.each(
                 function () {
                     if (settings.makeTextEditable) {
-                        jQuery(this).attr("contenteditable", true);
+                        jQuery(this).attr("contenteditable", false);
                     }
 
                     jQuery(this).mouseup(handleMouseUp);

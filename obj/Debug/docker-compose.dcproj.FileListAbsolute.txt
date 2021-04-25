@@ -1,5 +1,8 @@
 C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.Views.dll
 C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.Views.pdb
+C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.deps.json
+C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.runtimeconfig.json
+C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.runtimeconfig.dev.json
 C:\Users\Amin\source\repos\TextMark\bin\Debug\appsettings.Development.json
 C:\Users\Amin\source\repos\TextMark\bin\Debug\appsettings.json
 C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.exe
@@ -24,6 +27,3 @@ C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\obj\Debug\docker-compose.dcprojAssemblyReference.cache
 C:\Users\Amin\source\repos\TextMark\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\Amin\source\repos\TextMark\obj\Debug\docker-compose.dcproj.CopyComplete
-C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.deps.json
-C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.runtimeconfig.json
-C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.runtimeconfig.dev.json

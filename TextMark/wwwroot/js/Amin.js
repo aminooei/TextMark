@@ -1,6 +1,7 @@
 ﻿let apparea = document.getElementById('apparea');
 
 apparea.addEventListener("keydown", (e) => {    
+   
     //if (!e.repeat)
     //    alert(`Key "${e.key}" pressed  [event: keydown]`);
     //else
@@ -11,5 +12,9 @@ apparea.addEventListener("keydown", (e) => {
         App.handlers.applyOnclickAnnotation('Requirement');
     else if (e.key == "b" || e.key == "B")
         App.handlers.applyOnclickAnnotation('Backlog');
-    else {}
+    else { $(".example").attr("contenteditable", false); }
+});
+
+apparea.addEventListener("mousedown", (e) => {
+    $(".example").attr("contenteditable", true);
 });

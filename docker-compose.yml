@@ -14,7 +14,8 @@ services:
     build:
       context: .
       dockerfile: TextMark/Dockerfile    
-
+    ports: 
+        - "80:80"
 
 
 

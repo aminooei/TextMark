@@ -26,5 +26,17 @@ namespace TextMark.Models
         public int UserType { get; set; }
     }
 
+    public class Annotation_Texts
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [Required(ErrorMessage = "Annotation Text is required")]
+        [StringLength(1000, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
+        public string Annotation_Text { get; set; }
+
+        public string Date { get; set; }
+    }
 
 }

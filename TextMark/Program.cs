@@ -11,7 +11,7 @@ using System.Data.Entity;
 namespace TextMark
 {
 
-    //class login
+    //class Users_TB
     //{
     //    public int ID { get; set; }
     //    public string Username { get; set; }
@@ -23,7 +23,7 @@ namespace TextMark
 
     //class LoginsContext : DbContext
     //{
-    //    public DbSet<login> Logins_List { get; set; }
+    //    public DbSet<Users_TB> Logins_List { get; set; }
 
     //}
 

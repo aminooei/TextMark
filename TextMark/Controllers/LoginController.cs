@@ -28,14 +28,14 @@ namespace TextMark.Controllers
         public async Task<IActionResult> Check_UserName_Password(string Username, string Password)
         {            
 
-            var login = await _context.Logins
+            var Users_TB = await _context.Users_TBs
                 .FirstOrDefaultAsync(m => m.Username == Username && m.Password == Password);
-            //if (login == null)
+            //if (Users_TB == null)
             //{
             //    return RedirectToAction("Index", "Home"); 
             //}
             TempData["Loggedin_User"] = Username;
-            return View(login);
+            return View(Users_TB);
         }
         public IActionResult Register()
         {
@@ -44,17 +44,17 @@ namespace TextMark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("ID,Username,Password,ConfirmPassword")] Login login)
+        public async Task<IActionResult> Register([Bind("ID,Username,Password,ConfirmPassword")] Users_TB Users_TB)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(login);
+                _context.Add(Users_TB);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
-                TempData["Loggedin_Username"] = login.Username;
+                TempData["Loggedin_Username"] = Users_TB.Username;
                 return RedirectToAction("Index", "Home");
             }
-            return View(login);
+            return View(Users_TB);
         }
 
     }

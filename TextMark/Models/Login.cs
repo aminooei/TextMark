@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TextMark.Models
 {
     public class Users_TB
-    {  
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int User_ID { get; set; }
 
         [Required]
+        [StringLength(20, ErrorMessage = "Must be between 5 and 20 characters", MinimumLength = 5)]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
@@ -23,13 +26,25 @@ namespace TextMark.Models
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
         [DataType(DataType.Password)]
         [Compare("Password")]
+        [Display(Name = "Repeat the Password again")]
         public string ConfirmPassword { get; set; }
 
+        [Required(ErrorMessage = "Role is required")]
         public int Role_ID { get; set; }
-        public Roles_TB Roles_TB { get; set; }
 
-        public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
+
+
+
+
+
+        //    public Roles_TB Roles_TB { get; set; }
+
+        //    public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
     }
+
+
+
+
     public class Labels_TB
     {
         [Key]
@@ -98,6 +113,7 @@ namespace TextMark.Models
         [Required(ErrorMessage = "Role Text is required")]
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
         public string Role_Text { get; set; }
-        public ICollection<Users_TB> Users_TBs { get; set; }
+
+        //public ICollection<Users_TB> Users_TBs { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace TextMark.Controllers
         public async Task<IActionResult> Check_UserName_Password(string Username, string Password)
         {            
 
-            var Users_TB = await _context.Users_TBs
+            var Users_TB = await _context.Users_TB
                 .FirstOrDefaultAsync(m => m.Username == Username && m.Password == Password);
             //if (Users_TB == null)
             //{

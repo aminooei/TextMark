@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "V5N36prtByP80LyHuyzsEHQ3VUyyYDtw+MRqr+b4Oz3mrdHl6UFvQt71az7GujOGxsEAoMUFpaxhXpkMW6TbYw==",
+  "dgSpecHash": "Bb7EdSYFWCl21OQ5a/W6fnSY/B/ST5PPg3OKQbQ4htQh/CdQHrUV1VBdrj/qImox7m7MH583ggf0eQxx5FtNHQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Amin\\source\\repos\\TextMark\\TextMark\\TextMark.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\Amin\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Amin\\.nuget\\packages\\htmlagilitypack\\1.11.28\\htmlagilitypack.1.11.28.nupkg.sha512",
     "C:\\Users\\Amin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Amin\\.nuget\\packages\\mahapps.metro.iconpacks.feathericons\\4.8.0\\mahapps.metro.iconpacks.feathericons.4.8.0.nupkg.sha512",
     "C:\\Users\\Amin\\.nuget\\packages\\messagepack\\2.2.85\\messagepack.2.2.85.nupkg.sha512",
     "C:\\Users\\Amin\\.nuget\\packages\\messagepack.annotations\\2.2.85\\messagepack.annotations.2.2.85.nupkg.sha512",
     "C:\\Users\\Amin\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

@@ -151,6 +151,20 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
+      "MahApps.Metro.IconPacks.FeatherIcons/4.8.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.dll": {},
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.FeatherIcons.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.dll": {},
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.FeatherIcons.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
       "MessagePack/2.2.85": {
         "type": "package",
         "dependencies": {
@@ -3502,6 +3516,57 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "MahApps.Metro.IconPacks.FeatherIcons/4.8.0": {
+      "sha512": "iAFTakoIaMbAr4JK7pgzIb2zTgQw4QC4vBVWeS6QDS8IS9zeFnUeopBKjqElr9E5owywNNntLn6Z6EdrXHOidA==",
+      "type": "package",
+      "path": "mahapps.metro.iconpacks.feathericons/4.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net45/MahApps.Metro.IconPacks.Core.pdb",
+        "lib/net45/MahApps.Metro.IconPacks.Core.xml",
+        "lib/net45/MahApps.Metro.IconPacks.FeatherIcons.dll",
+        "lib/net45/MahApps.Metro.IconPacks.FeatherIcons.pdb",
+        "lib/net45/MahApps.Metro.IconPacks.FeatherIcons.xml",
+        "lib/net46/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net46/MahApps.Metro.IconPacks.Core.pdb",
+        "lib/net46/MahApps.Metro.IconPacks.Core.xml",
+        "lib/net46/MahApps.Metro.IconPacks.FeatherIcons.dll",
+        "lib/net46/MahApps.Metro.IconPacks.FeatherIcons.pdb",
+        "lib/net46/MahApps.Metro.IconPacks.FeatherIcons.xml",
+        "lib/net47/MahApps.Metro.IconPacks.Core.dll",
+        "lib/net47/MahApps.Metro.IconPacks.Core.pdb",
+        "lib/net47/MahApps.Metro.IconPacks.Core.xml",
+        "lib/net47/MahApps.Metro.IconPacks.FeatherIcons.dll",
+        "lib/net47/MahApps.Metro.IconPacks.FeatherIcons.pdb",
+        "lib/net47/MahApps.Metro.IconPacks.FeatherIcons.xml",
+        "lib/netcoreapp3.0/MahApps.Metro.IconPacks.Core.dll",
+        "lib/netcoreapp3.0/MahApps.Metro.IconPacks.Core.pdb",
+        "lib/netcoreapp3.0/MahApps.Metro.IconPacks.Core.xml",
+        "lib/netcoreapp3.0/MahApps.Metro.IconPacks.FeatherIcons.dll",
+        "lib/netcoreapp3.0/MahApps.Metro.IconPacks.FeatherIcons.pdb",
+        "lib/netcoreapp3.0/MahApps.Metro.IconPacks.FeatherIcons.xml",
+        "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.dll",
+        "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.pdb",
+        "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.xml",
+        "lib/netcoreapp3.1/MahApps.Metro.IconPacks.FeatherIcons.dll",
+        "lib/netcoreapp3.1/MahApps.Metro.IconPacks.FeatherIcons.pdb",
+        "lib/netcoreapp3.1/MahApps.Metro.IconPacks.FeatherIcons.xml",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.Core.dll",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.Core.pdb",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.Core.pri",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.Core.xml",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.FeatherIcons.dll",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.FeatherIcons.pdb",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.FeatherIcons.pri",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.FeatherIcons.xml",
+        "lib/uap10.0.16299/MahApps.Metro.IconPacks.FeatherIcons/MahApps.Metro.IconPacks.FeatherIcons.xr.xml",
+        "logo_small.png",
+        "mahapps.metro.iconpacks.feathericons.4.8.0.nupkg.sha512",
+        "mahapps.metro.iconpacks.feathericons.nuspec"
       ]
     },
     "MessagePack/2.2.85": {
@@ -10445,6 +10510,7 @@
       "Catalyst >= 0.0.16396",
       "Ductus.FluentDocker >= 2.8.2",
       "EntityFramework >= 6.4.4",
+      "MahApps.Metro.IconPacks.FeatherIcons >= 4.8.0",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.4",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.4",
@@ -10507,6 +10573,10 @@
           "EntityFramework": {
             "target": "Package",
             "version": "[6.4.4, )"
+          },
+          "MahApps.Metro.IconPacks.FeatherIcons": {
+            "target": "Package",
+            "version": "[4.8.0, )"
           },
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

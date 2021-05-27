@@ -11,6 +11,7 @@
     <PackageReference Include="Catalyst" Version="0.0.16396" />
     <PackageReference Include="Ductus.FluentDocker" Version="2.8.2" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="MahApps.Metro.IconPacks.FeatherIcons" Version="4.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

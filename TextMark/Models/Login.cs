@@ -26,7 +26,7 @@ namespace TextMark.Models
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
         [DataType(DataType.Password)]
         [Compare("Password")]
-        [Display(Name = "Repeat the Password again")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Role is required")]
@@ -37,9 +37,9 @@ namespace TextMark.Models
 
 
 
-        //    public Roles_TB Roles_TB { get; set; }
+        public Roles_TB Roles_TB { get; set; }
 
-        //    public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
+        public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
     }
 
 
@@ -114,6 +114,6 @@ namespace TextMark.Models
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
         public string Role_Text { get; set; }
 
-        //public ICollection<Users_TB> Users_TBs { get; set; }
+        public ICollection<Users_TB> Users_TBs { get; set; }
     }
 }

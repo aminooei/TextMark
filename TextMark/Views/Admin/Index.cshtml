@@ -2,33 +2,40 @@
 
 @{
     ViewData["Title"] = "Users Data Add-Delete-Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
 
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">aiLand ADMIN </a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
-        </li>
-    </ul>
-</header>
+
 
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                    @*<li class="nav-item">
+            <a class="nav-link dropdown-toggle active" aria-current="page" href="#">
+                <span data-feather="users"></span>
+                Users
+            </a>
+        </li>*@
+
+                    <li class="nav-item has-submenu">
+                        <a class="nav-link dropdown-toggle active" aria-current="page" href="#UsersSubmenu" data-toggle="collapse" aria-expanded="false">
                             <span data-feather="users"></span>
                             Users
                         </a>
+                        <ul class="collapse submenu" id="UsersSubmenu">
+                            <li>
+                                <a class="nav-link" href="#"><span data-feather="plus"></span> New </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="#"><span data-feather="airplay"></span> Details </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="#"><span data-feather="edit"></span> Edit </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
@@ -66,41 +73,44 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="container" id="Users_Container">
-            <form asp-controller="Admin" asp-action="Add_User" method="post" autocomplete="off">
-                <div>
-                    <h1 class="h2">Users</h1>
-                </div>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Username" class="control-label"></label>
-                    <input asp-for="Username" class="form-control" placeholder="Enter Username Here" autocomplete="off" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" class="form-control" placeholder="Enter Password Here" autocomplete="new-password" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ConfirmPassword" class="control-label"></label>
-                    <input asp-for="ConfirmPassword" class="form-control"  placeholder="Enter Confirm Password Here" autocomplete="new-password"/>
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Role_ID" for="Role_ID" class="control-label">Role ID</label>
-                    <input asp-for="Role_ID" type="number" class="form-control" id="Role_ID" placeholder="Enter Role ID Here">
-                    <span asp-validation-for="Role_ID" class="text-danger"></span>
-                </div>
+                @*<partial name="_Users_Add_PartialView.cshtml" model="Model" />*@
+              
+                <!--<form asp-controller="Admin" asp-action="Add_User" method="post" autocomplete="off">
+    <div>
+        <h1 class="h2">Users</h1>
+    </div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Username" class="control-label"></label>
+        <input asp-for="Username" class="form-control" placeholder="Enter Username Here" autocomplete="off" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="control-label"></label>
+        <input asp-for="Password" class="form-control" placeholder="Enter Password Here" autocomplete="new-password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="control-label"></label>
+        <input asp-for="ConfirmPassword" class="form-control"  placeholder="Enter Confirm Password Here" autocomplete="new-password"/>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Role_ID" for="Role_ID" class="control-label">Role ID</label>
+        <input asp-for="Role_ID" type="number" class="form-control" id="Role_ID" placeholder="Enter Role ID Here">
+        <span asp-validation-for="Role_ID" class="text-danger"></span>
+    </div>-->
                 @*<div class="col-md-4">
-                        <label asp-for="Roles_TB" for="Roles_TBRole_ID" class="form-label">Roles_TB Role_ID</label>
-                        <input asp-for="Roles_TB" type="text" class="form-control" id="Roles_TBRole_ID" placeholder="EnterRole ID Here" value="">
-                        <span asp-validation-for="Roles_TB" class="text-danger"></span>
-                    </div>*@
+            <label asp-for="Roles_TB" for="Roles_TBRole_ID" class="form-label">Roles_TB Role_ID</label>
+            <input asp-for="Roles_TB" type="text" class="form-control" id="Roles_TBRole_ID" placeholder="EnterRole ID Here" value="">
+            <span asp-validation-for="Roles_TB" class="text-danger"></span>
+        </div>*@
 
-                <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Submit form</button>
-                </div>
-            </form>     
+                <!--<div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+        </div>
+    </form>-->
+
             </div>
         </main>
     </div>

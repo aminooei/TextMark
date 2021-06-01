@@ -29,6 +29,7 @@ namespace TextMark.Models
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Role")]
         [Required(ErrorMessage = "Role is required")]
         public int Role_ID { get; set; }
 

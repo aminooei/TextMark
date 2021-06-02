@@ -28,16 +28,26 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Role_ID" class="control-label"></label>
-                <input asp-for="Role_ID" class="form-control" />
-                <span asp-validation-for="Role_ID" class="text-danger"></span>
-            </div>
             @*<div class="form-group">
-                <label asp-for="Roles_TB.Role_Text" class="control-label"></label>
-                <input asp-for="Roles_TB.Role_Text" class="form-control" />
-                <span asp-validation-for="Roles_TB.Role_Text" class="text-danger"></span>
+
+                @Html.DropDownListFor(model => model.Roles_TB, new SelectList(Model.custlist, "custId", "custName")
+
+, new { @class = "form-control" })
+
             </div>*@
+        <div class="form-group">
+            <label asp-for="Role_ID" class="control-label"></label>
+            @*<input asp-for="Role_ID" class="form-control" />*@
+            
+            @Html.DropDownList("Role_ID", new SelectList(ViewBag.Roles, "Role_ID", "Role_Text"), "Select a Role",
+                   new { @class = "form-control" })
+            <span asp-validation-for="Role_ID" class="text-danger"></span>
+        </div>
+            @*<div class="form-group">
+            <label asp-for="Roles_TB.Role_Text" class="control-label"></label>
+            <input asp-for="Roles_TB.Role_Text" class="form-control" />
+            <span asp-validation-for="Roles_TB.Role_Text" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

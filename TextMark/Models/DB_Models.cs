@@ -32,15 +32,8 @@ namespace TextMark.Models
         [Display(Name = "Role")]
         [Required(ErrorMessage = "Role is required")]
         public int Role_ID { get; set; }
-
-
-
-
-
-
-        public Roles_TB Roles_TB { get; set; }
-
-        public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
+        //public Roles_TB Roles_TB { get; set; }
+        //public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
     }
 
 

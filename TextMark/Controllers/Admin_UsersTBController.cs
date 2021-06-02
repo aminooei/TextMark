@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TextMark.Data;
 using TextMark.Models;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TextMark.Controllers
 {
@@ -26,6 +26,7 @@ namespace TextMark.Controllers
         // GET: Logins/Create
         public IActionResult Create()
         {
+            Select_All_Roles();
             return View();
         }
 
@@ -149,18 +150,12 @@ namespace TextMark.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Add_User([Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB users_tb)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(users_tb);
-        //        await _context.SaveChangesAsync();
-        //        TempData["Loggedin_Username"] = Users_TB.Username;
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    return RedirectToAction("Index", "Admin");
-        //}
+
+        public List<Roles_TB> Select_All_Roles()
+        {
+            //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
+            ViewBag.Roles = _context.Roles_TB.ToList();
+            return ViewBag.Roles;
+        }        
     }
 }

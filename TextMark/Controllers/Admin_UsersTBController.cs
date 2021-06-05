@@ -20,7 +20,7 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users_TB.ToListAsync());
+            return View(await _context.Users_TB.Include("Roles_TB").ToListAsync());
             // return View();
         }
         // GET: Logins/Create
@@ -58,7 +58,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Users_tb = await _context.Users_TB
+            var Users_tb = await _context.Users_TB.Include("Roles_TB")
                 .FirstOrDefaultAsync(m => m.User_ID == id);
             if (Users_tb == null)
             {
@@ -70,12 +70,14 @@ namespace TextMark.Controllers
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Select_All_Roles();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var login = await _context.Users_TB.FindAsync(id);
+             //   var login = await _context.Users_TB.FindAsync(id);
+            var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
             if (login == null)
             {
                 return NotFound();
@@ -130,8 +132,8 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var login = await _context.Users_TB
-                .FirstOrDefaultAsync(m => m.User_ID == id);
+            var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
+              
             if (login == null)
             {
                 return NotFound();

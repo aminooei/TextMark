@@ -19,12 +19,12 @@ namespace TextMark.Models
 
         [Required(ErrorMessage = "Password is required")]
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
-        [DataType(DataType.Password)]
+        //[DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirm Password is required")]
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
-        [DataType(DataType.Password)]
+        //[DataType(DataType.Password)]
         [Compare("Password")]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
@@ -32,7 +32,9 @@ namespace TextMark.Models
         [Display(Name = "Role")]
         [Required(ErrorMessage = "Role is required")]
         public int Role_ID { get; set; }
-        //public Roles_TB Roles_TB { get; set; }
+
+        [ForeignKey("Role_ID")]
+        public Roles_TB Roles_TB { get; set; }
         //public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
     }
 
@@ -105,7 +107,8 @@ namespace TextMark.Models
         public int Role_ID { get; set; }
 
         [Required(ErrorMessage = "Role Text is required")]
-        [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
+        [StringLength(20, ErrorMessage = "Must be between 4 and 20 characters", MinimumLength = 4)]
+        [Display(Name = "Role")]
         public string Role_Text { get; set; }
 
         public ICollection<Users_TB> Users_TBs { get; set; }

@@ -187,6 +187,8 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.Ta
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.TagHelpers.output.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorCoreGenerate.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Index.cshtml.g.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_RolesTB\Create.cshtml.g.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_RolesTB\Index.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_UsersTB\Create.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_UsersTB\Delete.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_UsersTB\Details.cshtml.g.cs
@@ -212,3 +214,6 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dl
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csprojAssemblyReference.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_RolesTB\Details.cshtml.g.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_RolesTB\Edit.cshtml.g.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_RolesTB\Delete.cshtml.g.cs

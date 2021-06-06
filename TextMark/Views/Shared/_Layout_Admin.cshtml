@@ -81,9 +81,7 @@
                             </li>*@
 
                         <li class="nav-item has-submenu">
-                            @*<a class="nav-link dropdown-toggle active" aria-current="page" href="#UsersSubmenu" data-toggle="collapse" aria-expanded="false">*@
                             <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
-                                @*<a href="@Url.Action("Index", "Notas", new { moduloAtual = 4000 })">Notas</a>*@
                                 <span data-feather="users"></span>
                                 Users
                             </a>
@@ -103,10 +101,10 @@
                                 </ul>*@
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="key"></span>
-                                Roles
-                            </a>
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
+                                    <span data-feather="key"></span>
+                                    Roles
+                                </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
@@ -138,94 +136,13 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container" id="Users_Container">
-                    @*<partial name="_Users_Add_PartialView.cshtml" model="Model" />*@
-                    @*@if (TempData.Peek("Active_Action").ToString() == "Index") {    <partial name="_Users_Details_PartialView" model="Model.User_ID" />}*@
-                    <!--<form asp-controller="Admin" asp-action="Add_User" method="post" autocomplete="off">
-                    <div>
-                        <h1 class="h2">Users</h1>
-                    </div>
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Username" class="control-label"></label>
-                        <input asp-for="Username" class="form-control" placeholder="Enter Username Here" autocomplete="off" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Password" class="control-label"></label>
-                        <input asp-for="Password" class="form-control" placeholder="Enter Password Here" autocomplete="new-password" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
-                        <input asp-for="ConfirmPassword" class="form-control"  placeholder="Enter Confirm Password Here" autocomplete="new-password"/>
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Role_ID" for="Role_ID" class="control-label">Role ID</label>
-                        <input asp-for="Role_ID" type="number" class="form-control" id="Role_ID" placeholder="Enter Role ID Here">
-                        <span asp-validation-for="Role_ID" class="text-danger"></span>
-                    </div>-->
-                    @*<div class="col-md-4">
-                            <label asp-for="Roles_TB" for="Roles_TBRole_ID" class="form-label">Roles_TB Role_ID</label>
-                            <input asp-for="Roles_TB" type="text" class="form-control" id="Roles_TBRole_ID" placeholder="EnterRole ID Here" value="">
-                            <span asp-validation-for="Roles_TB" class="text-danger"></span>
-                        </div>*@
-
-                    <!--<div class="col-12">
-                            <button class="btn btn-primary" type="submit">Submit form</button>
-                        </div>
-                    </form>-->
-
+                   
                 </div>
             </main>
         </div>
     </div>
 
-    <!--<header>
-        <div class="flex-container">
-            <div><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></div>
-            <div><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
-            <div>
-                @{ if (TempData.Peek("Loggedin_User") == null)
-                    {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Users_TB" asp-action="Index">Login</a>
-                    }
-                }
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TextMark</a>
-                @{ if (TempData.Peek("Loggedin_User") != null)
-                    {
-                        <label class="col-md-4 text-right">Loggedin User : @TempData.Peek("Loggedin_User")</label>
-                    }
-                }
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>-->
-    @*<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </li>
-                @{ if (TempData.Peek("Loggedin_User") == null)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users_TB" asp-action="Index">Users_TB</a>
-                        </li>
-                    }
-                }
-
-            </ul>
-        </div>*@
-    <!--</div>
-        </nav>
-    </header>-->
+    
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="container" id="Users_Container">
             <div class="container">
@@ -246,37 +163,7 @@
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
 
-            <!--
-            Core JS files
-            <script src="~/js/jquery.min.js"></script>
-            <script src="~/js/bootstrap.bundle.min.js"></script>
-            <script src="~/js/blockui.min.js"></script>
-            /core JS files
-            Theme JS files
-            <script src="~/js/bootbox.min.js"></script>
-            <script src="~/js/select2.min.js"></script>
-
-            <script src="~/js/app_Theme.js"></script>
-            <script src="~/js/Components_Modals.js"></script>-->
-            <!-- Theme JS files -->
-            <!--<script src="~/js/d3.min.js"></script>
-            <script src="~/js/d3_tooltip.js"></script>
-            <script src="~/js/switchery.min.js"></script>
-            <script src="~/js/moment.min.js"></script>
-            <script src="~/js/daterangepicker.js"></script>
-            <script src="~/js/dashboard.js"></script>
-            <script src="~/js/streamgraph.js"></script>
-            <script src="~/js/sparklines.js"></script>
-            <script src="~/js/lines.js"></script>
-            <script src="~/js/areas.js"></script>
-            <script src="/js/donuts.js"></script>
-            <script src="~/js/bars.js"></script>
-            <script src="~/js/progress.js"></script>
-            <script src="~/js/heatmaps.js"></script>
-            <script src="~/js/pies.js"></script>
-            <script src="~/js/bullets.js"></script>-->
-            <!-- /theme JS files -->
-            <!--/theme JS files-->
+           
 
 
 

@@ -111,6 +111,6 @@ namespace TextMark.Models
         [Display(Name = "Role")]
         public string Role_Text { get; set; }
 
-        public ICollection<Users_TB> Users_TBs { get; set; }
+        //public ICollection<Users_TB> Users_TBs { get; set; }
     }
 }

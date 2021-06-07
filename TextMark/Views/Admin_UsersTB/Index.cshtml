@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Index</h1>
+<h1>List of Users</h1>
 
 <p>
     <a asp-action="Create">Create New User</a>
@@ -22,8 +22,8 @@
                         @Html.DisplayNameFor(model => model.Password)
                     </th>
                     <th>
-            @Html.DisplayNameFor(model => model.Roles_TB.Role_Text)
-        </th>
+                        @Html.DisplayNameFor(model => model.Roles_TB.Role_Text)
+                    </th>
                     
                     <th></th>
                 </tr>

@@ -10,23 +10,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TextMark.Controllers
 {
-    public class Admin_RolesTBController : Controller
+    public class Admin_LabelsTBController : Controller
     {
         private readonly TextMarkContext _context;
-        public Admin_RolesTBController(TextMarkContext context)
+        public Admin_LabelsTBController(TextMarkContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Roles_TB.ToListAsync());
+            return View(await _context.Labels_TB.ToListAsync());
             // return View();
         }
         // GET: Logins/Create
         public IActionResult Create()
         {
-         //   Select_All_Roles();
+       //     Select_All_Roles();
             return View();
         }
 
@@ -35,15 +35,15 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Role_ID,Role_Text")] Roles_TB roles_tb)
+        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text")] Labels_TB labels_tb)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(roles_tb);
+                _context.Add(labels_tb);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(roles_tb);
+            return View(labels_tb);
         }
         //public async Task<IActionResult> Details()
         //{            
@@ -58,40 +58,40 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Roles_tb = await _context.Roles_TB
-                .FirstOrDefaultAsync(m => m.Role_ID == id);
-            if (Roles_tb == null)
+            var Labels_tb = await _context.Labels_TB
+                .FirstOrDefaultAsync(m => m.Label_ID == id);
+            if (Labels_tb == null)
             {
                 return NotFound();
             }
 
-            return View(Roles_tb);
+            return View(Labels_tb);
         }
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-           // Select_All_Roles();
+            //Select_All_Roles();
             if (id == null)
             {
                 return NotFound();
             }
 
-              var login = await _context.Roles_TB.FindAsync(id);
-           // var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
-            if (login == null)
+            var label = await _context.Labels_TB.FindAsync(id);
+            //var login = await _context.Labels_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
+            if (label == null)
             {
                 return NotFound();
             }
-            return View(login);
+            return View(label);
         }
         // POST: Logins/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Role_ID,Role_Text")] Roles_TB Roles_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text")] Labels_TB Labels_tb)
         {
-            if (id != Roles_tb.Role_ID)
+            if (id != Labels_tb.Label_ID)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace TextMark.Controllers
             {
                 try
                 {
-                    _context.Update(Roles_tb);
+                    _context.Update(Labels_tb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoleExists(Roles_tb.Role_ID))
+                    if (!LabelExists(Labels_tb.Label_ID))
                     {
                         return NotFound();
                     }
@@ -116,12 +116,12 @@ namespace TextMark.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(Roles_tb);
+            return View(Labels_tb);
         }
 
-        private bool RoleExists(int id)
+        private bool LabelExists(int id)
         {
-            return _context.Roles_TB.Any(e => e.Role_ID == id);
+            return _context.Labels_TB.Any(e => e.Label_ID == id);
         }
 
         // GET: Logins/Delete/5
@@ -132,14 +132,14 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var login = await _context.Roles_TB.FirstOrDefaultAsync(m => m.Role_ID == id);
-
-            if (login == null)
+            var label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_ID == id);
+              
+            if (label == null)
             {
                 return NotFound();
             }
 
-            return View(login);
+            return View(label);
         }
 
         // POST: Logins/Delete/5
@@ -147,12 +147,17 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var Role = await _context.Roles_TB.FindAsync(id);
-            _context.Roles_TB.Remove(Role);
+            var label = await _context.Labels_TB.FindAsync(id);
+            _context.Labels_TB.Remove(label);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-       
+        //public List<Roles_TB> Select_All_Roles()
+        //{
+        //    //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
+        //    ViewBag.Roles = _context.Roles_TB.ToList();
+        //    return ViewBag.Roles;
+        //}        
     }
 }

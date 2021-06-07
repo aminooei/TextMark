@@ -47,11 +47,12 @@ namespace TextMark.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Label_ID { get; set; }
 
+        [Display(Name = "Label")]
         [Required(ErrorMessage = "Label Text is required")]
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Label_Text { get; set; }
 
-        public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
+        //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
     }
 
     public class Annotations_Labels_TB

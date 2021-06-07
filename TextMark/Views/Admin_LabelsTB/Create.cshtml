@@ -1,11 +1,11 @@
-﻿@model TextMark.Models.Roles_TB
+﻿@model TextMark.Models.Labels_TB
 
 @{
-    ViewData["Title"] = "Create a Role";
+    ViewData["Title"] = "Create a Label";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>Create a Role</h1>
+<h1>Create a Label</h1>
 
 
 <hr />
@@ -14,10 +14,10 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Role_Text" class="control-label"></label>
-                <input asp-for="Role_Text" class="form-control" />
-                <span asp-validation-for="Role_Text" class="text-danger"></span>
-            </div>           
+                <label asp-for="Label_Text" class="control-label"></label>
+                <input asp-for="Label_Text" class="form-control" />
+                <span asp-validation-for="Label_Text" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -73,41 +73,34 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        @*<li class="nav-item">
-                                <a class="nav-link dropdown-toggle active" aria-current="page" href="#">
-                                    <span data-feather="users"></span>
-                                    Users
-                                </a>
-                            </li>*@
-
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
+                                <span data-feather="key"></span>
+                                Roles
+                            </a>
+                        </li>
                         <li class="nav-item has-submenu">
                             <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
                                 <span data-feather="users"></span>
                                 Users
                             </a>
                             @*<ul class="collapse submenu" id="UsersSubmenu">
-                                    <li>
-                                        <a class="nav-link" href="#"><span data-feather="list"></span> List </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="#"><span data-feather="plus"></span> New </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="/admin/Details"><span data-feather="airplay"></span> Details </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="#"><span data-feather="edit"></span> Edit </a>
-                                    </li>
-                                </ul>*@
+                                <li>
+                                    <a class="nav-link" href="#"><span data-feather="list"></span> List </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="#"><span data-feather="plus"></span> New </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="/admin/Details"><span data-feather="airplay"></span> Details </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="#"><span data-feather="edit"></span> Edit </a>
+                                </li>
+                            </ul>*@
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
-                                    <span data-feather="key"></span>
-                                    Roles
-                                </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
                                 <span data-feather="tag"></span>
                                 Labels
                             </a>

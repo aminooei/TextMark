@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TextMark.Models.Labels_TB>
+
+@{
+    ViewData["Title"] = "LabelsTB Admin Page";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>List of Labels</h1>
+
+<p>
+    <a asp-action="Create">Create New Label</a>
+</p>
+@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container" id="Users_Container">*@
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Label_Text)
+                    </th>   
+                    <th>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label_Text)
+                        </td>
+                        
+                        
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Label_ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Label_ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Label_ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*</div>
+    </main>*@

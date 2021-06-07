@@ -15,7 +15,7 @@ namespace TextMark.Data
         public DbSet<Users_TB> Users_TB { get; set; }
         public DbSet<Labels_TB> Labels_TB { get; set; }
         public DbSet<Annotations_Labels_TB> Annotations_Labels_TB { get; set; }
-        public DbSet<Annotations_TB> Annotation_TB { get; set; } 
+        public DbSet<Annotations_TB> Annotations_TB { get; set; } 
         public DbSet<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TB { get; set; }
     }
 }

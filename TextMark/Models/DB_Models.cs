@@ -75,14 +75,16 @@ namespace TextMark.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Annotation_ID { get; set; }
 
+        [Display(Name = "Annotation Text")]
         [Required(ErrorMessage = "Annotation Text is required")]
         [StringLength(1000, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
         public string Annotation_Text { get; set; }
 
+        [DataType(DataType.DateTime)]
         public string Date { get; set; }
 
-        public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
-        public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
+        //public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
+        //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
     }
 
     public class Assigned_Annotations_ToUsers_TB

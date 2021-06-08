@@ -42,11 +42,11 @@
             @Html.DropDownList("Role_ID", new SelectList(ViewBag.Roles, "Role_ID", "Role_Text"), "Select a Role",
                    new { @class = "form-control" })
             <span asp-validation-for="Role_ID" class="text-danger"></span>
-        </div>
-            @*<div class="form-group">
-            <label asp-for="Roles_TB.Role_Text" class="control-label"></label>
-            <input asp-for="Roles_TB.Role_Text" class="form-control" />
-            <span asp-validation-for="Roles_TB.Role_Text" class="text-danger"></span>
+        @*</div>
+            <div class="form-group">
+            <label asp-for="Roles_TB" class="control-label"></label>
+            <input asp-for="Roles_TB" class="form-control" />
+            <span asp-validation-for="Roles_TB" class="text-danger"></span>
         </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

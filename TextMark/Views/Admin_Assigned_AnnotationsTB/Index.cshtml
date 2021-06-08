@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TextMark.Models.Assigned_Annotations_ToUsers_TB>
+
+@{
+    ViewData["Title"] = "Assigned Annotations to Users - Admin Page";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>List of Assigned Annotations to Users</h1>
+
+<p>
+    <a asp-action="Create">Create New Assigned Annotation</a>
+</p>
+@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container" id="Users_Container">*@
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Users_TB.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Users_TB.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Assigned_Anno_ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*</div>
+    </main>*@

@@ -1,0 +1,37 @@
+﻿@model TextMark.Models.Assigned_Annotations_ToUsers_TB
+
+@{
+    ViewData["Title"] = "Assigned Annotations To Users - Details";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Assigned Annotations To Users - Details</h1>
+
+<div>
+   
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Users_TB.Username)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Users_TB.Username)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Annotations_TB.Annotation_Text)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Assigned_Anno_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

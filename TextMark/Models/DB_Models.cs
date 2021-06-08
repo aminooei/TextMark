@@ -36,6 +36,7 @@ namespace TextMark.Models
         [ForeignKey("Role_ID")]
         public Roles_TB Roles_TB { get; set; }
         //public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
+               
     }
 
 
@@ -94,13 +95,18 @@ namespace TextMark.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int Assigned_Anno_ID { get; set; }
 
         public int User_ID { get; set; }
+        [ForeignKey("User_ID")]
         public Users_TB Users_TB { get; set; }
 
         public int Annotation_ID { get; set; }
-        public Annotations_TB Annotations_TB { get; set; }
+        [ForeignKey("Annotation_ID")]
+        public Annotations_TB Annotations_TB { get; set; }        
+
+        //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
+
 
         public DateTime Date { get; set; }
     }

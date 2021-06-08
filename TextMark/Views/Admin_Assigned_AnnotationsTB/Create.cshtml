@@ -1,0 +1,50 @@
+﻿@model TextMark.Models.Assigned_Annotations_ToUsers_TB
+
+@{
+    ViewData["Title"] = "Assign an Annotation to a User";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Assign an Annotation to a User</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Annotations_TB.Annotation_Text" class="control-label"></label>
+                @Html.DropDownList("Annotation_ID", new SelectList(ViewBag.Annotations, "Annotation_ID", "Annotation_Text"), "Select an Annotation Text",
+                  new { @class = "form-control" })
+                <span asp-validation-for="Annotations_TB.Annotation_Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Users_TB.Username" class="control-label"></label>
+                @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username"), "Select a User",
+                  new { @class = "form-control" })
+                <span asp-validation-for="Users_TB.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group" type="hidden">
+                @*<label asp-for="Date" class="control-label" type="hidden"></label>*@
+                <input ID="Date_Input" asp-for="Date" class="form-control" type="hidden" />
+                <span asp-validation-for="Date" class="text-danger" type="hidden"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    document.getElementById('Date_Input').value = new Date().toISOString().substring(0, 16);
+</script>
+}

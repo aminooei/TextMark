@@ -59,14 +59,17 @@ namespace TextMark.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
+        public int Anno_Label_ID { get; set; }
         
+        public int Annotation_ID { get; set; }
+        [ForeignKey("Annotation_ID")]
+        public Annotations_TB Annotations_TB { get; set; }
 
         public int Label_ID { get; set; }
+        [ForeignKey("Label_ID")]
         public Labels_TB Labels_TB { get; set; }
 
-        public int Annotation_ID { get; set; }
-        public Annotations_TB Annotations_TB { get; set; }
+       
     }
 
     public class Annotations_TB

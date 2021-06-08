@@ -1,0 +1,43 @@
+﻿@model TextMark.Models.Annotations_Labels_TB
+
+@{
+    ViewData["Title"] = "Create an Annotations Label";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Create an Annotations Label</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Annotations_TB.Annotation_Text" class="control-label"></label>
+                @*<input asp-for="Annotations_TB.Annotation_Text" class="form-control" />*@
+                @Html.DropDownList("Annotation_ID", new SelectList(ViewBag.Annotations, "Annotation_ID", "Annotation_Text"), "Select an Annotation Text",
+                  new { @class = "form-control" })
+                <span asp-validation-for="Annotations_TB.Annotation_Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Labels_TB.Label_Text" class="control-label"></label>
+                @*<input asp-for="Labels_TB.Label_Text" class="form-control" />*@
+                @Html.DropDownList("Label_ID", new SelectList(ViewBag.Labels, "Label_ID", "Label_Text"), "Select a Label",
+                  new { @class = "form-control" })
+                <span asp-validation-for="Labels_TB.Label_Text" class="text-danger"></span>
+            </div>    
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

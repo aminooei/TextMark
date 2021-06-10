@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TextMark.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 namespace TextMark
 {
@@ -24,11 +26,19 @@ namespace TextMark
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {                
             services.AddControllersWithViews();
+
+            //##
+            services.AddRazorPages();
+            //##
 
             services.AddDbContext<TextMarkContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("TextMarkConnectionSTR")));
+
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<TextMarkContext>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +67,7 @@ namespace TextMark
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -64,6 +75,9 @@ namespace TextMark
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                //##
+                endpoints.MapRazorPages();
+                //##  https://localhost:44318/identity/account/login
             });
         }
     }

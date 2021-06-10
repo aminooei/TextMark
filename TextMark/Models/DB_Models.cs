@@ -97,10 +97,12 @@ namespace TextMark.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Assigned_Anno_ID { get; set; }
 
+        //[Key, Column(Order = 0)]
         public int User_ID { get; set; }
         [ForeignKey("User_ID")]
         public Users_TB Users_TB { get; set; }
 
+        //[Key, Column(Order = 1)]
         public int Annotation_ID { get; set; }
         [ForeignKey("Annotation_ID")]
         public Annotations_TB Annotations_TB { get; set; }        

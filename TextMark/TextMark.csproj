@@ -12,7 +12,8 @@
     <PackageReference Include="Ductus.FluentDocker" Version="2.10.6" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="MahApps.Metro.IconPacks.FeatherIcons" Version="4.8.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.15" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
       <PrivateAssets>all</PrivateAssets>

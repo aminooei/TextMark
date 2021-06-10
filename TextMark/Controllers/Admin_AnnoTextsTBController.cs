@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using TextMark.Data;
 using TextMark.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TextMark.Controllers
 {
+    [Authorize]
     public class Admin_AnnoTextsTBController : Controller
     {
         private readonly TextMarkContext _context;

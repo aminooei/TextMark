@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TextMark.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 namespace TextMark.Data
 {
-    public class TextMarkContext : DbContext
+    public class TextMarkContext : IdentityDbContext
     {
         public TextMarkContext(DbContextOptions<TextMarkContext> options)
             : base(options)

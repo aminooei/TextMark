@@ -193,25 +193,25 @@
           "lib/netstandard2.0/MessagePack.Annotations.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Cryptography.Internal/5.0.6": {
+      "Microsoft.AspNetCore.Cryptography.Internal/3.1.15": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Cryptography.KeyDerivation/5.0.6": {
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/3.1.15": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.Internal": "5.0.6"
+          "Microsoft.AspNetCore.Cryptography.Internal": "3.1.15"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {}
         }
       },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
@@ -226,17 +226,46 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Html.Abstractions.dll": {}
         }
       },
-      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/5.0.6": {
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.15": {
         "type": "package",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "5.0.6",
-          "Microsoft.Extensions.Identity.Stores": "5.0.6"
+          "Microsoft.EntityFrameworkCore.Relational": "3.1.15",
+          "Microsoft.Extensions.Identity.Stores": "3.1.15"
         },
         "compile": {
-          "lib/netstandard2.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Identity.UI/3.1.15": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Embedded": "3.1.15",
+          "Microsoft.Extensions.Identity.Stores": "3.1.15",
+          "Newtonsoft.Json": "12.0.2"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V3.dll": {},
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V4.dll": {},
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V3.dll": {},
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V4.dll": {},
+          "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ],
+        "build": {
+          "buildTransitive/Microsoft.AspNetCore.Identity.UI.props": {},
+          "buildTransitive/Microsoft.AspnetCore.Identity.UI.targets": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Microsoft.AspNetCore.Identity.UI.props": {},
+          "buildMultiTargeting/Microsoft.AspnetCore.Identity.UI.targets": {}
         }
       },
       "Microsoft.AspNetCore.Razor/2.2.0": {
@@ -788,33 +817,62 @@
           "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll": {}
         }
       },
-      "Microsoft.Extensions.Identity.Core/5.0.6": {
+      "Microsoft.Extensions.FileProviders.Abstractions/3.1.15": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "5.0.6",
-          "Microsoft.Extensions.Logging": "5.0.0",
-          "Microsoft.Extensions.Options": "5.0.0",
-          "System.ComponentModel.Annotations": "5.0.0"
+          "Microsoft.Extensions.Primitives": "3.1.15"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.dll": {}
+          "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.dll": {}
+          "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Abstractions.dll": {}
         }
       },
-      "Microsoft.Extensions.Identity.Stores/5.0.6": {
+      "Microsoft.Extensions.FileProviders.Embedded/3.1.15": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Caching.Abstractions": "5.0.0",
-          "Microsoft.Extensions.Identity.Core": "5.0.6",
-          "Microsoft.Extensions.Logging": "5.0.0"
+          "Microsoft.Extensions.FileProviders.Abstractions": "3.1.15"
         },
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.Identity.Stores.dll": {}
+          "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.Identity.Stores.dll": {}
+          "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.dll": {}
+        },
+        "build": {
+          "build/netstandard2.0/_._": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/_._": {}
+        }
+      },
+      "Microsoft.Extensions.Identity.Core/3.1.15": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "3.1.15",
+          "Microsoft.Extensions.Logging": "3.1.15",
+          "Microsoft.Extensions.Options": "3.1.15"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Identity.Stores/3.1.15": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "3.1.15",
+          "Microsoft.Extensions.Identity.Core": "3.1.15",
+          "Microsoft.Extensions.Logging": "3.1.15"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll": {}
         }
       },
       "Microsoft.Extensions.Logging/5.0.0": {
@@ -3663,41 +3721,39 @@
         "messagepack.annotations.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Cryptography.Internal/5.0.6": {
-      "sha512": "iJYBphYXA0BLEzVwJDFpYuWN9yrZkPZIrOoHKthLuAA3pbv2rBRrDgiTp244ZQ8LGLVUa11VOBDncmFexZuhCg==",
+    "Microsoft.AspNetCore.Cryptography.Internal/3.1.15": {
+      "sha512": "NsaZoYsLfPZwjy8RJ3dnWp/fFXWKyGh+RWIRPENNdXGLifFOsdTrRlGyXz2TqGk9LsgZTZvBwgLzY/F8XO+inA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.cryptography.internal/5.0.6",
+      "path": "microsoft.aspnetcore.cryptography.internal/3.1.15",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.AspNetCore.Cryptography.Internal.dll",
-        "lib/net461/Microsoft.AspNetCore.Cryptography.Internal.xml",
-        "lib/net5.0/Microsoft.AspNetCore.Cryptography.Internal.dll",
-        "lib/net5.0/Microsoft.AspNetCore.Cryptography.Internal.xml",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.Internal.xml",
-        "microsoft.aspnetcore.cryptography.internal.5.0.6.nupkg.sha512",
+        "microsoft.aspnetcore.cryptography.internal.3.1.15.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.internal.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Cryptography.KeyDerivation/5.0.6": {
-      "sha512": "868Bpz85BwdDIEFdYxufcffDgm9soYTf6EUBLWpJg6gQ+HaeyWvvJyjpSsnZhuTekvloN+NHiVN5bEi1/jQFbA==",
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/3.1.15": {
+      "sha512": "X/jp3Qyj3x75EMaSmMKk+7Zs/jglqfk6UrU/rnXxmkjQgIeqQVuIY38BhF5IQJLsMwy6Us9LPO9UUR6WrfRGJg==",
       "type": "package",
-      "path": "microsoft.aspnetcore.cryptography.keyderivation/5.0.6",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/3.1.15",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
-        "lib/net461/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
-        "lib/net5.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
-        "lib/net5.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
+        "lib/netcoreapp2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+        "lib/netcoreapp2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.xml",
-        "microsoft.aspnetcore.cryptography.keyderivation.5.0.6.nupkg.sha512",
+        "microsoft.aspnetcore.cryptography.keyderivation.3.1.15.nupkg.sha512",
         "microsoft.aspnetcore.cryptography.keyderivation.nuspec"
       ]
     },
@@ -3714,21 +3770,111 @@
         "microsoft.aspnetcore.html.abstractions.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/5.0.6": {
-      "sha512": "eUXOjgKe3O2sB5oA1doeSBe2Y02EnQ+MPjUlot0uGS1RhyDfF41Kp3HWON508JTzcfHiM2pWj9IIVdj9sQMvGw==",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/3.1.15": {
+      "sha512": "s6bB80/VGeXiUmEiExEPv1QZXhwk40LkHKIDdVlJd7DKxhib28y38r6KHKJIUFhUaN/WRdupDrqGiPDM31dy1w==",
       "type": "package",
-      "path": "microsoft.aspnetcore.identity.entityframeworkcore/5.0.6",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/3.1.15",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net5.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
-        "lib/net5.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml",
         "lib/netstandard2.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
         "lib/netstandard2.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml",
-        "microsoft.aspnetcore.identity.entityframeworkcore.5.0.6.nupkg.sha512",
+        "microsoft.aspnetcore.identity.entityframeworkcore.3.1.15.nupkg.sha512",
         "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Identity.UI/3.1.15": {
+      "sha512": "AZgyGpwGnr77b9J8bAifU9iNHnTtjBRWCbWlKXW0uP+gGUPGN/ujdp0LOXRPXZiCrpExusAeZE2nJgw/DdouSQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.identity.ui/3.1.15",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "build/Microsoft.AspNetCore.Identity.UI.props",
+        "build/Microsoft.AspnetCore.Identity.UI.targets",
+        "buildMultiTargeting/Microsoft.AspNetCore.Identity.UI.props",
+        "buildMultiTargeting/Microsoft.AspnetCore.Identity.UI.targets",
+        "buildTransitive/Microsoft.AspNetCore.Identity.UI.props",
+        "buildTransitive/Microsoft.AspnetCore.Identity.UI.targets",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V3.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.Views.V4.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.dll",
+        "lib/netcoreapp3.1/Microsoft.AspNetCore.Identity.UI.xml",
+        "microsoft.aspnetcore.identity.ui.3.1.15.nupkg.sha512",
+        "microsoft.aspnetcore.identity.ui.nuspec",
+        "staticwebassets/V3/css/site.css",
+        "staticwebassets/V3/js/site.js",
+        "staticwebassets/V3/lib/bootstrap/LICENSE/LICENSE",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap-theme.css",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap-theme.css.map",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap-theme.min.css",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap-theme.min.css.map",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap.css",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap.css.map",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap.min.css",
+        "staticwebassets/V3/lib/bootstrap/dist/css/bootstrap.min.css.map",
+        "staticwebassets/V3/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+        "staticwebassets/V3/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+        "staticwebassets/V3/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+        "staticwebassets/V3/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+        "staticwebassets/V3/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+        "staticwebassets/V3/lib/bootstrap/dist/js/bootstrap.js",
+        "staticwebassets/V3/lib/bootstrap/dist/js/bootstrap.min.js",
+        "staticwebassets/V3/lib/bootstrap/dist/js/npm.js",
+        "staticwebassets/V3/lib/jquery-validation-unobtrusive/LICENSE.txt",
+        "staticwebassets/V3/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+        "staticwebassets/V3/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+        "staticwebassets/V3/lib/jquery-validation/LICENSE.md",
+        "staticwebassets/V3/lib/jquery-validation/dist/additional-methods.js",
+        "staticwebassets/V3/lib/jquery-validation/dist/additional-methods.min.js",
+        "staticwebassets/V3/lib/jquery-validation/dist/jquery.validate.js",
+        "staticwebassets/V3/lib/jquery-validation/dist/jquery.validate.min.js",
+        "staticwebassets/V3/lib/jquery/LICENSE.txt",
+        "staticwebassets/V3/lib/jquery/dist/jquery.js",
+        "staticwebassets/V3/lib/jquery/dist/jquery.min.js",
+        "staticwebassets/V3/lib/jquery/dist/jquery.min.map",
+        "staticwebassets/V4/css/site.css",
+        "staticwebassets/V4/favicon.ico",
+        "staticwebassets/V4/js/site.js",
+        "staticwebassets/V4/lib/bootstrap/LICENSE/LICENSE",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-grid.css",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-reboot.css",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap.css",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap.css.map",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap.min.css",
+        "staticwebassets/V4/lib/bootstrap/dist/css/bootstrap.min.css.map",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.bundle.js",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.js",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.js.map",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.min.js",
+        "staticwebassets/V4/lib/bootstrap/dist/js/bootstrap.min.js.map",
+        "staticwebassets/V4/lib/jquery-validation-unobtrusive/LICENSE.txt",
+        "staticwebassets/V4/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+        "staticwebassets/V4/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+        "staticwebassets/V4/lib/jquery-validation/LICENSE.md",
+        "staticwebassets/V4/lib/jquery-validation/dist/additional-methods.js",
+        "staticwebassets/V4/lib/jquery-validation/dist/additional-methods.min.js",
+        "staticwebassets/V4/lib/jquery-validation/dist/jquery.validate.js",
+        "staticwebassets/V4/lib/jquery-validation/dist/jquery.validate.min.js",
+        "staticwebassets/V4/lib/jquery/LICENSE.txt",
+        "staticwebassets/V4/lib/jquery/dist/jquery.js",
+        "staticwebassets/V4/lib/jquery/dist/jquery.min.js",
+        "staticwebassets/V4/lib/jquery/dist/jquery.min.map"
       ]
     },
     "Microsoft.AspNetCore.Razor/2.2.0": {
@@ -4385,41 +4531,74 @@
         "microsoft.extensions.dependencymodel.nuspec"
       ]
     },
-    "Microsoft.Extensions.Identity.Core/5.0.6": {
-      "sha512": "RgppFgQKpUcrkfhGFum+kILfigdMM8bomgECh0J6DuM5uqR4/sL8/wi2Smad26uQ5j7cix5AyMjzmXbuXBLN+g==",
+    "Microsoft.Extensions.FileProviders.Abstractions/3.1.15": {
+      "sha512": "Y1GDUX+Wo6l3RaF/DR/t/jgrS91013uip+oMw/tX44T4dJCWFrII3t39Nn5Ugep/fjtd54Z/1bNwNtd+tQepCQ==",
       "type": "package",
-      "path": "microsoft.extensions.identity.core/5.0.6",
+      "path": "microsoft.extensions.fileproviders.abstractions/3.1.15",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Abstractions.dll",
+        "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Abstractions.xml",
+        "microsoft.extensions.fileproviders.abstractions.3.1.15.nupkg.sha512",
+        "microsoft.extensions.fileproviders.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.FileProviders.Embedded/3.1.15": {
+      "sha512": "GDy+seZ4vmMttGSpie/YYEvb8kh45ejzE5VncllfB7vrxz1U1DRHSjqs5o34JFJKlwaW3LsKEmfFi0U0RgnMAg==",
+      "type": "package",
+      "path": "microsoft.extensions.fileproviders.embedded/3.1.15",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "build/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.props",
+        "build/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.targets",
+        "buildMultiTargeting/Microsoft.Extensions.FileProviders.Embedded.props",
+        "buildMultiTargeting/Microsoft.Extensions.FileProviders.Embedded.targets",
+        "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.dll",
+        "lib/netcoreapp3.1/Microsoft.Extensions.FileProviders.Embedded.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.xml",
+        "microsoft.extensions.fileproviders.embedded.3.1.15.nupkg.sha512",
+        "microsoft.extensions.fileproviders.embedded.nuspec",
+        "tasks/netstandard2.0/Microsoft.Extensions.FileProviders.Embedded.Manifest.Task.dll"
+      ]
+    },
+    "Microsoft.Extensions.Identity.Core/3.1.15": {
+      "sha512": "doojdtxWyHaP0w1IOgd2Smp2k+whzpZ/+VNO8FihW7FfGHV2uLD0apB9CCIXq5Yfdtg2+q2zxGfKB2R/vJ4amQ==",
+      "type": "package",
+      "path": "microsoft.extensions.identity.core/3.1.15",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Extensions.Identity.Core.dll",
-        "lib/net461/Microsoft.Extensions.Identity.Core.xml",
-        "lib/net5.0/Microsoft.Extensions.Identity.Core.dll",
-        "lib/net5.0/Microsoft.Extensions.Identity.Core.xml",
+        "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll",
+        "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Core.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.xml",
-        "microsoft.extensions.identity.core.5.0.6.nupkg.sha512",
+        "microsoft.extensions.identity.core.3.1.15.nupkg.sha512",
         "microsoft.extensions.identity.core.nuspec"
       ]
     },
-    "Microsoft.Extensions.Identity.Stores/5.0.6": {
-      "sha512": "tm2V/IZZZHfFaAlUgYJLonfPdWUZMPjq6RDgh7bBTNZi+QJfu0Mji38hkK8YxSev9J0NlpubY/infVt+x4OQVA==",
+    "Microsoft.Extensions.Identity.Stores/3.1.15": {
+      "sha512": "XovWVTNFhbt7F0knwvzLLnCf1LrQ3Drw8MCV4AEJjt/Rc1DKZf5rICfTLrOCTOJyxMWfUjVnt4xe/xyQ3f31LQ==",
       "type": "package",
-      "path": "microsoft.extensions.identity.stores/5.0.6",
+      "path": "microsoft.extensions.identity.stores/3.1.15",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Extensions.Identity.Stores.dll",
-        "lib/net461/Microsoft.Extensions.Identity.Stores.xml",
-        "lib/net5.0/Microsoft.Extensions.Identity.Stores.dll",
-        "lib/net5.0/Microsoft.Extensions.Identity.Stores.xml",
+        "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll",
+        "lib/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Identity.Stores.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Identity.Stores.xml",
-        "microsoft.extensions.identity.stores.5.0.6.nupkg.sha512",
+        "microsoft.extensions.identity.stores.3.1.15.nupkg.sha512",
         "microsoft.extensions.identity.stores.nuspec"
       ]
     },
@@ -10670,7 +10849,8 @@
       "Ductus.FluentDocker >= 2.10.6",
       "EntityFramework >= 6.4.4",
       "MahApps.Metro.IconPacks.FeatherIcons >= 4.8.0",
-      "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 5.0.6",
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 3.1.15",
+      "Microsoft.AspNetCore.Identity.UI >= 3.1.15",
       "Microsoft.EntityFrameworkCore >= 5.0.6",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.6",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.6",
@@ -10741,7 +10921,11 @@
           },
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
             "target": "Package",
-            "version": "[5.0.6, )"
+            "version": "[3.1.15, )"
+          },
+          "Microsoft.AspNetCore.Identity.UI": {
+            "target": "Package",
+            "version": "[3.1.15, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
@@ -10790,7 +10974,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.204\\RuntimeIdentifierGraph.json"
       }
     }
   }

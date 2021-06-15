@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using TextMark.Areas.Identity.Data
+
+@inject SignInManager<TextMarkUser> SignInManager
+@inject UserManager<TextMarkUser> UserManager
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -56,17 +64,45 @@
     @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
 </head>
 <body>
+    
+
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">aiLand ADMIN </a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
-            </li>
-        </ul>
+
+        @*<ul class="navbar-nav">*@
+       
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <span class="nav-item">
+                    <a id="manage" class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+
+                </span>
+                <div class="nav-item">
+                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <button id="logout" type="submit" class="nav-link btn btn-link ">Logout</button>
+
+                    </form>
+                </div>
+            }
+            else
+            {
+                <span class="nav-item">
+                    <a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+
+                </span>
+                <span class="nav-item">
+                    <a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+
+                </span>
+            }
+        
+
+        @*</ul>*@
+
     </header>
     <div class="container-fluid">
         <div class="row">
@@ -85,19 +121,19 @@
                                 Users
                             </a>
                             @*<ul class="collapse submenu" id="UsersSubmenu">
-                                <li>
-                                    <a class="nav-link" href="#"><span data-feather="list"></span> List </a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" href="#"><span data-feather="plus"></span> New </a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" href="/admin/Details"><span data-feather="airplay"></span> Details </a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" href="#"><span data-feather="edit"></span> Edit </a>
-                                </li>
-                            </ul>*@
+                                    <li>
+                                        <a class="nav-link" href="#"><span data-feather="list"></span> List </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#"><span data-feather="plus"></span> New </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="/admin/Details"><span data-feather="airplay"></span> Details </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#"><span data-feather="edit"></span> Edit </a>
+                                    </li>
+                                </ul>*@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
@@ -129,13 +165,13 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="container" id="Users_Container">
-                   
+
                 </div>
             </main>
         </div>
     </div>
 
-    
+
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="container" id="Users_Container">
             <div class="container">
@@ -156,7 +192,7 @@
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
 
-           
+
 
 
 

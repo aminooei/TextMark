@@ -8,10 +8,11 @@ using TextMark.Data;
 using TextMark.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TextMark.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class Admin_AnnoLabelsTBController : Controller
     {
         private readonly TextMarkContext _context;
@@ -22,12 +23,43 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(await _context.Annotations_Labels_TB.Include("Annotations_TB").Include("Labels_TB").ToListAsync());
             // return View();
         }
+        private bool IsValidUser()
+        {
+
+            string usertype = "";
+
+            if (HttpContext.Session.GetString("UserType") != null)
+            {
+                usertype = HttpContext.Session.GetString("UserType").ToUpper();
+            }
+
+
+            if (usertype != "ADMIN")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
         // GET: Logins/Create
         public IActionResult Create()
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Select_All_Annotations();
             Select_All_Labels();
             return View();
@@ -40,6 +72,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Anno_Label_ID,Annotation_ID,Label_ID")] Annotations_Labels_TB anno_Labels_tb)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(anno_Labels_tb);
@@ -56,6 +93,11 @@ namespace TextMark.Controllers
         // GET: Logins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -73,6 +115,11 @@ namespace TextMark.Controllers
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Select_All_Annotations();
             Select_All_Labels();
 
@@ -96,6 +143,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Anno_Label_ID,Annotation_ID,Label_ID")] Annotations_Labels_TB Anno_Labels_tb)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id != Anno_Labels_tb.Anno_Label_ID)
             {
                 return NotFound();
@@ -132,6 +184,11 @@ namespace TextMark.Controllers
         // GET: Logins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -152,6 +209,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var anno_Label = await _context.Annotations_Labels_TB.FindAsync(id);
             _context.Annotations_Labels_TB.Remove(anno_Label);
             await _context.SaveChangesAsync();

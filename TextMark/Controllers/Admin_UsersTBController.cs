@@ -8,26 +8,60 @@ using TextMark.Data;
 using TextMark.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TextMark.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class Admin_UsersTBController : Controller
     {
         private readonly TextMarkContext _context;
+      
         public Admin_UsersTBController(TextMarkContext context)
-        {
-            _context = context;
+        {           
+            _context = context; 
         }
 
         public async Task<IActionResult> Index()
-        {
+        {               
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }          
+
             return View(await _context.Users_TB.Include("Roles_TB").ToListAsync());
             // return View();
+        }
+
+        private bool IsValidUser()
+        {
+
+            string usertype = "";
+
+            if (HttpContext.Session.GetString("UserType") != null)
+            {
+                usertype = HttpContext.Session.GetString("UserType").ToUpper();
+            }
+
+
+            if (usertype != "ADMIN")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
         }
         // GET: Logins/Create
         public IActionResult Create()
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Select_All_Roles();
             return View();
         }
@@ -39,6 +73,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB users_tb)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(users_tb);
@@ -55,6 +94,11 @@ namespace TextMark.Controllers
         // GET: Logins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -72,6 +116,12 @@ namespace TextMark.Controllers
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             Select_All_Roles();
             if (id == null)
             {
@@ -93,6 +143,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB Users_tb)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id != Users_tb.User_ID)
             {
                 return NotFound();
@@ -122,13 +177,18 @@ namespace TextMark.Controllers
         }
 
         private bool UserExists(int id)
-        {
+        {            
             return _context.Users_TB.Any(e => e.User_ID == id);
         }
 
         // GET: Logins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -149,6 +209,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var login = await _context.Users_TB.FindAsync(id);
             _context.Users_TB.Remove(login);
             await _context.SaveChangesAsync();
@@ -156,7 +221,8 @@ namespace TextMark.Controllers
         }
 
         public List<Roles_TB> Select_All_Roles()
-        {
+        {            
+
             //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
             ViewBag.Roles = _context.Roles_TB.ToList();
             return ViewBag.Roles;

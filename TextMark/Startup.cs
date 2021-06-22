@@ -12,6 +12,7 @@ using TextMark.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace TextMark
 {
@@ -26,7 +27,30 @@ namespace TextMark
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {                
+        {
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+
+            //services.AddAuthentication("AILand_Cookie")
+            //    .AddCookie("AILand_Cookie", config => 
+            //    {
+            //        config.Cookie.Name = "Users_Cookie";
+            //        config.LoginPath = "/Login"; 
+            //    });
+
             services.AddControllersWithViews();
 
             //##
@@ -70,11 +94,14 @@ namespace TextMark
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Index}/{id?}");
+                //   endpoints.MapDefaultControllerRoute();
                 //##
                 endpoints.MapRazorPages();
                 //##  https://localhost:44318/identity/account/login

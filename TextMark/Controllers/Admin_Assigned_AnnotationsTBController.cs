@@ -8,10 +8,11 @@ using TextMark.Data;
 using TextMark.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TextMark.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class Admin_Assigned_AnnotationsTBController : Controller
     {
         private readonly TextMarkContext _context;
@@ -22,12 +23,43 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").ToListAsync());
             // return View();
         }
+        private bool IsValidUser()
+        {
+
+            string usertype = "";
+
+            if (HttpContext.Session.GetString("UserType") != null)
+            {
+                usertype = HttpContext.Session.GetString("UserType").ToUpper();
+            }
+
+
+            if (usertype != "ADMIN")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
         // GET: Logins/Create
         public IActionResult Create()
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Select_All_Users();
             Select_All_Annotations();
             return View();
@@ -40,6 +72,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Date")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(assigned_annotations_tousers_tb);
@@ -56,6 +93,11 @@ namespace TextMark.Controllers
         // GET: Logins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -73,6 +115,11 @@ namespace TextMark.Controllers
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             Select_All_Users();
             Select_All_Annotations();
 
@@ -96,6 +143,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Date")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id != Assigned_Anno.Assigned_Anno_ID)
             {
                 return NotFound();
@@ -132,6 +184,11 @@ namespace TextMark.Controllers
         // GET: Logins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -152,6 +209,11 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.FindAsync(id);
             _context.Assigned_Annotations_ToUsers_TB.Remove(Assigned_Anno);
             await _context.SaveChangesAsync();

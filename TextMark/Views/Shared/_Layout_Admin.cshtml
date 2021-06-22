@@ -5,7 +5,6 @@
 @inject UserManager<TextMarkUser> UserManager
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +63,7 @@
     @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
 </head>
 <body>
-    
+
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">aiLand ADMIN </a>
@@ -74,32 +73,33 @@
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 
         @*<ul class="navbar-nav">*@
-       
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <span class="nav-item">
-                    <a id="manage" class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
 
-                </span>
-                <div class="nav-item">
-                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button id="logout" type="submit" class="nav-link btn btn-link ">Logout</button>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <span class="nav-item">
+                <a id="manage" class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
 
-                    </form>
-                </div>
-            }
-            else
-            {
-                <span class="nav-item">
-                    <a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </span>
+            <div class="nav-item">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link btn btn-link ">Logout</button>
 
-                </span>
-                <span class="nav-item">
-                    <a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                </form>
+            </div>
+        }
+        else
+        {
+            <span class="nav-item">
+                @*<a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>*@
 
-                </span>
-            }
-        
+            </span>
+            <span class="nav-item">
+                @*<a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>*@
+                <a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Login</a>
+
+            </span>
+        }
+
 
         @*</ul>*@
 

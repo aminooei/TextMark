@@ -25,7 +25,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             return View(await _context.Roles_TB.ToListAsync());
@@ -58,7 +58,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
             //   Select_All_Roles();
             return View();
@@ -73,7 +73,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (ModelState.IsValid)
@@ -94,7 +94,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -116,7 +116,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             // Select_All_Roles();
@@ -142,7 +142,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id != Roles_tb.Role_ID)
@@ -183,7 +183,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -208,7 +208,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             var Role = await _context.Roles_TB.FindAsync(id);

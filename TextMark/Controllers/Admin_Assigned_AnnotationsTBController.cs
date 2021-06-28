@@ -25,7 +25,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
             return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").ToListAsync());
             // return View();
@@ -57,7 +57,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             Select_All_Users();
@@ -74,7 +74,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -117,7 +117,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             Select_All_Users();
@@ -145,7 +145,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id != Assigned_Anno.Assigned_Anno_ID)
@@ -186,7 +186,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -211,7 +211,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.FindAsync(id);

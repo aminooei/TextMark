@@ -16,7 +16,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             return View();

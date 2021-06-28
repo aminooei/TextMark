@@ -39,18 +39,17 @@ namespace TextMark.Controllers
         }
 
     
-        public async Task<IActionResult> DetailsAsync(string username, string password)
+        public  IActionResult DetailsAsync(string username, string password)
         {
-            if (username == null)
-            {
-                return NotFound();
-            }
+            //if (username == null)
+            //{
+            //    return NotFound();
+            //}
 
-        var login =  _context.Users_TB
-                .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text.ToUpper() == "ADMIN");
+            var login_admin =  _context.Users_TB.Include("Roles_TB")
+                .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text == "ADMIN");
 
-
-            if (login != null)
+            if (login_admin != null)
             {
                 //var adminClaims = new List<Claim>
                 //{
@@ -64,30 +63,38 @@ namespace TextMark.Controllers
 
                 
                 HttpContext.Session.SetString("UserType", "ADMIN");
-                //TempData["UserType"] = "ADMIN";
-                //string usertype = TempData["UserType"].ToString();
-                //  string usertype = HttpContext.Session.GetString("UserType").ToUpper();
+                HttpContext.Session.SetString("UserID", login_admin.User_ID.ToString());
+                TempData["Username"] = username;
                 return RedirectToAction("Index", "Admin_UsersTB");
             }
 
             else
             {
-                var userClaims = new List<Claim>
+                //var userClaims = new List<Claim>
+                //{
+                //    new Claim(ClaimTypes.Name, username),
+                //    new Claim(ClaimTypes.Role, "USER")
+                //};
+
+                //var userIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                //var userPrincipal = new ClaimsPrincipal(userIdentity);
+                //await HttpContext.SignInAsync(userPrincipal);
+
+                var login_user = _context.Users_TB.Include("Roles_TB")
+              .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text != "ADMIN");
+
+                if (login_user != null)
                 {
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, "USER")
-                };
-
-                var userIdentity = new ClaimsIdentity(userClaims, "User Identity");
-                var userPrincipal = new ClaimsPrincipal(userIdentity);
-                await HttpContext.SignInAsync(userPrincipal);
-
-                HttpContext.Session.SetString("UserType", "USER");
-                return RedirectToAction("Index", "Home");
+                    HttpContext.Session.SetString("UserType", "USER");
+                    HttpContext.Session.SetString("UserID", login_user.User_ID.ToString());
+                    TempData["Username"] = username;
+                    return RedirectToAction("Index", "Home");
+                }
             }
+            return RedirectToAction("Index", "Login");
 
-           
-         }
+
+        }
 
         
     }

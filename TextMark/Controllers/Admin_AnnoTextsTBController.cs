@@ -25,7 +25,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
             return View(await _context.Annotations_TB.ToListAsync());
             // return View();
@@ -57,7 +57,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             //    Select_All_Roles();
@@ -73,7 +73,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (ModelState.IsValid)
@@ -94,7 +94,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -115,7 +115,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             //Select_All_Roles();
@@ -141,7 +141,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id != Anno_tb.Annotation_ID)
@@ -182,7 +182,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -207,7 +207,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             var anno = await _context.Annotations_TB.FindAsync(id);

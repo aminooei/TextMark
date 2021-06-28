@@ -26,7 +26,7 @@ namespace TextMark.Controllers
         {               
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }          
 
             return View(await _context.Users_TB.Include("Roles_TB").ToListAsync());
@@ -59,7 +59,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             Select_All_Roles();
@@ -70,12 +70,12 @@ namespace TextMark.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]        
         public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB users_tb)
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (ModelState.IsValid)
@@ -96,7 +96,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -118,7 +118,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
 
@@ -145,7 +145,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id != Users_tb.User_ID)
@@ -186,7 +186,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             if (id == null)
@@ -211,7 +211,7 @@ namespace TextMark.Controllers
         {
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             var login = await _context.Users_TB.FindAsync(id);

@@ -190,7 +190,6 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\wi
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\staticwebassets\TextMark.StaticWebAssets.Manifest.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\staticwebassets\TextMark.StaticWebAssets.xml
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\scopedcss\bundle\TextMark.styles.css
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.TagHelpers.input.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.TagHelpers.output.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorCoreGenerate.cache
@@ -282,3 +281,7 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\PartialViews\_PartialView_Tasks_List.cshtml.g.cs

@@ -19,7 +19,7 @@ namespace TextMark.Models
 
         [Required(ErrorMessage = "Password is required")]
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
-        //[DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirm Password is required")]
@@ -34,8 +34,8 @@ namespace TextMark.Models
 
         [ForeignKey("Role_ID")]
         public Roles_TB Roles_TB { get; set; }
-        //public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
-               
+        //  public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
+
     }
 
 
@@ -52,7 +52,7 @@ namespace TextMark.Models
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Label_Text { get; set; }
 
-        //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
+       // public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
     }
 
     public class Annotations_Labels_TB
@@ -96,12 +96,12 @@ namespace TextMark.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Assigned_Anno_ID { get; set; }
 
-        //[Key, Column(Order = 0)]
+        [Display(Name = "User ID")]
         public int User_ID { get; set; }
         [ForeignKey("User_ID")]
         public Users_TB Users_TB { get; set; }
 
-        //[Key, Column(Order = 1)]
+        [Display(Name = "Annotation ID")]
         public int Annotation_ID { get; set; }
         [ForeignKey("Annotation_ID")]
         public Annotations_TB Annotations_TB { get; set; }        
@@ -124,6 +124,6 @@ namespace TextMark.Models
         [Display(Name = "Role")]
         public string Role_Text { get; set; }
 
-        //public ICollection<Users_TB> Users_TBs { get; set; }
+        public ICollection<Users_TB> Users_TBs { get; set; }
     }
 }

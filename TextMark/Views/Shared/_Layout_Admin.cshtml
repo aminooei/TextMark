@@ -1,8 +1,5 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using TextMark.Areas.Identity.Data
+﻿@using Microsoft.AspNetCore.Http;
 
-@inject SignInManager<TextMarkUser> SignInManager
-@inject UserManager<TextMarkUser> UserManager
 
 
 <!DOCTYPE html>
@@ -74,10 +71,11 @@
 
         @*<ul class="navbar-nav">*@
 
-        @if (SignInManager.IsSignedIn(User))
+        @if (TempData["Username"] != null)
+            //(SignInManager.IsSignedIn(User))
         {
             <span class="nav-item">
-                <a id="manage" class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a id="manage" class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@TempData["Username"]</a>
 
             </span>
             <div class="nav-item">

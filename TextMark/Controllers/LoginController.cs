@@ -38,15 +38,20 @@ namespace TextMark.Controllers
             return View();
         }
 
-    
+        public void Check_Initialize_Admin()
+        {
+            var count_Users = _context.Users_TB.ToList().Count();
+            if (count_Users == 0)
+            {
+                Create_Role();
+                Create_User();
+            }
+        }
         public  IActionResult DetailsAsync(string username, string password)
         {
-            //if (username == null)
-            //{
-            //    return NotFound();
-            //}
+            Check_Initialize_Admin();
 
-            var login_admin =  _context.Users_TB.Include("Roles_TB")
+             var login_admin =  _context.Users_TB.Include("Roles_TB")
                 .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text == "ADMIN");
 
             if (login_admin != null)
@@ -70,16 +75,7 @@ namespace TextMark.Controllers
 
             else
             {
-                //var userClaims = new List<Claim>
-                //{
-                //    new Claim(ClaimTypes.Name, username),
-                //    new Claim(ClaimTypes.Role, "USER")
-                //};
-
-                //var userIdentity = new ClaimsIdentity(userClaims, "User Identity");
-                //var userPrincipal = new ClaimsPrincipal(userIdentity);
-                //await HttpContext.SignInAsync(userPrincipal);
-
+              
                 var login_user = _context.Users_TB.Include("Roles_TB")
               .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text != "ADMIN");
 
@@ -95,7 +91,24 @@ namespace TextMark.Controllers
 
 
         }
+        public  void Create_Role()
+        {
+            Roles_TB RT = new Roles_TB();
+            RT.Role_Text = "ADMIN";
+            _context.Add(RT);
+            _context.SaveChanges(); 
+            
+        }
 
-        
+        public  void Create_User()
+        {
+            Users_TB UT = new Users_TB();
+            UT.Username = "aminoo";
+            UT.Password = "12345";
+            UT.ConfirmPassword = "12345";
+            UT.Role_ID = 1;
+            _context.Add(UT);
+            _context.SaveChanges();
+        }
     }
 }

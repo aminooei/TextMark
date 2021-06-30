@@ -9,32 +9,46 @@ using TextMark.Data;
 using TextMark.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace TextMark.Controllers
 {
     public class HomeController : Controller
     {        
         private readonly TextMarkContext _context;
+        
 
         public HomeController(TextMarkContext context)
         {
             _context = context;
 
+            
         }
-        public async Task<IActionResult> Index()
+        
+       
+        public ActionResult Index()
+        {
+            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            HP.allAnnotations = Select_Assigned_Anno_ToUsers();
+            HP.allLabels = Select_Annotation_Labels(1);
+
+            return View(HP);
+        }
+
+        private List<Assigned_Annotations_ToUsers_TB> Select_Assigned_Anno_ToUsers()
         {
             var UserID = "";
 
             if (!IsValidUser())
             {
-                return RedirectToAction("Index", "Login");
+                //return RedirectToAction("Index", "Login");
             }
             if (HttpContext.Session.GetString("UserID") != null)
             {
                 UserID = HttpContext.Session.GetString("UserID").ToUpper();
             }
-            return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID).ToListAsync());
-            // return View();
+            return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID).ToList();
+
         }
         private bool IsValidUser()
         {
@@ -61,6 +75,10 @@ namespace TextMark.Controllers
             }
 
         }
+        public List<Labels_TB> Select_Annotation_Labels(int Project_ID)
+        {            
+            return _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();  
+        }
         public async Task<IActionResult> Details(int? AnnotaionID)
         {
             var UserID = "";
@@ -75,7 +93,7 @@ namespace TextMark.Controllers
             }
             if (AnnotaionID != null)
             {
-                Annotaion_ID = AnnotaionID.ToString().ToUpper();
+                Annotaion_ID = AnnotaionID.ToString().ToUpper();                
             }
             var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Annotation_ID.ToString() == Annotaion_ID).ToListAsync();
             var Selected_Anno_Text = Selected_Annotation[0].Annotations_TB.Annotation_Text;
@@ -84,7 +102,7 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-
+          
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Privacy()

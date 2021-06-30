@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TextMark.Models.Assigned_Annotations_ToUsers_TB>
+﻿@model TextMark.Models.CL_Users_Home_Page
+@using TextMark.Models;
+@using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "AILand";
@@ -25,43 +27,29 @@
                 <div class="content">
                     <!--Header-->
                     <h5 class="ui header">
-                        <i class="green color tags icon"></i>
+                        @*<i class="green color tags icon"></i>*@
                         <div class="content">
-                            List of Annotations
+                            List of Tasks
                             <div class="meta">
                                 <span>Please select an annotation</span>
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            @*<th>
-                                                @Html.DisplayNameFor(model => model.User_ID)
-                                            </th>*@
+                                        <tr>                                            
                                             <th>
-                                                @Html.DisplayNameFor(model => model.Annotation_ID)
-                                            </th>
-                                            <th>
-                                                @Html.DisplayNameFor(model => model.Date)
-                                            </th>
+                                                @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Text)
+                                            </th>                                            
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in Model.allAnnotations)
                                         {
-                                            <tr>
-                                                @*<td>
-                                                    @Html.DisplayFor(modelItem => item.Users_TB.Username)
-                                                </td>*@
+                                            <tr>                                               
+                                                <td>                                                    
+                                                    @item.Annotations_TB.Annotation_Text.Substring(0, 30)
+                                                </td>                                               
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Date)
-                                                </td>
-                                                <td>
-                                                    @*<a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |*@
-                                                    <a asp-action="Details" asp-route-AnnotaionID="@item.Assigned_Anno_ID">Select</a> 
-                                                    @*<a asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>*@
+                                                    <a asp-action="Details" asp-route-AnnotaionID="@item.Assigned_Anno_ID">Select</a>
                                                 </td>
                                             </tr>
                                         }
@@ -107,31 +95,49 @@
                                 <header class="card-header">
                                     <div class="card-header-title has-background-royalblue" style="padding: 1.5rem;">
                                         <div class="field is-grouped is-grouped-multiline">
-                                            <div class="control">
-                                                <div name="Internal" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Internal');">
-                                                    <a class="tag is-medium" style="        color: rgb(255, 255, 255); background-color: blue;">
-                                                        Internal
-                                                    </a> <span class="tag is-medium">I</span>
-                                                </div>
-                                            </div><div class="control">
-                                                <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
-                                                    <a class="tag is-medium" style="        color: rgb(51, 51, 51);  background-color: orange;">
-                                                        Requirement
-                                                    </a> <span class="tag is-medium">R</span>
-                                                </div>
-                                            </div><div class="control">
-                                                <div name="Backlog" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Backlog');">
-                                                    <a class="tag is-medium" style="        color: rgb(255, 255, 255);  background-color: teal;">
-                                                        Backlog
-                                                    </a> <span class="tag is-medium">B</span>
-                                                </div>
-                                            </div>
+                                            @*List<Annotations_Labels_TB> labels = TempData["Annotation_Labels"] as List<Annotations_Labels_TB>;*@
+                                           
+    
+            @foreach (var item in Model.allLabels)
+                    {
+                        
+                <div class="control">
+                    <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
+                        <a class="tag is-medium" style="color: rgb(51, 51, 51);  background-color: orange;">
+                            item.Labels_TB.Label_Text
+                        </a> <span class="tag is-medium">R</span>
+                    </div>
+                </div>
+            }
+        }
+    }
+    @*<div class="control">
+            <div name="Internal" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Internal');">
+                <a class="tag is-medium" style="        color: rgb(255, 255, 255); background-color: blue;">
+                    Internal
+                </a> <span class="tag is-medium">I</span>
+            </div>
+        </div>
+        <div class="control">
+            <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
+                <a class="tag is-medium" style="        color: rgb(51, 51, 51);  background-color: orange;">
+                    Requirement
+                </a> <span class="tag is-medium">R</span>
+            </div>
+        </div>
+        <div class="control">
+            <div name="Backlog" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Backlog');">
+                <a class="tag is-medium" style="        color: rgb(255, 255, 255);  background-color: teal;">
+                    Backlog
+                </a> <span class="tag is-medium">B</span>
+            </div>
+        </div>*@
                                         </div>
                                     </div>
-                                </header> 
+                                </header>
                                 <div class="example card-content">
-                                <div class="content">
-                                    <div> @TempData["Selected_Anno_Text"]</div>
+                                    <div class="content">
+                                        <div> @TempData["Selected_Anno_Text"]</div>
                                     </div>
                                 </div>
                             </div>

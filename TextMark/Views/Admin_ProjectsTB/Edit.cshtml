@@ -1,0 +1,33 @@
+﻿@model TextMark.Models.Projects_TB
+
+@{
+    ViewData["Title"] = "Project Edit";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Project</h4>
+<hr />
+<form asp-action="Edit" autocomplete="off">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Project_ID" />
+    <div class="form-group">
+        <label asp-for="Project_Name" class="control-label"></label>
+        <input asp-for="Project_Name" class="form-control" autocomplete="false" />
+        <span asp-validation-for="Project_Name" class="text-danger"></span>
+    </div>  
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+    @*</div>
+    </main>*@
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

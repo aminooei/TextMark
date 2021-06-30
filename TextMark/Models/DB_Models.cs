@@ -52,15 +52,28 @@ namespace TextMark.Models
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Label_Text { get; set; }
 
-       // public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
+        public int Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+        // public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
     }
+    public class Projects_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Project_ID { get; set; }
 
+        [Display(Name = "Project Name")]
+        [Required(ErrorMessage = "Project Name is required")]
+        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
+        public string Project_Name { get; set; }
+    }
     public class Annotations_Labels_TB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Anno_Label_ID { get; set; }
-        
+
         public int Annotation_ID { get; set; }
         [ForeignKey("Annotation_ID")]
         public Annotations_TB Annotations_TB { get; set; }
@@ -68,8 +81,6 @@ namespace TextMark.Models
         public int Label_ID { get; set; }
         [ForeignKey("Label_ID")]
         public Labels_TB Labels_TB { get; set; }
-
-       
     }
 
     public class Annotations_TB
@@ -125,5 +136,11 @@ namespace TextMark.Models
         public string Role_Text { get; set; }
 
         public ICollection<Users_TB> Users_TBs { get; set; }
+    }
+
+    public class CL_Users_Home_Page
+    {
+        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
+        public List<Labels_TB> allLabels { get; set; }
     }
 }

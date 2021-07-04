@@ -24,29 +24,35 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Roles_TB.Role_Text)
                     </th>
-                    
+                    <th>
+                        @Html.DisplayNameFor(model => model.Roles_TB.Projects_TB.Project_Name)
+                    </th>
+
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Username)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Password)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Roles_TB.Role_Text)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles_TB.Role_Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles_TB.Projects_TB.Project_Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

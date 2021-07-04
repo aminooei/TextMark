@@ -16,7 +16,12 @@
         <label asp-for="Project_Name" class="control-label"></label>
         <input asp-for="Project_Name" class="form-control" autocomplete="false" />
         <span asp-validation-for="Project_Name" class="text-danger"></span>
-    </div>  
+    </div>
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger">@ViewBag.Error</p>
+
+    }
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>

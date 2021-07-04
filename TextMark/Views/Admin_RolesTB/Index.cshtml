@@ -21,9 +21,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Role_Text)
                     </th>
-                    @*<th>
-            @Html.DisplayNameFor(model => model.Roles_TB.Role_Text)
-        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                    </th>
                     
                     <th></th>
                 </tr>
@@ -38,9 +38,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Role_Text)
                         </td>
-                        @*<td>
-                            @Html.DisplayFor(modelItem => item.Roles_TB.Role_Text)
-                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                        </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Role_ID">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.Role_ID">Details</a> |

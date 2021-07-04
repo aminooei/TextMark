@@ -32,6 +32,19 @@ namespace TextMark.Controllers
             // return View();
         }
 
+        private async Task<bool> IsProjectDuplicated(string ProjectText)
+        {
+            var Project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_Name == ProjectText);
+            if (Project == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool IsValidUser()
         {
 
@@ -77,11 +90,19 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            if (ModelState.IsValid)
+            if (await IsProjectDuplicated(Projects_TB.Project_Name))
             {
-                _context.Add(Projects_TB);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Error = "This Project Name is already registered.";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(Projects_TB);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(Projects_TB);
         }
@@ -103,7 +124,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Projects_TB = await _context.Projects_TB.Include("Roles_TB")
+            var Projects_TB = await _context.Projects_TB
                 .FirstOrDefaultAsync(m => m.Project_ID == id);
             if (Projects_TB == null)
             {
@@ -152,30 +173,38 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (await IsProjectDuplicated(Projects_TB.Project_Name))
             {
-                try
+                ViewBag.Error = "This Project Name is already registered.";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    _context.Update(Projects_TB);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(Projects_TB.Project_ID))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(Projects_TB);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!ProjectExists(Projects_TB.Project_ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(Projects_TB);
         }
 
-        private bool UserExists(int id)
+        private bool ProjectExists(int id)
         {
             return _context.Projects_TB.Any(e => e.Project_ID == id);
         }
@@ -219,7 +248,7 @@ namespace TextMark.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public List<Roles_TB> Select_All_Projects()
+        public List<Projects_TB> Select_All_Projects()
         {
 
             //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");

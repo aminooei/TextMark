@@ -8,11 +8,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TextMark.Models
 {
     public class Users_TB
-    {
-        [Key]
+    {   
+        [Key]            
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int User_ID { get; set; }
 
+        
         [Required]
         [StringLength(20, ErrorMessage = "Must be between 5 and 20 characters", MinimumLength = 5)]
         public string Username { get; set; }
@@ -36,37 +37,11 @@ namespace TextMark.Models
         public Roles_TB Roles_TB { get; set; }
         //  public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
 
-    }
+        //[Display(Name = "Project ID")]
+        //public int? Project_ID { get; set; }
 
-
-
-
-    public class Labels_TB
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Label_ID { get; set; }
-
-        [Display(Name = "Label")]
-        [Required(ErrorMessage = "Label Text is required")]
-        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
-        public string Label_Text { get; set; }
-
-        public int Project_ID { get; set; }
-        [ForeignKey("Project_ID")]
-        public Projects_TB Projects_TB { get; set; }
-        // public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
-    }
-    public class Projects_TB
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Project_ID { get; set; }
-
-        [Display(Name = "Project Name")]
-        [Required(ErrorMessage = "Project Name is required")]
-        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
-        public string Project_Name { get; set; }
+        //[ForeignKey("Project_ID")]
+        //public Projects_TB Projects_TB { get; set; }
     }
     public class Annotations_Labels_TB
     {
@@ -82,7 +57,36 @@ namespace TextMark.Models
         [ForeignKey("Label_ID")]
         public Labels_TB Labels_TB { get; set; }
     }
+    public class Labels_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Label_ID { get; set; }
 
+        [Display(Name = "Label")]
+        [Required(ErrorMessage = "Label Text is required")]
+        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
+        public string Label_Text { get; set; }
+
+
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+
+    }
+    public class Projects_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Project_ID { get; set; }
+
+        
+        [Display(Name = "Project Name")]
+        [Required(ErrorMessage = "Project Name is required")]
+        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
+        public string Project_Name { get; set; }
+    }
     public class Annotations_TB
     {
         [Key]
@@ -97,10 +101,13 @@ namespace TextMark.Models
         [DataType(DataType.DateTime)]
         public string Date { get; set; }
 
-        //public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
-        //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
-    }
 
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+
+    }
     public class Assigned_Annotations_ToUsers_TB
     {
         [Key]
@@ -115,15 +122,25 @@ namespace TextMark.Models
         [Display(Name = "Annotation ID")]
         public int Annotation_ID { get; set; }
         [ForeignKey("Annotation_ID")]
-        public Annotations_TB Annotations_TB { get; set; }        
+        public Annotations_TB Annotations_TB { get; set; }
+
+        [Display(Name = "Annotated Text")]
+        //[Required(ErrorMessage = "Annotated Text is required")]
+        [StringLength(1000, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
+        public string Annotated_Text { get; set; }
+
+
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+
 
         //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
 
 
         public DateTime Date { get; set; }
     }
-
-
     public class Roles_TB
     {
         [Key]
@@ -135,9 +152,13 @@ namespace TextMark.Models
         [Display(Name = "Role")]
         public string Role_Text { get; set; }
 
-        public ICollection<Users_TB> Users_TBs { get; set; }
-    }
 
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+
+        [ForeignKey("Project_ID")]
+        public virtual Projects_TB Projects_TB { get; set; }    
+    }
     public class CL_Users_Home_Page
     {
         public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }

@@ -27,10 +27,25 @@ namespace TextMark.Controllers
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
-            }          
+            }
 
-            return View(await _context.Users_TB.Include("Roles_TB").ToListAsync());
-            // return View();
+            return View(await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB").ToListAsync());
+           // return View(await _context.Users_TB.Include("Roles_TB").Select(x => new { Username = x.Username, Password = x.Password, Role = x.Roles_TB.Role_Text + "(" + x.Roles_TB.Projects_TB.Project_Name + ")" }).ToListAsync());
+            
+            
+        }
+
+        private async Task<bool> IsUserDuplicated(string Username, int? RoleID)
+        {
+            var User = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.Username == Username && m.Role_ID == RoleID);
+            if (User == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private bool IsValidUser()
@@ -70,7 +85,7 @@ namespace TextMark.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]        
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB users_tb)
         {
             if (!IsValidUser())
@@ -78,12 +93,21 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            if (ModelState.IsValid)
+            if (await IsUserDuplicated(users_tb.Username, users_tb.Role_ID))
             {
-                _context.Add(users_tb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Error = "This User is already registered for this role";
+
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(users_tb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            Select_All_Roles();
             return View(users_tb);
         }
         //public async Task<IActionResult> Details()
@@ -153,25 +177,33 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (await IsUserDuplicated(Users_tb.Username, Users_tb.Role_ID))
             {
-                try
+                ViewBag.Error = "This Username is already registered for this role";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    _context.Update(Users_tb);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(Users_tb.User_ID))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(Users_tb);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!UserExists(Users_tb.User_ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(Users_tb);
         }
@@ -220,12 +252,11 @@ namespace TextMark.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public List<Roles_TB> Select_All_Roles()
-        {            
-
-            //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
-            ViewBag.Roles = _context.Roles_TB.ToList();
-            return ViewBag.Roles;
+        public void Select_All_Roles()
+        {           
+            ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text + "("+x.Projects_TB.Project_Name+")"  }).ToList();
+           
+           // return ViewBag.Roles;
         }        
     }
 }

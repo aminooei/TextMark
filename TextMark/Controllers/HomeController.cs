@@ -76,8 +76,9 @@ namespace TextMark.Controllers
 
         }
         public List<Labels_TB> Select_Annotation_Labels(int Project_ID)
-        {            
-            return _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();  
+        {
+            return _context.Labels_TB.ToList();
+            // return _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();
         }
         public async Task<IActionResult> Details(int? AnnotaionID)
         {

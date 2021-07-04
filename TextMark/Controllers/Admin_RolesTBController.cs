@@ -28,10 +28,22 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            return View(await _context.Roles_TB.ToListAsync());
+            return View(await _context.Roles_TB.Include("Projects_TB").ToListAsync());
             
         }
-        
+        private async Task<bool> IsRoleDuplicated(string RoleText, int? ProjectID)
+        {              
+            var Role = await _context.Roles_TB.FirstOrDefaultAsync(m => m.Role_Text == RoleText && m.Project_ID == ProjectID);
+            if (Role == null)
+            {               
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool IsValidUser()
         {
 
@@ -60,7 +72,8 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            //   Select_All_Roles();
+            
+            Select_All_Projects();
             return View();
         }
 
@@ -69,19 +82,28 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Role_ID,Role_Text")] Roles_TB roles_tb)
+        public async Task<IActionResult> Create([Bind("Role_ID,Role_Text,Project_ID")] Roles_TB roles_tb)
         {
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Add(roles_tb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            if (await IsRoleDuplicated(roles_tb.Role_Text, roles_tb.Project_ID))
+            { 
+                ViewBag.Error = "This User is already registered for this role"; 
+                
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(roles_tb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }      
+            }
+            Select_All_Projects();
             return View(roles_tb);
         }
         //public async Task<IActionResult> Details()
@@ -90,7 +112,7 @@ namespace TextMark.Controllers
         //}
 
         // GET: Logins/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? ProjectID)
         {
             if (!IsValidUser())
             {
@@ -119,26 +141,26 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            // Select_All_Roles();
+            Select_All_Projects();
             if (id == null)
             {
                 return NotFound();
             }
 
-              var login = await _context.Roles_TB.FindAsync(id);
-           // var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
-            if (login == null)
+            
+            var Role = await _context.Roles_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Role_ID == id);
+            if (Role == null)
             {
                 return NotFound();
             }
-            return View(login);
+            return View(Role);
         }
         // POST: Logins/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Role_ID,Role_Text")] Roles_TB Roles_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Role_ID,Role_Text,Project_ID")] Roles_TB Roles_tb)
         {
             if (!IsValidUser())
             {
@@ -150,25 +172,33 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (await IsRoleDuplicated(Roles_tb.Role_Text, Roles_tb.Project_ID))
             {
-                try
+                ViewBag.Error = "This User is already registered for this role";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    _context.Update(Roles_tb);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RoleExists(Roles_tb.Role_ID))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(Roles_tb);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!RoleExists(Roles_tb.Role_ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(Roles_tb);
         }
@@ -191,7 +221,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var login = await _context.Roles_TB.FirstOrDefaultAsync(m => m.Role_ID == id);
+            var login = await _context.Roles_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Role_ID == id);
 
             if (login == null)
             {
@@ -216,7 +246,12 @@ namespace TextMark.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-       
+        public List<Projects_TB> Select_All_Projects()
+        {           
+            ViewBag.Projects = _context.Projects_TB.ToList();
+            
+            return ViewBag.Projects;
+        }
+        
     }
 }

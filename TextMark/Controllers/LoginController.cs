@@ -43,6 +43,7 @@ namespace TextMark.Controllers
             var count_Users = _context.Users_TB.ToList().Count();
             if (count_Users == 0)
             {
+                Create_Project();
                 Create_Role();
                 Create_User();
             }
@@ -70,7 +71,7 @@ namespace TextMark.Controllers
                 HttpContext.Session.SetString("UserType", "ADMIN");
                 HttpContext.Session.SetString("UserID", login_admin.User_ID.ToString());
                 TempData["Username"] = username;
-                return RedirectToAction("Index", "Admin_UsersTB");
+                return RedirectToAction("Index", "Admin_ProjectsTB");
             }
 
             else
@@ -95,18 +96,28 @@ namespace TextMark.Controllers
         {
             Roles_TB RT = new Roles_TB();
             RT.Role_Text = "ADMIN";
+            RT.Project_ID = 1;
             _context.Add(RT);
             _context.SaveChanges(); 
             
         }
+        public void Create_Project()
+        {
+            Projects_TB PT = new Projects_TB();
+            PT.Project_Name = "Project 1";
+            _context.Add(PT);
+            _context.SaveChanges();
 
-        public  void Create_User()
+        }
+
+        public void Create_User()
         {
             Users_TB UT = new Users_TB();
             UT.Username = "aminoo";
             UT.Password = "12345";
             UT.ConfirmPassword = "12345";
             UT.Role_ID = 1;
+            //UT.Project_ID = 1;
             _context.Add(UT);
             _context.SaveChanges();
         }

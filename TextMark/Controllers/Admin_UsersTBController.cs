@@ -128,7 +128,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Users_tb = await _context.Users_TB.Include("Roles_TB")
+            var Users_tb = await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB")
                 .FirstOrDefaultAsync(m => m.User_ID == id);
             if (Users_tb == null)
             {
@@ -167,6 +167,7 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB Users_tb)
         {
+            Select_All_Roles();
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");

@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,19 +72,24 @@
 
         @*<ul class="navbar-nav">*@
 
-        @if (TempData["Username"] != null)
-            //(SignInManager.IsSignedIn(User))
+        @if (Context.Session.GetString("Username") != "")
+        //if (TempData["Username"] != null)
+        //(SignInManager.IsSignedIn(User))
         {
             <span class="nav-item">
-                <a id="manage" class="nav-link " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@TempData["Username"]</a>
+                <a id="manage" class="nav-link " title="Manage">@Context.Session.GetString("Username")</a>
 
             </span>
-            <div class="nav-item">
-                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button id="logout" type="submit" class="nav-link btn btn-link ">Logout</button>
+            <span class="nav-item">
+                @*<a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>*@
+                <a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Logout</a>
 
+            </span>
+            @*<div class="nav-item">
+                <form id="logoutForm" class="form-inline"  >
+                    <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
                 </form>
-            </div>
+            </div>*@
         }
         else
         {

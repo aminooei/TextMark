@@ -29,6 +29,7 @@ namespace TextMark.Controllers
 
         public IActionResult Index()
         {
+            ResetUserDetails();
             return View();
         }
 
@@ -38,10 +39,17 @@ namespace TextMark.Controllers
             return View();
         }
 
+        private void ResetUserDetails()
+        {
+            HttpContext.Session.SetString("UserType", "");
+            HttpContext.Session.SetString("UserID", "");
+            HttpContext.Session.SetString("Username", "");
+           // TempData["Username"] = "";
+        }
         public void Check_Initialize_Admin()
         {
-            var count_Users = _context.Users_TB.ToList().Count();
-            if (count_Users == 0)
+            var count_Projects = _context.Projects_TB.ToList().Count();
+            if (count_Projects == 0)
             {
                 Create_Project();
                 Create_Role();
@@ -52,25 +60,15 @@ namespace TextMark.Controllers
         {
             Check_Initialize_Admin();
 
-             var login_admin =  _context.Users_TB.Include("Roles_TB")
-                .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text == "ADMIN");
+            var login_admin = _context.Users_TB.Include("Roles_TB")
+               .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text == "ADMIN");
 
-            if (login_admin != null)
-            {
-                //var adminClaims = new List<Claim>
-                //{
-                //    new Claim(ClaimTypes.Name, username),
-                //    new Claim(ClaimTypes.Role, "ADMIN")
-                //};
-
-                //var adminIdentity = new ClaimsIdentity(adminClaims, CookieAuthenticationDefaults.AuthenticationScheme);
-                //var adminPrincipal = new ClaimsPrincipal(new[] { adminIdentity });
-                //await HttpContext.SignInAsync(adminPrincipal);
-
-                
+            if (login_admin != null)               
+            {   
                 HttpContext.Session.SetString("UserType", "ADMIN");
                 HttpContext.Session.SetString("UserID", login_admin.User_ID.ToString());
-                TempData["Username"] = username;
+                HttpContext.Session.SetString("Username", username);
+                //TempData["Username"] = username;
                 return RedirectToAction("Index", "Admin_ProjectsTB");
             }
 
@@ -95,19 +93,18 @@ namespace TextMark.Controllers
         public  void Create_Role()
         {
             Roles_TB RT = new Roles_TB();
-            RT.Role_Text = "ADMIN";
+            RT.Role_Text = "Admin";
             RT.Project_ID = 1;
             _context.Add(RT);
             _context.SaveChanges(); 
             
         }
         public void Create_Project()
-        {
+        {  
             Projects_TB PT = new Projects_TB();
             PT.Project_Name = "Project 1";
-            _context.Add(PT);
+            _context.Add(PT); 
             _context.SaveChanges();
-
         }
 
         public void Create_User()

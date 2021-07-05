@@ -26,6 +26,7 @@ namespace TextMark.Models
         [Required(ErrorMessage = "Confirm Password is required")]
         [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
         [Compare("Password")]
+        [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 

@@ -162,6 +162,7 @@ namespace TextMark.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Role_ID,Role_Text,Project_ID")] Roles_TB Roles_tb)
         {
+            Select_All_Projects();
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");

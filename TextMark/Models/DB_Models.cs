@@ -91,17 +91,19 @@ namespace TextMark.Models
     public class Annotations_TB
     {
         [Key]
+        [Display(Name = "Annotation ID")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Annotation_ID { get; set; }
+
+        [Display(Name = "Annotation Tilte")]
+        [Required(ErrorMessage = "Annotation Title is required")]
+        [StringLength(30, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
+        public string Annotation_Title { get; set; }
 
         [Display(Name = "Annotation Text")]
         [Required(ErrorMessage = "Annotation Text is required")]
         [StringLength(1000, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
         public string Annotation_Text { get; set; }
-
-        [DataType(DataType.DateTime)]
-        public string Date { get; set; }
-
 
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
@@ -137,10 +139,7 @@ namespace TextMark.Models
         public Projects_TB Projects_TB { get; set; }
 
 
-        //public ICollection<Annotations_Labels_TB> Annotations_Labels_TBs { get; set; }
-
-
-        public DateTime Date { get; set; }
+        
     }
     public class Roles_TB
     {

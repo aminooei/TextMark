@@ -27,9 +27,23 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View(await _context.Annotations_TB.ToListAsync());
-            // return View();
+            return View(await _context.Annotations_TB.Include("Projects_TB").ToListAsync());
+          
         }
+
+        private async Task<bool> IsAnnoDuplicated(string Anno_Text, int? ProjectID)
+        {
+            var Annotation = await _context.Annotations_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Annotation_Text == Anno_Text && m.Project_ID == ProjectID);
+            if (Annotation == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool IsValidUser()
         {
 
@@ -60,7 +74,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //    Select_All_Roles();
+            Select_All_Projects();
             return View();
         }
 
@@ -69,19 +83,28 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Annotation_ID,Annotation_Text,Date")] Annotations_TB annotations_tb)
+        public async Task<IActionResult> Create([Bind("Annotation_ID,Annotation_Text,Project_ID")] Annotations_TB annotations_tb)
         {
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            if (ModelState.IsValid)
+            if (await IsAnnoDuplicated(annotations_tb.Annotation_Text, annotations_tb.Project_ID))
             {
-                _context.Add(annotations_tb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Error = "This Label is already registered for this Project";
+
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(annotations_tb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            Select_All_Projects();
             return View(annotations_tb);
         }
         //public async Task<IActionResult> Details()
@@ -102,7 +125,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Annotations_tb = await _context.Annotations_TB.FirstOrDefaultAsync(m => m.Annotation_ID == id);
+            var Annotations_tb = await _context.Annotations_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Annotation_ID == id);
             if (Annotations_tb == null)
             {
                 return NotFound();
@@ -118,14 +141,14 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //Select_All_Roles();
+            Select_All_Projects();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var Anno = await _context.Annotations_TB.FindAsync(id);
-           // var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
+            var Anno = await _context.Annotations_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Annotation_ID == id);
+          
             if (Anno == null)
             {
                 return NotFound();
@@ -137,8 +160,9 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Annotation_ID,Annotation_Text,Date")] Annotations_TB Anno_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Annotation_ID,Annotation_Text,Project_ID")] Annotations_TB Anno_tb)
         {
+            Select_All_Projects();
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
@@ -148,31 +172,38 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (await IsAnnoDuplicated(Anno_tb.Annotation_Text, Anno_tb.Project_ID))
             {
-                try
+                ViewBag.Error = "This Annotation Text is already registered for this Project";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    _context.Update(Anno_tb);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(Anno_tb.Annotation_ID))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(Anno_tb);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!AnnoExists(Anno_tb.Annotation_ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(Anno_tb);
         }
 
-        private bool UserExists(int id)
+        private bool AnnoExists(int id)
         {
             return _context.Annotations_TB.Any(e => e.Annotation_ID == id);
         }
@@ -190,7 +221,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var anno = await _context.Annotations_TB.FirstOrDefaultAsync(m => m.Annotation_ID == id);
+            var anno = await _context.Annotations_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Annotation_ID == id);
 
             if (anno == null)
             {
@@ -216,6 +247,11 @@ namespace TextMark.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+        public List<Projects_TB> Select_All_Projects()
+        {
+            ViewBag.Projects = _context.Projects_TB.ToList();
+
+            return ViewBag.Projects;
+        }
     }
 }

@@ -27,9 +27,23 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").ToListAsync());
+            return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             // return View();
         }
+
+        private async Task<bool> IsAssignedAnnoDuplicated(int Anno_ID,int UserID, int? ProjectID)
+        {
+            var Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.User_ID == UserID && m.Annotation_ID == Anno_ID  && m.Project_ID == ProjectID);
+            if (Annotation == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool IsValidUser()
         {
 
@@ -62,6 +76,7 @@ namespace TextMark.Controllers
 
             Select_All_Users();
             Select_All_Annotations();
+            Select_All_Projects();
             return View();
         }
 
@@ -70,19 +85,30 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Date")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
+        public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
         {
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            if (ModelState.IsValid)
+            if (await IsAssignedAnnoDuplicated(assigned_annotations_tousers_tb.Annotation_ID,assigned_annotations_tousers_tb.User_ID,assigned_annotations_tousers_tb.Project_ID))
             {
-                _context.Add(assigned_annotations_tousers_tb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Error = "This Label is already registered for this Project";
+
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(assigned_annotations_tousers_tb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            Select_All_Projects();
+            Select_All_Annotations();
+            Select_All_Users();
             return View(assigned_annotations_tousers_tb);
         }
         //public async Task<IActionResult> Details()
@@ -103,7 +129,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Assigned_Anno_TB = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB")
+            var Assigned_Anno_TB = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
                 .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id);
             if (Assigned_Anno_TB == null)
             {
@@ -122,14 +148,15 @@ namespace TextMark.Controllers
 
             Select_All_Users();
             Select_All_Annotations();
-
+            Select_All_Projects();
+            
             if (id == null)
             {
                 return NotFound();
             }
 
             //   var login = await _context.Users_TB.FindAsync(id);
-            var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id);
+            var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id);
             if (Assigned_Anno == null)
             {
                 return NotFound();
@@ -141,8 +168,12 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Date")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
+        public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
         {
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
+
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
@@ -153,25 +184,33 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (await IsAssignedAnnoDuplicated(Assigned_Anno.Annotation_ID, Assigned_Anno.User_ID, Assigned_Anno.Project_ID))
             {
-                try
+                ViewBag.Error = "This Label is already registered for this Project";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    _context.Update(Assigned_Anno);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!Assigned_Anno_Exists(Assigned_Anno.Assigned_Anno_ID))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(Assigned_Anno);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!Assigned_Anno_Exists(Assigned_Anno.Assigned_Anno_ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(Assigned_Anno);
         }
@@ -194,7 +233,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id);
+            var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id);
 
             if (Assigned_Anno == null)
             {
@@ -233,6 +272,11 @@ namespace TextMark.Controllers
             ViewBag.Annotations = _context.Annotations_TB.ToList();
             return ViewBag.Annotations;
         }
-        
+        public List<Projects_TB> Select_All_Projects()
+        {
+            ViewBag.Projects = _context.Projects_TB.ToList();
+
+            return ViewBag.Projects;
+        }
     }
 }

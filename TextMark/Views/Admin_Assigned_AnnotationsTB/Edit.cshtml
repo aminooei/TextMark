@@ -16,6 +16,12 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Assigned_Anno_ID" />
     <div class="form-group">
+        <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
+        @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+new { @class = "form-control" })
+        <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Annotations_TB.Annotation_Text" class="control-label"></label>
         @Html.DropDownList("Annotation_ID", new SelectList(ViewBag.Annotations, "Annotation_ID", "Annotation_Text"), "Select an Annotation Text",
           new { @class = "form-control" })
@@ -27,11 +33,12 @@
           new { @class = "form-control" })
         <span asp-validation-for="Users_TB.Username" class="text-danger"></span>
     </div>
-    <div class="form-group" type="hidden">
-        @*<label asp-for="Date" class="control-label" type="hidden"></label>*@
-        <input ID="Date_Input" asp-for="Date" class="form-control" type="hidden" />
-        <span asp-validation-for="Date" class="text-danger" type="hidden"></span>
-    </div>
+    
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger">@ViewBag.Error</p>
+
+    }
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>

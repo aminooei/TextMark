@@ -16,37 +16,45 @@
             <thead>
                 <tr>
                     <th>
+                        @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Users_TB.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Title)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Date)
-                    </th>
-                    
+
+
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Users_TB.Username)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Date)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Assigned_Anno_ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Users_TB.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Assigned_Anno_ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

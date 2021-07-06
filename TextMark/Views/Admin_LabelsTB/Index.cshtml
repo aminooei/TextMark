@@ -17,7 +17,10 @@
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Label_Text)
-                    </th>   
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                    </th>
                     <th>
                     </th>
 
@@ -30,7 +33,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Label_Text)
                         </td>
-                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                        </td>
                         
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Label_ID">Edit</a> |

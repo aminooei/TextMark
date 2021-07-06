@@ -91,7 +91,7 @@ namespace TextMark.Controllers
 
             if (await IsRoleDuplicated(roles_tb.Role_Text, roles_tb.Project_ID))
             { 
-                ViewBag.Error = "This User is already registered for this role"; 
+                ViewBag.Error = "This Role is already registered for this project!"; 
                 
             }
             else

@@ -27,9 +27,22 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View(await _context.Labels_TB.ToListAsync());
-            // return View();
+            return View(await _context.Labels_TB.Include("Projects_TB").ToListAsync());            
         }
+
+        private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID)
+        {
+            var Label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_Text == LabelText && m.Project_ID == ProjectID);
+            if (Label == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool IsValidUser()
         {
 
@@ -59,7 +72,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //     Select_All_Roles();
+            Select_All_Projects();
             return View();
         }
 
@@ -68,19 +81,28 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text")] Labels_TB labels_tb)
+        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text,Project_ID")] Labels_TB labels_tb)
         {
+           
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
-
-            if (ModelState.IsValid)
+            if (await IsLabelDuplicated(labels_tb.Label_Text, labels_tb.Project_ID))
             {
-                _context.Add(labels_tb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Error = "This Label is already registered for this Project";
+
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(labels_tb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            Select_All_Projects();
             return View(labels_tb);
         }
         //public async Task<IActionResult> Details()
@@ -101,7 +123,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Labels_tb = await _context.Labels_TB
+            var Labels_tb = await _context.Labels_TB.Include("Projects_TB")
                 .FirstOrDefaultAsync(m => m.Label_ID == id);
             if (Labels_tb == null)
             {
@@ -118,13 +140,13 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            //Select_All_Roles();
+            Select_All_Projects();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var label = await _context.Labels_TB.FindAsync(id);
+            var label = await _context.Labels_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
             //var login = await _context.Labels_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
             if (label == null)
             {
@@ -137,8 +159,9 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text")] Labels_TB Labels_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text,Project_ID")] Labels_TB Labels_tb)
         {
+            Select_All_Projects();
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
@@ -148,26 +171,33 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (await IsLabelDuplicated(Labels_tb.Label_Text, Labels_tb.Project_ID))
             {
-                try
+                ViewBag.Error = "This Label is already registered for this Project";
+
+            }
+            else
+            {
+                if (ModelState.IsValid)
                 {
-                    _context.Update(Labels_tb);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LabelExists(Labels_tb.Label_ID))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(Labels_tb);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!LabelExists(Labels_tb.Label_ID))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
             return View(Labels_tb);
         }
@@ -190,7 +220,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_ID == id);
+            var label = await _context.Labels_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
               
             if (label == null)
             {
@@ -216,11 +246,11 @@ namespace TextMark.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public List<Roles_TB> Select_All_Roles()
-        //{
-        //    //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
-        //    ViewBag.Roles = _context.Roles_TB.ToList();
-        //    return ViewBag.Roles;
-        //}        
+        public List<Projects_TB> Select_All_Projects()
+        {
+            ViewBag.Projects = _context.Projects_TB.ToList();
+
+            return ViewBag.Projects;
+        }
     }
 }

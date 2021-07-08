@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "AILand";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var Selected_Assigned_Annotation = "";
 }
 
 <h1>AI Land</h1>
@@ -36,7 +37,7 @@
                                     <thead>
                                         <tr>                                            
                                             <th>
-                                                @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Text)
+                                                @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
                                             </th>                                            
                                             <th></th>
                                         </tr>
@@ -44,14 +45,19 @@
                                     <tbody>
                                         @foreach (var item in Model.allAnnotations)
                                         {
-                                            <tr>                                               
-                                                <td>                                                    
-                                                    @item.Annotations_TB.Annotation_Text.Substring(0, 30)
-                                                </td>                                               
-                                                <td>
-                                                    <a asp-action="Details" asp-route-AnnotaionID="@item.Assigned_Anno_ID">Select</a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            @*<td>
+                                                @item.Annotations_TB.Annotation_Text.Substring(0, 30)
+                                            </td>*@
+                                            <td>
+                                                @item.Annotations_TB.Annotation_Title
+                                            </td>
+                                            <td>
+                                                <a asp-action="Index" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID">Select</a>
+                                                @*@Selected_Assigned_Annotation = @item.Assigned_Anno_ID;*@
+                                                
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -105,6 +111,7 @@
                     <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
                         <a class="tag is-medium" style="color: rgb(51, 51, 51);  background-color: orange;">
                             item.Labels_TB.Label_Text
+                           
                         </a> <span class="tag is-medium">R</span>
                     </div>
                 </div>
@@ -137,7 +144,12 @@
                                 </header>
                                 <div class="example card-content">
                                     <div class="content">
-                                        <div> @TempData["Selected_Anno_Text"]</div>
+                                        @*<div> @TempData["Selected_Anno_Text"]</div>*@
+                                        @if (Model.Selected_Assigned_Annotation.Annotated_Text != null)
+                                        {
+                                            <div> @Model.Selected_Assigned_Annotation.Annotated_Text </div>
+                                        }
+
                                     </div>
                                 </div>
                             </div>

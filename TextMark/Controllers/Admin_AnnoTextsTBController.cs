@@ -83,7 +83,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Annotation_ID,Annotation_Text,Project_ID")] Annotations_TB annotations_tb)
+        public async Task<IActionResult> Create([Bind("Annotation_ID,Annotation_Title,Annotation_Text,Project_ID")] Annotations_TB annotations_tb)
         {
             if (!IsValidUser())
             {

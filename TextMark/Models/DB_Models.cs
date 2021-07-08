@@ -36,28 +36,22 @@ namespace TextMark.Models
 
         [ForeignKey("Role_ID")]
         public Roles_TB Roles_TB { get; set; }
-        //  public ICollection<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TBs { get; set; }
-
-        //[Display(Name = "Project ID")]
-        //public int? Project_ID { get; set; }
-
-        //[ForeignKey("Project_ID")]
-        //public Projects_TB Projects_TB { get; set; }
+       
     }
-    public class Annotations_Labels_TB
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Anno_Label_ID { get; set; }
+    //public class Annotations_Labels_TB
+    //{
+    //    [Key]
+    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //    public int Anno_Label_ID { get; set; }
 
-        public int Annotation_ID { get; set; }
-        [ForeignKey("Annotation_ID")]
-        public Annotations_TB Annotations_TB { get; set; }
+    //    public int Annotation_ID { get; set; }
+    //    [ForeignKey("Annotation_ID")]
+    //    public Annotations_TB Annotations_TB { get; set; }
 
-        public int Label_ID { get; set; }
-        [ForeignKey("Label_ID")]
-        public Labels_TB Labels_TB { get; set; }
-    }
+    //    public int Label_ID { get; set; }
+    //    [ForeignKey("Label_ID")]
+    //    public Labels_TB Labels_TB { get; set; }
+    //}
     public class Labels_TB
     {
         [Key]
@@ -97,7 +91,7 @@ namespace TextMark.Models
 
         [Display(Name = "Annotation Tilte")]
         [Required(ErrorMessage = "Annotation Title is required")]
-        [StringLength(30, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
+        [StringLength(30, ErrorMessage = "Must be between 5 and 30 characters", MinimumLength = 5)]
         public string Annotation_Title { get; set; }
 
         [Display(Name = "Annotation Text")]
@@ -163,5 +157,6 @@ namespace TextMark.Models
     {
         public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
         public List<Labels_TB> allLabels { get; set; }
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
     }
 }

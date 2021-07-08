@@ -31,7 +31,8 @@
                   new { @class = "form-control" })
                 <span asp-validation-for="Users_TB.Username" class="text-danger"></span>
             </div>
-            
+           
+
             @if (ViewBag.Error != null)
             {
                 <p class="text-danger">@ViewBag.Error</p>

@@ -85,7 +85,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
+        public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID,Annotated_Text")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
         {
             if (!IsValidUser())
             {
@@ -101,6 +101,8 @@ namespace TextMark.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var a = _context.Assigned_Annotations_ToUsers_TB.Include("Annotations_TB").FirstOrDefault(m => m.Assigned_Anno_ID == assigned_annotations_tousers_tb.Annotation_ID);
+                    assigned_annotations_tousers_tb.Annotated_Text = a.Annotations_TB.Annotation_Text;
                     _context.Add(assigned_annotations_tousers_tb);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

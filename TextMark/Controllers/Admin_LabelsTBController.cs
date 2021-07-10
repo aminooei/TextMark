@@ -27,7 +27,7 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View(await _context.Labels_TB.Include("Projects_TB").ToListAsync());            
+            return View(await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").ToListAsync());            
         }
 
         private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID)
@@ -72,6 +72,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
+            Select_All_Labels_BGColours();
             Select_All_Projects();
             return View();
         }
@@ -81,7 +82,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text,Project_ID")] Labels_TB labels_tb)
+        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text,Project_ID,Label_BGColour_ID")] Labels_TB labels_tb)
         {
            
             if (!IsValidUser())
@@ -102,6 +103,7 @@ namespace TextMark.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
+            Select_All_Labels_BGColours();
             Select_All_Projects();
             return View(labels_tb);
         }
@@ -123,7 +125,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Labels_tb = await _context.Labels_TB.Include("Projects_TB")
+            var Labels_tb = await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB")
                 .FirstOrDefaultAsync(m => m.Label_ID == id);
             if (Labels_tb == null)
             {
@@ -140,13 +142,14 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
+            Select_All_Labels_BGColours();
             Select_All_Projects();
             if (id == null)
             {
                 return NotFound();
             }
 
-            var label = await _context.Labels_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
+            var label = await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
             //var login = await _context.Labels_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
             if (label == null)
             {
@@ -159,8 +162,9 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text,Project_ID")] Labels_TB Labels_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text,Project_ID,Label_BGColour_ID")] Labels_TB Labels_tb)
         {
+            Select_All_Labels_BGColours();
             Select_All_Projects();
             if (!IsValidUser())
             {
@@ -252,5 +256,12 @@ namespace TextMark.Controllers
 
             return ViewBag.Projects;
         }
+        public List<Labels_BG_Colours_TB> Select_All_Labels_BGColours()
+        {
+            ViewBag.Labels = _context.Labels_BG_Colours_TB.ToList();
+
+            return ViewBag.Labels;
+        }
+
     }
 }

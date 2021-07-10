@@ -75,14 +75,16 @@ namespace TextMark.Controllers
             else
             {
               
-                var login_user = _context.Users_TB.Include("Roles_TB")
-              .FirstOrDefault(m => m.Username == username && m.Password == password && m.Roles_TB.Role_Text != "ADMIN");
+                var login_user = _context.Users_TB.Include("Roles_TB").Select(c => new { Username = c.Username, Password = c.Password , Role = c.Roles_TB.Role_Text , Project_ID = c.Roles_TB.Project_ID, User_ID = c.User_ID})
+              .FirstOrDefault(m => m.Username == username && m.Password == password && m.Role != "ADMIN");
 
                 if (login_user != null)
                 {
                     HttpContext.Session.SetString("UserType", "USER");
                     HttpContext.Session.SetString("UserID", login_user.User_ID.ToString());
-                    TempData["Username"] = username;
+                    HttpContext.Session.SetString("ProjectID", login_user.Project_ID.ToString());
+
+                   TempData["Username"] = username;
                     return RedirectToAction("Index", "Home");
                 }
             }

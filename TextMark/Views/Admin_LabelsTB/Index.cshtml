@@ -21,6 +21,15 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
                     </th>
+                    <th>                         
+                        @Html.DisplayNameFor(model => model.Labels_BG_Colours_TB.Label_Background_Color)                        
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Labels_BG_Colours_TB.Label_Background_Color)                        
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Labels_BG_Colours_TB.Label_ShortCut_Key)
+                    </th>
                     <th>
                     </th>
 
@@ -29,20 +38,26 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Label_Text)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
-                        </td>
-                        
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Label_ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Label_ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Label_ID">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Label_Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                    </td>
+                    <td>
+                        <span style = "background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">@Html.DisplayFor(modelItem => item.Labels_BG_Colours_TB.Label_Background_Color)</span>                       
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Labels_BG_Colours_TB.Label_ShortCut_Key)
+                    </td>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Label_ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Label_ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Label_ID">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

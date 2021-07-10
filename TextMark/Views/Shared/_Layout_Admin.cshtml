@@ -146,6 +146,12 @@
             </ul>*@
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Labels_BG_ColoursTB")">
+                                <span data-feather="key"></span>
+                                Labels Background Colours and Shortkeys
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
                                 <span data-feather="tag"></span>
                                 Labels
@@ -156,7 +162,7 @@
                                 <span data-feather="file-text"></span>
                                 Annotations Texts
                             </a>
-                        </li>                        
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Assigned_AnnotationsTB")">
                                 <span data-feather="list"></span>
@@ -196,7 +202,19 @@
             <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
 
+            <script src="~/js/bootstrap-colorpicker.js"></script>
 
+            <script>
+                $(function () {
+                    // Basic instantiation:
+                    $('#demo-input').colorpicker();
+
+                    // Example using an event, to change the color of the #demo div background:
+                    $('#demo-input').on('colorpickerChange', function (event) {
+                        $('#demo').css('background-color', event.color.toString());
+                    });
+                });
+            </script>
 
 
 

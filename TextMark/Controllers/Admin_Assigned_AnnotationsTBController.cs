@@ -101,8 +101,8 @@ namespace TextMark.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var a = _context.Assigned_Annotations_ToUsers_TB.Include("Annotations_TB").FirstOrDefault(m => m.Assigned_Anno_ID == assigned_annotations_tousers_tb.Annotation_ID);
-                    assigned_annotations_tousers_tb.Annotated_Text = a.Annotations_TB.Annotation_Text;
+                    var a = _context.Annotations_TB.FirstOrDefault(m => m.Annotation_ID == assigned_annotations_tousers_tb.Annotation_ID);
+                    assigned_annotations_tousers_tb.Annotated_Text = a.Annotation_Text;
                     _context.Add(assigned_annotations_tousers_tb);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

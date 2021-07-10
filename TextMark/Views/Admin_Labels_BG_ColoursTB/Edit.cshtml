@@ -1,0 +1,43 @@
+﻿@model TextMark.Models.Labels_BG_Colours_TB
+
+@{
+    ViewData["Title"] = "Edit BackGround Colour and Shortcut Key";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Edit BackGround Colour and Shortcut Key</h1>
+
+<hr />
+<form asp-action="Edit" autocomplete="off">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Label_BGColour_ID" />
+    <div class="form-group">
+        <label asp-for="Label_Background_Color" class="control-label"></label>
+        @*<input asp-for="Label_Background_Color" class="form-control" autocomplete="false" />*@
+        @Html.TextBoxFor(model => model.Label_Background_Color, new { @class = "form-control", type = "color" })
+        <span asp-validation-for="Label_Background_Color" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Label_ShortCut_Key" class="control-label"></label>
+        <input asp-for="Label_ShortCut_Key" class="form-control" autocomplete="false" />
+        <span asp-validation-for="Label_ShortCut_Key" class="text-danger"></span>
+    </div>
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger">@ViewBag.Error</p>
+
+    }
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+    @*</div>
+    </main>*@
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -19,6 +19,12 @@
                 <span asp-validation-for="Label_Text" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Label_BGColour_ID" class="control-label"></label>
+                @Html.DropDownList("Label_BGColour_ID", new SelectList(ViewBag.Labels, "Label_BGColour_ID", "Label_Background_Color"), "Select a Label",
+       new { @class = "form-control" })
+                <span asp-validation-for="Label_BGColour_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
        new { @class = "form-control" })

@@ -53,7 +53,7 @@
                                                 @item.Annotations_TB.Annotation_Title
                                             </td>
                                             <td>
-                                                <a asp-action="Index" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID">Select</a>
+                                                <a asp-action="Index" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
                                                 @*@Selected_Assigned_Annotation = @item.Assigned_Anno_ID;*@
                                                 
                                             </td>
@@ -105,19 +105,19 @@
                                            
     
             @foreach (var item in Model.allLabels)
-                    {
-                        
+            {
+                       
                 <div class="control">
                     <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
-                        <a class="tag is-medium" style="color: rgb(51, 51, 51);  background-color: orange;">
-                            item.Labels_TB.Label_Text
-                           
-                        </a> <span class="tag is-medium">R</span>
+                        @*<a class="tag is-medium" style="color: rgb(51, 51, 51);  background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">*@
+                        <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Labels_BG_Colours_TB.Label_Background_Color ;">
+
+                            @item.Label_Text
+                        </a> <span class="tag is-medium">@item.Labels_BG_Colours_TB.Label_ShortCut_Key</span>
                     </div>
                 </div>
             }
-        }
-    }
+        
     @*<div class="control">
             <div name="Internal" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Internal');">
                 <a class="tag is-medium" style="        color: rgb(255, 255, 255); background-color: blue;">

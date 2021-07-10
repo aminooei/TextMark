@@ -24,25 +24,31 @@ namespace TextMark.Controllers
         }
         
        
-        public ActionResult Index(int? Selected_Assigned_Anno_ID)
+        public ActionResult Index(int Selected_Assigned_Anno_ID, int UserID)
         {
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
             HP.allAnnotations = All_Assigned_Anno_ToUsers();
-            HP.allLabels = Select_Annotation_Labels(1);
-            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID);
+            HP.allLabels = Select_Annotation_Labels();
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
 
             return View(HP);
         }
-        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int? id)
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int id, int UserID)
         {
-           var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB")
-                .FirstOrDefault(m => m.Assigned_Anno_ID == id);
-            if (Selected_Annotation == null)
+            string ActiveUserID = HttpContext.Session.GetString("UserID");
+
+            if (ActiveUserID == UserID.ToString())
             {
-                return new Assigned_Annotations_ToUsers_TB();
+                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB")
+               .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID);
+                if (Selected_Annotation == null)
+                {
+                    return new Assigned_Annotations_ToUsers_TB();
+                }
+                return Selected_Annotation;
             }
-            return Selected_Annotation;
-           
+
+            return new Assigned_Annotations_ToUsers_TB();
         }
         private List<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers()
         {
@@ -84,10 +90,12 @@ namespace TextMark.Controllers
             }
 
         }
-        public List<Labels_TB> Select_Annotation_Labels(int Project_ID)
+        public List<Labels_TB> Select_Annotation_Labels()
         {
-            return _context.Labels_TB.ToList();
-            // return _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();
+            var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
+            return Labels;
+            //Select(c => new { Label_Text = c.Label_Text , Project_ID = c.Project_ID }).
+            //.Select(c => new { Label_Text=c.Label_Text, Label_Background_Color = c.Labels_BG_Colours_TB.Label_Background_Color , Label_ShortCut_Key = c.Labels_BG_Colours_TB.Label_ShortCut_Key , Project_ID= c.Project_ID })
         }
         public async Task<IActionResult> Details(int? AnnotaionID)
         {

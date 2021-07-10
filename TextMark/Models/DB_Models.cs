@@ -52,6 +52,26 @@ namespace TextMark.Models
     //    [ForeignKey("Label_ID")]
     //    public Labels_TB Labels_TB { get; set; }
     //}
+
+    public class Labels_BG_Colours_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Label_BGColour_ID { get; set; }
+
+        [Display(Name = "Background Color")]
+        [Required(ErrorMessage = "Background Color  is required")]
+        [StringLength(20, ErrorMessage = "Must be between 3 and 20 characters", MinimumLength = 3)]
+        public string Label_Background_Color { get; set; }
+
+        [Display(Name = "Shortcut Key")]
+        [Required(ErrorMessage = "Shortcut Key  is required")]
+        [StringLength(1, ErrorMessage = "Must be between 1 character", MinimumLength = 1)]
+        public string Label_ShortCut_Key { get; set; }
+
+    }
+
+
     public class Labels_TB
     {
         [Key]
@@ -62,6 +82,11 @@ namespace TextMark.Models
         [Required(ErrorMessage = "Label Text is required")]
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Label_Text { get; set; }
+
+        [Display(Name = "Label BGColour ID")]
+        public int Label_BGColour_ID { get; set; }
+        [ForeignKey("Label_BGColour_ID")]
+        public Labels_BG_Colours_TB Labels_BG_Colours_TB { get; set; }
 
 
         [Display(Name = "Project ID")]
@@ -149,7 +174,6 @@ namespace TextMark.Models
 
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
-
         [ForeignKey("Project_ID")]
         public virtual Projects_TB Projects_TB { get; set; }    
     }

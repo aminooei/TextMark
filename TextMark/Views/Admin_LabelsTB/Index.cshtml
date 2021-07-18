@@ -23,10 +23,7 @@
                     </th>
                     <th>                         
                         @Html.DisplayNameFor(model => model.Labels_BG_Colours_TB.Label_Background_Color)                        
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Labels_BG_Colours_TB.Label_Background_Color)                        
-                    </th>
+                    </th>                    
                     <th>
                         @Html.DisplayNameFor(model => model.Labels_BG_Colours_TB.Label_ShortCut_Key)
                     </th>
@@ -46,7 +43,9 @@
                         @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
                     </td>
                     <td>
-                        <span style = "background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">@Html.DisplayFor(modelItem => item.Labels_BG_Colours_TB.Label_Background_Color)</span>                       
+                        @*<span style="background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">@Html.DisplayFor(modelItem => item.Labels_BG_Colours_TB.Label_Background_Color)</span>*@
+                        <div style="width: 200px; height: 40px; text-align: center; background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">@Html.DisplayFor(modelItem => item.Labels_BG_Colours_TB.Label_Background_Color)</div>
+
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Labels_BG_Colours_TB.Label_ShortCut_Key)

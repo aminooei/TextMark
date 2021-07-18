@@ -155,11 +155,9 @@ namespace TextMark.Models
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
         [ForeignKey("Project_ID")]
-        public Projects_TB Projects_TB { get; set; }
-
-
-        
+        public Projects_TB Projects_TB { get; set; }   
     }
+
     public class Roles_TB
     {
         [Key]

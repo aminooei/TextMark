@@ -14,9 +14,16 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Label_Background_Color" class="control-label"></label>            
+                <label asp-for="Label_Background_Color" class="control-label"></label>
 
                 @Html.TextBoxFor(model => model.Label_Background_Color, new { @class = "form-control", type = "color" })
+            <select name="color">
+                <option style="background-color:Red;"></option>
+                <option style="background-color:Blue;"></option>
+                <option style="background-color:black;"></option>
+                <option style="background-color:white;"></option>
+            </select>
+                @*"black", "white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal", and "aqua"*@
                 <span asp-validation-for="Label_Background_Color" class="text-danger"></span>
             </div>            
             <div class="form-group">

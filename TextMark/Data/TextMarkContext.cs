@@ -7,8 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-
-
 namespace TextMark.Data
 {
     public class TextMarkContext : IdentityDbContext
@@ -18,6 +16,7 @@ namespace TextMark.Data
         {
         }
 
+        
         //protected override void OnModelCreating(ModelBuilder modelbuilder)
         //{
         //    base.OnModelCreating(modelbuilder);
@@ -30,10 +29,6 @@ namespace TextMark.Data
         public DbSet<Labels_BG_Colours_TB> Labels_BG_Colours_TB { get; set; }
         public DbSet<Annotations_TB> Annotations_TB { get; set; } 
         public DbSet<Assigned_Annotations_ToUsers_TB> Assigned_Annotations_ToUsers_TB { get; set; }
-        public DbSet<Projects_TB> Projects_TB { get; set; }
-
-       
-    }
-
-    
+        public DbSet<Projects_TB> Projects_TB { get; set; }       
+    }    
 }

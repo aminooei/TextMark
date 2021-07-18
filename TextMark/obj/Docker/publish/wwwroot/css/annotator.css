@@ -1,0 +1,26 @@
+﻿annotation
+{
+   /* background-color: #2185d0 !important;*/
+    border: 1px dashed white;
+    color: white;
+    z-index: 2000;
+}
+
+annotation[current = true] {
+position: relative;
+}
+
+annotation[type = Location] {
+     background-color: #f2711c !important;
+  
+}
+
+    annotation[type = City] {
+       background-color: #009c95 !important;
+       
+    }
+
+    annotation[type = Country] {
+       background-color: #2185d0 !important;
+      
+    }

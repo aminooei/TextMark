@@ -4,14 +4,26 @@
 
 @{
     ViewData["Title"] = "AILand";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    var Selected_Assigned_Annotation = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
 
 <h1>AI Land</h1>
 
 <!DOCTYPE html>
 
+<style>
+    @{var Label_text = "";
+      var Label_Color = "";
+        var Style_Text = "";
+    @foreach (var item in Model.allLabels)
+    {
+        Label_text = @item.Label_Text;
+        Label_Color = @item.Labels_BG_Colours_TB.Label_Background_Color;
+        Style_Text += "annotation[type = " + Label_text + "] {background-color: " + Label_Color + " !important;}";
+    }
+    }
+    @Style_Text
+</style>
 
 <!--Error-->
 <div id="error_message" class="ui floating negative message" style="display: none">
@@ -35,10 +47,10 @@
                                 <span>Please select an annotation</span>
                                 <table class="table">
                                     <thead>
-                                        <tr>                                            
+                                        <tr>
                                             <th>
                                                 @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
-                                            </th>                                            
+                                            </th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,7 +67,7 @@
                                             <td>
                                                 <a asp-action="Index" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
                                                 @*@Selected_Assigned_Annotation = @item.Assigned_Anno_ID;*@
-                                                
+
                                             </td>
                                         </tr>
                                         }
@@ -63,19 +75,19 @@
                                 </table>
                             </div>
                         </div>
-                    </h5>-->
+                    </h5>
                     <!--Annotations List-->
-                    <div id="annotations_list">
+                    @*<div id="annotations_list">*@
                     </div>
                 </div>
             </div>
         </div>
         <!--Transcript-->
-        <div class="ten wide column">
+        <div class="ten wide column overflow-scroll ">
 
-            <div class="content">
+            <div class="content ">
                 <!--Header-->
-                <h5 class="ui header">
+                <!--<h5 class="ui header">
                     <i class="violet color phone square icon"></i>
                     <div class="content">
                         Transcript
@@ -83,87 +95,130 @@
                             <span>Try selecting a block of text</span>
                         </div>
                     </div>
-                </h5>
+                </h5>-->
                 <!--Feed-->
                 <div class="ui feed">
                     <div class="event">
-                        <div class="label">
-                            <i class="olive color user icon"></i>
-                        </div>
+                        @*<div class="label">
+                <i class="olive color user icon"></i>
+            </div>*@
                         <div class="content">
-                            <div class="summary">
-                                <a>Joe Henderson</a> spoke at
-                                <div class="date">
-                                    02:03
-                                </div>
-                            </div>
-                            <div class="text card">
+                            @*<div class="summary">
+            <a>Joe Henderson</a> spoke at
+            <div class="date">
+                02:03
+            </div>
+        </div>*@
+                            <div class="text card ">
                                 <header class="card-header">
                                     <div class="card-header-title has-background-royalblue" style="padding: 1.5rem;">
                                         <div class="field is-grouped is-grouped-multiline">
                                             @*List<Annotations_Labels_TB> labels = TempData["Annotation_Labels"] as List<Annotations_Labels_TB>;*@
-                                           
-    
-            @foreach (var item in Model.allLabels)
-            {
-                       
-                <div class="control">
-                    <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
-                        @*<a class="tag is-medium" style="color: rgb(51, 51, 51);  background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">*@
-                        <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Labels_BG_Colours_TB.Label_Background_Color ;">
 
-                            @item.Label_Text
-                        </a> <span class="tag is-medium">@item.Labels_BG_Colours_TB.Label_ShortCut_Key</span>
-                    </div>
-                </div>
-            }
-        
-    @*<div class="control">
-            <div name="Internal" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Internal');">
-                <a class="tag is-medium" style="        color: rgb(255, 255, 255); background-color: blue;">
-                    Internal
-                </a> <span class="tag is-medium">I</span>
-            </div>
-        </div>
-        <div class="control">
-            <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Requirement');">
-                <a class="tag is-medium" style="        color: rgb(51, 51, 51);  background-color: orange;">
-                    Requirement
-                </a> <span class="tag is-medium">R</span>
-            </div>
-        </div>
-        <div class="control">
-            <div name="Backlog" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('Backlog');">
-                <a class="tag is-medium" style="        color: rgb(255, 255, 255);  background-color: teal;">
-                    Backlog
-                </a> <span class="tag is-medium">B</span>
-            </div>
-        </div>*@
+
+                                            @foreach (var item in Model.allLabels)
+                                            {
+
+                                                <div class="control">
+                                                    @*<div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('@item.Label_Text');">*@
+                                                    <div name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('@item.Label_Text');">
+                                                        @*, '@item.Labels_BG_Colours_TB.Label_Background_Color');">*@
+                                                        <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Labels_BG_Colours_TB.Label_Background_Color ;">
+
+                                                            @item.Label_Text
+                                                        </a> <span class="tag is-medium">@item.Labels_BG_Colours_TB.Label_ShortCut_Key</span>
+                                                    </div>
+                                                </div>
+                                            }
+
+
                                         </div>
                                     </div>
                                 </header>
+                                <form asp-action="Edit2" method="post">
+                                    <div class="example card-content">
+                                        <div class="content">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" />
+                                            <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Project_ID" />
+                                            <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.User_ID" />
+                                            <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Annotation_ID" />
+                                            @*<div class="form-group">
+                <label type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Projects_TB.Project_Name" class="control-label"></label>
+                @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+                new { @class = "form-control" })
+                <span asp-validation-for="@Model.Selected_Assigned_Annotation.Projects_TB.Project_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Annotations_TB.Annotation_Text" class="control-label"></label>
+                @Html.DropDownList("Annotation_ID", new SelectList(ViewBag.Annotations, "Annotation_ID", "Annotation_Text"), "Select an Annotation Text",
+                  new { @class = "form-control" })
+                <span asp-validation-for="@Model.Selected_Assigned_Annotation.Annotations_TB.Annotation_Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Users_TB.Username" class="control-label"></label>
+                @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username"), "Select a User",
+                  new { @class = "form-control" })
+                <span asp-validation-for="@Model.Selected_Assigned_Annotation.Users_TB.Username" class="text-danger"></span>
+            </div>*@
+                                                                                      
+                                               
+                                           <input type="hidden" id="Txtbx_Annotated_Text" asp-for="@Model.Selected_Assigned_Annotation.Annotated_Text" class="form-control" />
+                                                
+
+                                            @if (Model.Selected_Assigned_Annotation.Annotated_Text != null)
+                                            {                                               
+                                                <div>
+                                                    <div id="Annotated_Text_tobesaved"> @Model.Selected_Assigned_Annotation.Annotated_Text </div>
+                                                </div>
+                                            }
+                                            @if (ViewBag.Error != null)
+                                            {
+                                                <p class="text-danger">@ViewBag.Error</p>
+
+                                            }
+                                        <div class="form-group">
+                                            <!--<input id="btn_Save" onclick="Exchange_Text();" value="Exchange Text" class="btn btn-primary"--> @*type="submit" asp-route-id="@Model.Selected_Assigned_Annotation.Project_ID" asp-route-AnnotatedText="@Model.Selected_Assigned_Annotation.Annotated_Text"*@ <!--/>-->
+                                            @*<input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit" asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" asp-route-annotatedtext="@Model.Selected_Assigned_Annotation.Annotated_Text" />*@
+                                            <input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit"/>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            
+                            <!--<form autocomplete="off">
                                 <div class="example card-content">
                                     <div class="content">
-                                        @*<div> @TempData["Selected_Anno_Text"]</div>*@
                                         @if (Model.Selected_Assigned_Annotation.Annotated_Text != null)
                                         {
-                                            <div> @Model.Selected_Assigned_Annotation.Annotated_Text </div>
+                                            <input id="Txtbx_Annotated_Text" asp-for="@Model.Selected_Assigned_Annotation.Annotated_Text" class="form-control" />
+                                            <div>
+                                                <div id="Annotated_Text_tobesaved"> @Model.Selected_Assigned_Annotation.Annotated_Text </div>
+                                            </div>
                                         }
 
                                     </div>
+                                    <div class="form-group">
+                                        <input id="btn_Save" onclick="Exchange_Text();" value="Exchange Text" class="btn btn-primary"--> @*type="submit" asp-route-id="@Model.Selected_Assigned_Annotation.Project_ID" asp-route-AnnotatedText="@Model.Selected_Assigned_Annotation.Annotated_Text"*@ <!--/>
+                                        <input id="btn_Save" value="Save" class="btn btn-primary" type="submit" asp-action="Edit" asp-controller="Home" asp-route-id="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" asp-route-annotatedtext="@Model.Selected_Assigned_Annotation.Annotated_Text" />
+                                    </div>
                                 </div>
-                            </div>
+                            </form>-->
+                        </div>
 
 
 
                         </div>
                     </div>
+                     </div> 
                 </div>
-            </div>
 
         </div>
-    </div>
-</div>
+ </div>
+
 <!--Annotator Popover Contents-->
 <div id="annotate_settings" class="ui form raised segments" style="margin: 0px; display: none;">
     <!--Notes-->
@@ -187,7 +242,8 @@
                     Tag Label
                 </div>
                 <div class="scrolling menu">
-                    <div name="Requirement" class="item">
+                    @*NO EFFECT*@
+                    @*<div name="Requirement" class="item">
                         <div class="ui orange empty circular label"></div>
                         Requirement
                     </div>
@@ -198,7 +254,7 @@
                     <div name="Internal" class="item">
                         <div class="ui blue empty circular label"></div>
                         Internal
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -280,7 +336,7 @@
 @section Scripts
 {
     <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script>
-    <script id="annotations_tmpl" type="text/x-jsrender" data-jsv-tmpl="jsvTmpl">
+    @*<script id="annotations_tmpl" type="text/x-jsrender" data-jsv-tmpl="jsvTmpl">
         {{for annotations}}
         <div class="ui raised segment">
             <a class="ui {{:color}} ribbon label">{{:type}}</a>
@@ -290,7 +346,7 @@
             <div class="fluid ui button" onclick="App.handlers.deleteAnnotation( '{{:id}}' )">Delete</div>
         </div>
         {{/for}}
-    </script>
+    </script>*@
     <!--Scripts-->
     <!--Required for Annotator.js-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -305,6 +361,22 @@
     <!--Custom Script for the App-->
     <script type="text/javascript" src="~/js/app.js"></script>
     <script type="text/javascript" src="~/js/Amin.js"></script>
+    <script>
+        //$(document).ready(function () {
+        //    //$("#btn_Save").click(function () {
+        function Exchange_Text() {
+            Edited_Text = document.getElementById("Annotated_Text_tobesaved");
+            //alert(Edited_Text.innerHTML);
+            $("#Txtbx_Annotated_Text").val(Edited_Text.innerHTML);
+        }
+
+        function Run_Save_Functions() {           
+            Exchange_Text();
+            window.location.href = "/Home/Edit";
+        }
+        //});
+
+    </script>
     @*<script type="text/javascript">
 
             var _gaq = _gaq || [];

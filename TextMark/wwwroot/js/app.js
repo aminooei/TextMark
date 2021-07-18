@@ -1,4 +1,5 @@
-﻿var App = {
+﻿var Selected_Color = "";
+var App = {
     elements: {
         tags: null
     },
@@ -57,10 +58,10 @@
         },
         applyOnclickAnnotation: function (type) {
             
-
-            $(".example").attr("contenteditable", true);  
+                       $(".example").attr("contenteditable", true);  
             $.Annotator.api.clickAction1(type);
-           
+            
+            
          
         },
         cancelAnnotation: function () {
@@ -84,23 +85,41 @@
           //  alert("saveAnnotation end");
         },
         renderSavedAnnotations: function (annotations) {  //#3
-         //   alert("renderSavedAnnotations 1");
+       
+
+
             var html = $.templates("#annotations_tmpl").render({
                 annotations: annotations.map((item) => {
-                    if (item.type === "Requirement") {
-                        item.color = "orange";
-                    } else if (item.type === "Backlog") {
-                        item.color = "teal";
-                    } else {
-                        item.color = "blue";
-                    }
+                    item.color = Selected_Color;
+                    //if (item.type === "Location") {
+                    //    item.color = "orange";
+                    //} else if (item.type === "City") {
+                    //    item.color = "teal";
+                    //} else {
+                    //    item.color = "blue";
+                    //}
 
                     return item;
                 })
             });
 
             $("#annotations_list").html(html);
-            
+             //#NO EFFECT
+            //var html = $.templates("#annotations_tmpl").render({
+            //    annotations: annotations.map((item) => {
+            //        if (item.type === "Requirement") {
+            //            item.color = "orange";
+            //        } else if (item.type === "Backlog") {
+            //            item.color = "teal";                        
+            //        } else {
+            //            item.color = "blue";
+            //        }
+
+            //        return item;
+            //    })
+            //});
+
+            //$("#annotations_list").html(html);
         },
         deleteAnnotation: function (annotationId) {
             //############Added new

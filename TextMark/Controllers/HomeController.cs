@@ -25,11 +25,17 @@ namespace TextMark.Controllers
         
        
         public ActionResult Index(int Selected_Assigned_Anno_ID, int UserID)
-        {
+        {           
+
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
             HP.allAnnotations = All_Assigned_Anno_ToUsers();
             HP.allLabels = Select_Annotation_Labels();
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
+
+
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
 
             return View(HP);
         }
@@ -39,7 +45,7 @@ namespace TextMark.Controllers
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB")
+                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
                .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID);
                 if (Selected_Annotation == null)
                 {
@@ -132,8 +138,125 @@ namespace TextMark.Controllers
             // return RedirectToAction("Index", "Home");
             return  View(Selected_Annotation);
         }
-        
 
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit2(CL_Users_Home_Page Assigned_Anno)
+        {
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
+
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
+
+            //if (id != Assigned_Anno.Assigned_Anno_ID)
+            //{
+            //    return NotFound();
+            //}
+
+            //if (await IsAssignedAnnoDuplicated(Assigned_Anno.Annotation_ID, Assigned_Anno.User_ID, Assigned_Anno.Project_ID))
+            //{
+            //    ViewBag.Error = "This Label is already registered for this Project";
+
+            //}
+            //else
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        //if (!Assigned_Anno_Exists(Assigned_Anno.Assigned_Anno_ID))
+                        //{
+                        //    return NotFound();
+                        //}
+                        //else
+                        //{
+                        //    throw;
+                        //}
+                    }
+                    return RedirectToAction("Index","Home");
+                }
+            }
+            return View(Assigned_Anno);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, CL_Users_Home_Page Assigned_Anno)
+        {
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
+           
+            //Select_All_Roles();
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
+
+            if (id != Assigned_Anno.Selected_Assigned_Annotation.Assigned_Anno_ID)
+            {
+                return NotFound();
+            }
+
+            //if (await IsUserDuplicated(Assigned_Anno_Users.Username, Assigned_Anno_Users.Role_ID))
+            //{
+            //    ViewBag.Error = "This Username is already registered for this role";
+
+            //}
+            //else
+            //{
+            if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        //if (!AnnoExists(Assigned_Anno_Users.Assigned_Anno_ID))
+                        //{
+                        //    return NotFound();
+                        //}
+                        //else
+                        //{
+                        //    throw;
+                        //}
+                }
+                    return RedirectToAction("Index", "Home");
+                }
+            //}
+            return RedirectToAction("Index", "Home");
+        }
+
+        private bool AnnoExists(int id)
+        {
+            return _context.Assigned_Annotations_ToUsers_TB.Any(e => e.Assigned_Anno_ID == id);
+        }
+
+        public List<Users_TB> Select_All_Users()
+        {           
+            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToList();
+            return ViewBag.Users;
+        }
+        public List<Annotations_TB> Select_All_Annotations()
+        {            
+            ViewBag.Annotations = _context.Annotations_TB.ToList();
+            return ViewBag.Annotations;
+        }
+        public List<Projects_TB> Select_All_Projects()
+        {
+            ViewBag.Projects = _context.Projects_TB.ToList();
+            return ViewBag.Projects;
+        }
     }
 }

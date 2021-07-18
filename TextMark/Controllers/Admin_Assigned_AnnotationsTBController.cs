@@ -94,7 +94,7 @@ namespace TextMark.Controllers
 
             if (await IsAssignedAnnoDuplicated(assigned_annotations_tousers_tb.Annotation_ID,assigned_annotations_tousers_tb.User_ID,assigned_annotations_tousers_tb.Project_ID))
             {
-                ViewBag.Error = "This Label is already registered for this Project";
+                ViewBag.Error = "This Annotation is already assigned to this user in this project";
 
             }
             else
@@ -188,7 +188,7 @@ namespace TextMark.Controllers
 
             if (await IsAssignedAnnoDuplicated(Assigned_Anno.Annotation_ID, Assigned_Anno.User_ID, Assigned_Anno.Project_ID))
             {
-                ViewBag.Error = "This Label is already registered for this Project";
+                ViewBag.Error = "This Annotation is already assigned to this user in this project";
 
             }
             else
@@ -262,22 +262,18 @@ namespace TextMark.Controllers
         }
 
         public List<Users_TB> Select_All_Users()
-        {
-            //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
-            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToList();
-            
+        {           
+            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToList();            
             return ViewBag.Users;
         }
         public List<Annotations_TB> Select_All_Annotations()
         {
-            //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
             ViewBag.Annotations = _context.Annotations_TB.ToList();
             return ViewBag.Annotations;
         }
         public List<Projects_TB> Select_All_Projects()
         {
             ViewBag.Projects = _context.Projects_TB.ToList();
-
             return ViewBag.Projects;
         }
     }

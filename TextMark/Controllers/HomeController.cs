@@ -104,32 +104,15 @@ namespace TextMark.Controllers
             //.Select(c => new { Label_Text=c.Label_Text, Label_Background_Color = c.Labels_BG_Colours_TB.Label_Background_Color , Label_ShortCut_Key = c.Labels_BG_Colours_TB.Label_ShortCut_Key , Project_ID= c.Project_ID })
         }
         public async Task<IActionResult> Details(int? AnnotaionID)
-        {
-            //var Users_tb = await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB")
-            //  .FirstOrDefaultAsync(m => m.User_ID == id);
-            //if (Users_tb == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(Users_tb);
-
-
-
-
-           // var Assigned_Annotaion_ID = "";
+        {           
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
             
-            //if (AnnotaionID != null)
-            //{
-            //    Assigned_Annotaion_ID = AnnotaionID.ToString().ToUpper();                
-            //}
+           
             var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.Assigned_Anno_ID == AnnotaionID).FirstOrDefaultAsync();
-          //  var Selected_Anno_Text = Selected_Annotation[0].Annotations_TB.Annotation_Text;
-           // TempData["Selected_Anno_Text"] = Selected_Anno_Text;
+         
             if (Selected_Annotation == null)
             {
                 return NotFound();
@@ -190,22 +173,23 @@ namespace TextMark.Controllers
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CL_Users_Home_Page Assigned_Anno)
+        public async Task<IActionResult> Edit( CL_Users_Home_Page Assigned_Anno)
         {
             Select_All_Users();
             Select_All_Annotations();
             Select_All_Projects();
            
+
             //Select_All_Roles();
             //if (!IsValidUser())
             //{
             //    return RedirectToAction("Index", "Login");
             //}
 
-            if (id != Assigned_Anno.Selected_Assigned_Annotation.Assigned_Anno_ID)
-            {
-                return NotFound();
-            }
+            //if (id != Assigned_Anno.Selected_Assigned_Annotation.Assigned_Anno_ID)
+            //{
+            //    return NotFound();
+            //}
 
             //if (await IsUserDuplicated(Assigned_Anno_Users.Username, Assigned_Anno_Users.Role_ID))
             //{

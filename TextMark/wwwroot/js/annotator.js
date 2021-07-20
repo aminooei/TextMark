@@ -71,7 +71,7 @@
                             jQuery($annotation).attr("current", "true");
                             jQuery($annotation).attr("onselectstart", "return false;");
                             jQuery($annotation).attr("type", type);  //Added by Amin - After click on the annotation choice, the chosen attribute will be replaced here
-                           
+
 
                             ////####################
                             ////var cache = jQuery.Annotator.cache;
@@ -162,9 +162,8 @@
                
                // ############################# Added by Amin- it adds the closing icon to each annotation
                 var cache = jQuery.Annotator.cache;
-                var id = `annotation_${Object.keys(cache.annotations).length}`;               
-                //jQuery($annotation).attr("background-
-                    
+                var id = `annotation_${Object.keys(cache.annotations).length}`;
+                           
                 jQuery($activeAnnotation).append("<button id=\"BtnClosing_"+id+"\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('"+id+"')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
                
                 //#############################
@@ -199,7 +198,9 @@
                     id: null,
                     attributes: {}
                 };
-               
+
+                cache.activePopper.destroy();
+
                 cache.activePopper = {};
 
                 jQuery(settings.popoverContents).hide();

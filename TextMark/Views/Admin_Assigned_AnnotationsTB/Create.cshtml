@@ -31,7 +31,11 @@
                   new { @class = "form-control" })
                 <span asp-validation-for="Users_TB.Username" class="text-danger"></span>
             </div>
-           
+            <div class="form-group">
+                <label asp-for="Count_Annotations" class="control-label hidden"></label>
+                <input asp-for="Count_Annotations" class="form-control hidden" />
+                <span asp-validation-for="Count_Annotations" class="text-danger hidden"></span>
+            </div>
 
             @if (ViewBag.Error != null)
             {

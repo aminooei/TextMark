@@ -121,7 +121,7 @@ namespace TextMark.Models
 
         [Display(Name = "Annotation Text")]
         [Required(ErrorMessage = "Annotation Text is required")]
-        [StringLength(1000, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
+        [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
         public string Annotation_Text { get; set; }
 
         [Display(Name = "Project ID")]
@@ -148,9 +148,11 @@ namespace TextMark.Models
 
         [Display(Name = "Annotated Text")]
         //[Required(ErrorMessage = "Annotated Text is required")]
-        [StringLength(1000, ErrorMessage = "Must be between 5 and 1000 characters", MinimumLength = 5)]
+        [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
         public string Annotated_Text { get; set; }
 
+        [Display(Name = "Annotation ID")]
+        public int Count_Annotations { get; set; }
 
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }

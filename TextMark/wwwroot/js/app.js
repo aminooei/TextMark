@@ -57,11 +57,16 @@
         },
         applyOnclickAnnotation: function (type) {
             
+            var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+            document.getElementById("Txtbx_Count_Annotations").value = txtbx_value + 1;
 
-            $(".example").attr("contenteditable", true);  
-            $.Annotator.api.clickAction1(type);
-           
-         
+
+            Count_Annotations_Var = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+            $.Annotator.Count_Annotations_Var2 = Count_Annotations_Var;
+
+            $(".example").attr("contenteditable", true);
+            $.Annotator.api.clickAction1(type, Count_Annotations_Var);
+
         },
         cancelAnnotation: function () {
             App.helpers.resetControls();
@@ -84,12 +89,14 @@
           //  alert("saveAnnotation end");
         },
         renderSavedAnnotations: function (annotations) {  //#3
-         //   alert("renderSavedAnnotations 1");
+       
+
+
             var html = $.templates("#annotations_tmpl").render({
-                annotations: annotations.map((item) => {
-                    if (item.type === "Requirement") {
+                annotations: annotations.map((item) => {                   
+                    if (item.type === "Location") {
                         item.color = "orange";
-                    } else if (item.type === "Backlog") {
+                    } else if (item.type === "City") {
                         item.color = "teal";
                     } else {
                         item.color = "blue";
@@ -102,17 +109,19 @@
             $("#annotations_list").html(html);
             
         },
-        deleteAnnotation: function (annotationId) {
+        deleteAnnotation: function (annotationId) {     
             //############Added new
-            $("#BtnClosing_" + annotationId).remove();            
+           $("#BtnClosing_" + annotationId).remove();            
             ///######
+           // $("\"#"+annotationId+"\"").contents().unwrap();
+            $("#" + annotationId ).contents().unwrap();
 
+            var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+            document.getElementById("Txtbx_Count_Annotations").value = txtbx_value - 1;
 
+            //var remainingAnnotations = $.Annotator.api.deleteAnnotation(annotationId);
 
-            var remainingAnnotations =
-                $.Annotator.api.deleteAnnotation(annotationId);
-
-            App.handlers.renderSavedAnnotations(remainingAnnotations);
+            //App.handlers.renderSavedAnnotations(remainingAnnotations);
         }        
     },
     init: function () {  //#2

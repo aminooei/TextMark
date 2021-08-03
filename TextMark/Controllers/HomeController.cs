@@ -122,54 +122,54 @@ namespace TextMark.Controllers
             return  View(Selected_Annotation);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit2(CL_Users_Home_Page Assigned_Anno)
-        {
-            Select_All_Users();
-            Select_All_Annotations();
-            Select_All_Projects();
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit2(CL_Users_Home_Page Assigned_Anno)
+        //{
+        //    Select_All_Users();
+        //    Select_All_Annotations();
+        //    Select_All_Projects();
 
-            //if (!IsValidUser())
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
+        //    //if (!IsValidUser())
+        //    //{
+        //    //    return RedirectToAction("Index", "Login");
+        //    //}
 
-            //if (id != Assigned_Anno.Assigned_Anno_ID)
-            //{
-            //    return NotFound();
-            //}
+        //    //if (id != Assigned_Anno.Assigned_Anno_ID)
+        //    //{
+        //    //    return NotFound();
+        //    //}
 
-            //if (await IsAssignedAnnoDuplicated(Assigned_Anno.Annotation_ID, Assigned_Anno.User_ID, Assigned_Anno.Project_ID))
-            //{
-            //    ViewBag.Error = "This Label is already registered for this Project";
+        //    //if (await IsAssignedAnnoDuplicated(Assigned_Anno.Annotation_ID, Assigned_Anno.User_ID, Assigned_Anno.Project_ID))
+        //    //{
+        //    //    ViewBag.Error = "This Label is already registered for this Project";
 
-            //}
-            //else
-            {
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        //if (!Assigned_Anno_Exists(Assigned_Anno.Assigned_Anno_ID))
-                        //{
-                        //    return NotFound();
-                        //}
-                        //else
-                        //{
-                        //    throw;
-                        //}
-                    }
-                    return RedirectToAction("Index","Home");
-                }
-            }
-            return View(Assigned_Anno);
-        }
+        //    //}
+        //    //else
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            try
+        //            {
+        //                _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+        //                await _context.SaveChangesAsync();
+        //            }
+        //            catch (DbUpdateConcurrencyException)
+        //            {
+        //                //if (!Assigned_Anno_Exists(Assigned_Anno.Assigned_Anno_ID))
+        //                //{
+        //                //    return NotFound();
+        //                //}
+        //                //else
+        //                //{
+        //                //    throw;
+        //                //}
+        //            }
+        //            return RedirectToAction("Index","Home");
+        //        }
+        //    }
+        //    return View(Assigned_Anno);
+        //}
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

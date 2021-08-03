@@ -27,7 +27,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
                     </th>
-
+                    <th>
+                        @Html.DisplayNameFor(model => model.Count_Annotations)
+                    </th>
 
                     <th></th>
                 </tr>
@@ -48,7 +50,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
                     </td>
-
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Count_Annotations)
+                    </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Assigned_Anno_ID">Details</a> |

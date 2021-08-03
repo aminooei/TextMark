@@ -85,7 +85,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID,Annotated_Text")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
+        public async Task<IActionResult> Create([Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID,Annotated_Text,Count_Annotations")] Assigned_Annotations_ToUsers_TB assigned_annotations_tousers_tb)
         {
             if (!IsValidUser())
             {
@@ -170,7 +170,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
+        public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID,Count_Annotations")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
         {
             Select_All_Users();
             Select_All_Annotations();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Html;
 
 namespace TextMark.Models
 {
@@ -182,5 +183,7 @@ namespace TextMark.Models
         public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
         public List<Labels_TB> allLabels { get; set; }
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
+
+        public HtmlString ShortcutKeys_Press_Script { get; set; }
     }
 }

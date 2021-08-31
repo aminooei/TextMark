@@ -10,6 +10,7 @@ using TextMark.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Html;
 
 namespace TextMark.Controllers
 {
@@ -31,13 +32,42 @@ namespace TextMark.Controllers
             HP.allAnnotations = All_Assigned_Anno_ToUsers();
             HP.allLabels = Select_Annotation_Labels();
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
-
+            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
             Select_All_Users();
             Select_All_Annotations();
             Select_All_Projects();
 
             return View(HP);
+        }
+         public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
+        {
+            string Code_STR = "";
+            Code_STR += " <script> ";
+            Code_STR += " let apparea = document.getElementById('apparea'); ";
+            Code_STR += " apparea.addEventListener(\"keydown\", (e) => { ";
+            foreach (var item in List_Labels)
+            {
+                Code_STR += " if (e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToLower() +"\" || e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToUpper() +"\")  App.handlers.applyOnclickAnnotation('"+ item.Label_Text  +"'); ";                       
+            }
+
+            Code_STR += " else { $(\".example\").attr(\"contenteditable\", false); }";
+
+            //if (e.key == "i" || e.key == "I")
+            //        App.handlers.applyOnclickAnnotation('Internal');
+            //    else if (e.key == "r" || e.key == "R")
+            //        App.handlers.applyOnclickAnnotation('Requirement');
+            //    else if (e.key == "b" || e.key == "B")
+            //        App.handlers.applyOnclickAnnotation('Backlog');
+            //    else { $(".example").attr("contenteditable", false); }
+
+            Code_STR += " }); ";
+
+            Code_STR += " apparea.addEventListener(\"mousedown\", (e) => { ";
+            Code_STR += " $(\".example\").attr(\"contenteditable\", true); ";
+            Code_STR += " }); ";
+            Code_STR += "  </script> ";
+            return new HtmlString(Code_STR);
         }
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int id, int UserID)
         {

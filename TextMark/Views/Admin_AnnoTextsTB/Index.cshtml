@@ -19,10 +19,22 @@
                         @Html.DisplayNameFor(model => model.Annotation_ID)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.Annotation_ID_InFile)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Annotation_Title)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Annotation_Text)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Annotation_Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Annotation_Source)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Source_File_Name)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
@@ -38,10 +50,22 @@
                         @Html.DisplayFor(modelItem => item.Annotation_ID)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Annotation_Title)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Annotation_Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Annotation_Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Annotation_Source)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Source_File_Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)

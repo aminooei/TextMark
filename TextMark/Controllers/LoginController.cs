@@ -184,20 +184,32 @@ namespace TextMark.Controllers
         {
             Annotations_TB Anno1 = new Annotations_TB();
             Anno1.Project_ID = 1;
+            Anno1.Annotation_ID_InFile = "abcd1";
             Anno1.Annotation_Title = "Anno Title 1";
             Anno1.Annotation_Text = "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            Anno1.Annotation_Date = "01/01/2020";
+            Anno1.Annotation_Source = "Yahoo";
+            Anno1.Source_File_Name = "file1.xls";
             _context.Add(Anno1);
 
             Annotations_TB Anno2 = new Annotations_TB();
             Anno2.Project_ID = 1;
+            Anno2.Annotation_ID_InFile = "abcd2";
             Anno2.Annotation_Title = "Anno Title 2";
             Anno2.Annotation_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            Anno2.Annotation_Date = "05/11/2021";
+            Anno2.Annotation_Source = "Google";
+            Anno2.Source_File_Name = "file1.xls";
             _context.Add(Anno2);
 
             Annotations_TB Anno3 = new Annotations_TB();
             Anno3.Project_ID = 1;
+            Anno3.Annotation_ID_InFile = "abcd3";
             Anno3.Annotation_Title = "Anno Title 3";
             Anno3.Annotation_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            Anno3.Annotation_Date = "01/01/2020";
+            Anno3.Annotation_Source = "MSN";
+            Anno3.Source_File_Name = "file1.xls";
             _context.Add(Anno3);
             _context.SaveChanges();
         }

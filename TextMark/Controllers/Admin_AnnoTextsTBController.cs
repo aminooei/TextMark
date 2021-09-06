@@ -9,6 +9,9 @@ using TextMark.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using ServiceStack;
+using System.IO;
+using ExcelDataReader;
 
 namespace TextMark.Controllers
 {
@@ -83,34 +86,59 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Annotation_ID,Annotation_Title,Annotation_Text,Project_ID")] Annotations_TB annotations_tb)
+        //public async Task<IActionResult> Create([Bind("Annotation_ID,Annotation_Title,Annotation_Text,Project_ID")] Annotations_TB annotations_tb/*, UploadFile UploadFile*/)
+        public async Task<IActionResult> Create(IFormFile ExcelFile, int Project_ID)        
         {
-            if (!IsValidUser())
+            List<Annotations_TB> users = new List<Annotations_TB>();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            using (var stream = new MemoryStream())
             {
-                return RedirectToAction("Index", "Login");
-            }
-
-            if (await IsAnnoDuplicated(annotations_tb.Annotation_Text, annotations_tb.Project_ID))
-            {
-                ViewBag.Error = "This Label is already registered for this Project";
-
-            }
-            else
-            {
-                if (ModelState.IsValid)
+                ExcelFile.CopyTo(stream);
+                stream.Position = 0;
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    _context.Add(annotations_tb);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    while (reader.Read()) //Each row of the file
+                    {
+                        try
+                        {
+                            Annotations_TB annoTB = new Annotations_TB { Annotation_ID_InFile = reader.GetValue(0).ToString(), Annotation_Title = reader.GetValue(1).ToString(), Annotation_Text = reader.GetValue(2).ToString(), Annotation_Date = (Convert.ToDateTime(reader.GetValue(3).ToString())).ToString("dd-MM-yyyy"), Annotation_Source = reader.GetValue(4).ToString(), Source_File_Name = ExcelFile.FileName, Project_ID = Project_ID };
+                            _context.Add(annoTB);
+                            await _context.SaveChangesAsync();
+                        }
+                        catch(Exception ex)
+                        {
+                            ViewBag.Error = ex.Message;
+                        }
+                    }
                 }
             }
             Select_All_Projects();
-            return View(annotations_tb);
+            return RedirectToAction(nameof(Index));
+
+            // return Ok(users);
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
+
+            //if (await IsAnnoDuplicated(annotations_tb.Annotation_Text, annotations_tb.Project_ID))
+            //{
+            //    ViewBag.Error = "This Label is already registered for this Project";
+
+            //}
+            //else
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        _context.Add(annotations_tb);
+            //        await _context.SaveChangesAsync();
+            //        return RedirectToAction(nameof(Index));
+            //    }
+            //}
+           
+           
         }
-        //public async Task<IActionResult> Details()
-        //{            
-        //    return View(await _context.Users_TB.ToListAsync());
-        //}
+      
 
         // GET: Logins/Details/5
         public async Task<IActionResult> Details(int? id)

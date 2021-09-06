@@ -115,15 +115,34 @@ namespace TextMark.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Annotation_ID { get; set; }
 
+      
+        [Display(Name = "Annotation ID in the Original File")]
+        public string Annotation_ID_InFile { get; set; }
+
         [Display(Name = "Annotation Tilte")]
         [Required(ErrorMessage = "Annotation Title is required")]
-        [StringLength(30, ErrorMessage = "Must be between 5 and 30 characters", MinimumLength = 5)]
+        [StringLength(200, ErrorMessage = "Must be between 5 and 200 characters", MinimumLength = 5)]
         public string Annotation_Title { get; set; }
 
-        [Display(Name = "Annotation Text")]
+        [Display(Name = "Annotation Body")]
         [Required(ErrorMessage = "Annotation Text is required")]
         [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
         public string Annotation_Text { get; set; }
+
+        [Display(Name = "Annotation Date")]
+        [Required(ErrorMessage = "Annotation Date is required")]
+        [StringLength(10, ErrorMessage = "Must be between 8 and 10 characters", MinimumLength = 8)]
+        public string Annotation_Date { get; set; }
+
+        [Display(Name = "Annotation Source")]
+        [Required(ErrorMessage = "Annotation Source is required")]
+        [StringLength(100, ErrorMessage = "Must be between 3 and 100 characters", MinimumLength = 3)]
+        public string Annotation_Source { get; set; }
+
+        [Display(Name = "Source File Name")]
+        [Required(ErrorMessage = "Source File Name is required")]
+        [StringLength(1000, ErrorMessage = "Must be between 3 and 1000 characters", MinimumLength = 3)]
+        public string Source_File_Name { get; set; }
 
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
@@ -178,6 +197,13 @@ namespace TextMark.Models
         [ForeignKey("Project_ID")]
         public virtual Projects_TB Projects_TB { get; set; }    
     }
+
+    //public class ReadExcel
+    //{
+    //    [Required(ErrorMessage = "Please select file")]
+    //    [FileExt(Allow = ".xls,.xlsx", ErrorMessage = "Only excel file")]
+    //    public HttpPostedFileBase file { get; set; }
+    //}
     public class CL_Users_Home_Page
     {
         public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }

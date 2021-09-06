@@ -198,9 +198,6 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\wi
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.TagHelpers.input.cache
@@ -524,3 +521,14 @@ D:\backups\TextMark_03082021_All annotations functions OK\TextMark\obj\Debug\net
 D:\backups\TextMark_03082021_All annotations functions OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 D:\backups\TextMark_03082021_All annotations functions OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 D:\backups\TextMark_03082021_All annotations functions OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\ClosedXML.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\DocumentFormat.OpenXml.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\ExcelNumberFormat.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\ServiceStack.Interfaces.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\ExcelDataReader.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\System.Text.Encoding.CodePages.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Text.Encoding.CodePages.dll

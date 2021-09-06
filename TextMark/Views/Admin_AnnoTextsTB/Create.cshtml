@@ -1,4 +1,5 @@
-﻿@model TextMark.Models.Annotations_TB
+﻿@using TextMark.Models
+@model TextMark.Models.Annotations_TB
 
 @{
     ViewData["Title"] = "Create an Annotation Text";
@@ -11,22 +12,38 @@
 <hr />
 @*<div class="row">
     <div class="col-md-4">*@
-<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>   
-    <div class="form-group">
-        <label asp-for="Annotation_Title" class="control-label"></label>
-        <textarea asp-for="Annotation_Title" class="form-control" rows="1" cols="30"></textarea>
-        <span asp-validation-for="Annotation_Title" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Annotation_Text" class="control-label"></label>
-        <textarea asp-for="Annotation_Text" class="form-control" rows="10" cols="50"></textarea>
-        <span asp-validation-for="Annotation_Text" class="text-danger"></span>
-    </div>
-    <div class="form-group">
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Annotation_ID_InFile" class="control-label"></label>
+            <textarea asp-for="Annotation_ID_InFile" class="form-control" rows="1" cols="30"></textarea>
+            <span asp-validation-for="Annotation_ID_InFile" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Annotation_Title" class="control-label"></label>
+            <textarea asp-for="Annotation_Title" class="form-control" rows="1" cols="30"></textarea>
+            <span asp-validation-for="Annotation_Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Annotation_Text" class="control-label"></label>
+            <textarea asp-for="Annotation_Text" class="form-control" rows="10" cols="50"></textarea>
+            <span asp-validation-for="Annotation_Text" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Annotation_Date" class="control-label"></label>
+            <textarea asp-for="Annotation_Date" class="form-control" rows="1" cols="10"></textarea>
+            <span asp-validation-for="Annotation_Date" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Annotation_Source" class="control-label"></label>
+            <textarea asp-for="Annotation_Source" class="form-control" rows="1" cols="100"></textarea>
+            <span asp-validation-for="Annotation_Source" class="text-danger"></span>
+        </div>
+    *@
+    <div class="form-group m-2">
         <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
         @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
-new { @class = "form-control" })
+            new { @class = "form-control" })
         <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
     </div>
     @if (ViewBag.Error != null)
@@ -34,12 +51,15 @@ new { @class = "form-control" })
         <p class="text-danger">@ViewBag.Error</p>
 
     }
-    <div class="form-group">
+    <div class="form-group m-2">
+        <input type="file" value="Get Users" name="ExcelFile" />
+    </div>
+    <div class="form-group m-2">     
         <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
-    @*</div>
-</div>*@
+@*</div>
+    </div>*@
 
 <div>
     <a asp-action="Index">Back to List</a>
@@ -48,7 +68,7 @@ new { @class = "form-control" })
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script>
-    document.getElementById('Date_Input').value = new Date().toISOString().substring(0, 16);
-</script>
+    <script>
+        document.getElementById('Date_Input').value = new Date().toISOString().substring(0, 16);
+    </script>
 }

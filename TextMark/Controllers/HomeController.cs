@@ -17,6 +17,9 @@ namespace TextMark.Controllers
     public class HomeController : Controller
     {        
         private readonly TextMarkContext _context;
+        int LoggedIn_User_ID = 0;
+        int? Selected_Project_ID = 0;
+        int Selected_Assigned_Anno_ID = 0;
         
 
         public HomeController(TextMarkContext context)
@@ -37,10 +40,55 @@ namespace TextMark.Controllers
             Select_All_Users();
             Select_All_Annotations();
             Select_All_Projects();
+            LoggedIn_User_ID = Convert.ToInt32( HttpContext.Session.GetString("UserID"));
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             return View(HP);
         }
-         public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
+
+       
+        public ActionResult ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID)
+        {
+
+            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(Project_ID);
+            HP.allLabels = Select_Annotation_Labels(Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID, Project_ID);
+            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+
+            HttpContext.Session.SetString("Selected_Assigned_Anno_ID", Selected_Assigned_Anno_ID.ToString());
+            HttpContext.Session.SetString("Selected_Project_ID", Project_ID.ToString());
+
+
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+
+            return  View("Index", HP);
+        }
+
+        public ActionResult ViewRecord_AfterSave()
+        {    
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
+            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(Selected_Project_ID);
+            HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+
+            //   return View("Index", HP);
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = Selected_Assigned_Anno_ID, UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
+        }
+        public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
         {
             string Code_STR = "";
             Code_STR += " <script> ";
@@ -53,14 +101,7 @@ namespace TextMark.Controllers
 
             Code_STR += " else { $(\".example\").attr(\"contenteditable\", false); }";
 
-            //if (e.key == "i" || e.key == "I")
-            //        App.handlers.applyOnclickAnnotation('Internal');
-            //    else if (e.key == "r" || e.key == "R")
-            //        App.handlers.applyOnclickAnnotation('Requirement');
-            //    else if (e.key == "b" || e.key == "B")
-            //        App.handlers.applyOnclickAnnotation('Backlog');
-            //    else { $(".example").attr("contenteditable", false); }
-
+            
             Code_STR += " }); ";
 
             Code_STR += " apparea.addEventListener(\"mousedown\", (e) => { ";
@@ -69,14 +110,14 @@ namespace TextMark.Controllers
             Code_STR += "  </script> ";
             return new HtmlString(Code_STR);
         }
-        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int id, int UserID)
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int id, int UserID, int? Project_ID = 0 )
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
                 var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID);
+               .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
                     return new Assigned_Annotations_ToUsers_TB();
@@ -86,7 +127,7 @@ namespace TextMark.Controllers
 
             return new Assigned_Annotations_ToUsers_TB();
         }
-        private List<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers()
+        private List<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers(int? Project_ID = 0)
         {
             var UserID = "";
 
@@ -98,7 +139,7 @@ namespace TextMark.Controllers
             {
                 UserID = HttpContext.Session.GetString("UserID").ToUpper();
             }
-            return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID).ToList();
+            return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToList();
 
         }
         private bool IsValidUser()
@@ -126,13 +167,12 @@ namespace TextMark.Controllers
             }
 
         }
-        public List<Labels_TB> Select_Annotation_Labels()
+        public List<Labels_TB> Select_Annotation_Labels(int? Project_ID = 0)
         {
-            var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
+            var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID == Project_ID).ToList();
+            //var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
             return Labels;
-            //Select(c => new { Label_Text = c.Label_Text , Project_ID = c.Project_ID }).
-            //.Select(c => new { Label_Text=c.Label_Text, Label_Background_Color = c.Labels_BG_Colours_TB.Label_Background_Color , Label_ShortCut_Key = c.Labels_BG_Colours_TB.Label_ShortCut_Key , Project_ID= c.Project_ID })
-        }
+            }
         public async Task<IActionResult> Details(int? AnnotaionID)
         {           
             if (!IsValidUser())
@@ -208,26 +248,9 @@ namespace TextMark.Controllers
             Select_All_Users();
             Select_All_Annotations();
             Select_All_Projects();
-           
+          
 
-            //Select_All_Roles();
-            //if (!IsValidUser())
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
-
-            //if (id != Assigned_Anno.Selected_Assigned_Annotation.Assigned_Anno_ID)
-            //{
-            //    return NotFound();
-            //}
-
-            //if (await IsUserDuplicated(Assigned_Anno_Users.Username, Assigned_Anno_Users.Role_ID))
-            //{
-            //    ViewBag.Error = "This Username is already registered for this role";
-
-            //}
-            //else
-            //{
+            
             if (ModelState.IsValid)
                 {
                     try
@@ -237,19 +260,15 @@ namespace TextMark.Controllers
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        //if (!AnnoExists(Assigned_Anno_Users.Assigned_Anno_ID))
-                        //{
-                        //    return NotFound();
-                        //}
-                        //else
-                        //{
-                        //    throw;
-                        //}
+                       
                 }
-                    return RedirectToAction("Index", "Home");
-                }
-            //}
-            return RedirectToAction("Index", "Home");
+
+                return RedirectToAction("ViewRecord_AfterSave", "Home");
+             
+            }
+          
+        return RedirectToAction("Index", "Home");
+            
         }
 
         private bool AnnoExists(int id)
@@ -272,5 +291,17 @@ namespace TextMark.Controllers
             ViewBag.Projects = _context.Projects_TB.ToList();
             return ViewBag.Projects;
         }
+        //public List<Assigned_Annotations_ToUsers_TB> Select_All_Projects_of_LoggedInUser(int userID)
+        public void Select_All_Projects_of_LoggedInUser(int userID)
+        {
+            /// var UserRecords = _context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == userID).ToList();
+
+            //ViewBag.UserProjects = UserRecords.GroupBy(t => new { Project_ID = t.Project_ID , Project_Name = t.Projects_TB.Project_Name }).Select(b => b).ToList();
+
+
+            //ViewBag.UserProjects = _context.Assigned_Annotations_ToUsers_TB.GroupBy(c => new { Project_ID = c.Project_ID, User_ID = c.User_ID, Project_Name = c.Projects_TB.Project_Name }).Where(d => d.Key.User_ID == userID).ToList();
+          ViewBag.UserProjects = _context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == userID).Select(c => new { Project_ID = c.Project_ID , Project_Name = c.Projects_TB.Project_Name }).Distinct().ToList();
+
+        }    
     }
 }

@@ -4,24 +4,44 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_PID: Express
       SA_PASSWORD: Amin3420
-    image: microsoft/mssql-server-linux
+    image: mcr.microsoft.com/mssql/server
+    networks:
+      default: null
     ports:
-    - published: 1433
+    - mode: ingress
       target: 1433
+      published: 1433
+      protocol: tcp
   textmark:
     build:
       context: C:\Users\Amin\source\repos\TextMark
-      dockerfile: TextMark/Dockerfile
+      dockerfile: C:\Users\Amin\source\repos\TextMark\TextMark\Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
     image: textmark
+    networks:
+      default: null
     ports:
-    - published: 80
+    - mode: ingress
+      target: 443
+      protocol: tcp
+    - mode: ingress
       target: 80
-    - target: 80
-    - target: 443
+      protocol: tcp
     volumes:
-    - C:\Users\Amin\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
-    - C:\Users\Amin\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
-version: '3.9'
+    - type: bind
+      source: C:\Users\Amin\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Amin\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: dockercompose214410592790654273_default

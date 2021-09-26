@@ -6,14 +6,15 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.83.1">
-    <title>Dashboard Template · Bootstrap v5.0</title>
+    <title>AILand Dashboard</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
-    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    @*<link href="~/css/bootstrap.min.css" rel="stylesheet">*@
 
     <style>
         .bd-placeholder-img {
@@ -37,51 +38,7 @@
     @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
 </head>
 <body>
-    <!--<header>
-        <div class="flex-container">
-            <div><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a></div>
-            <div><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
-            <div>
-                @{ if (TempData.Peek("Loggedin_User") == null)
-                    {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Users_TB" asp-action="Index">Login</a>
-                    }
-                }
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TextMark</a>
-                @{ if (TempData.Peek("Loggedin_User") != null)
-                    {
-                        <label class="col-md-4 text-right">Loggedin User : @TempData.Peek("Loggedin_User")</label>
-                    }
-                }
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>-->
-    @*<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </li>
-                @{ if (TempData.Peek("Loggedin_User") == null)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users_TB" asp-action="Index">Users_TB</a>
-                        </li>
-                    }
-                }
 
-            </ul>
-        </div>*@
-    <!--</div>
-        </nav>
-    </header>-->
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -92,44 +49,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-  
+
     <script src="~/js/feather.js"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!--
-    Core JS files
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/blockui.min.js"></script>
-    /core JS files
-    Theme JS files
-    <script src="~/js/bootbox.min.js"></script>
-    <script src="~/js/select2.min.js"></script>
-
-    <script src="~/js/app_Theme.js"></script>
-    <script src="~/js/Components_Modals.js"></script>-->
-    <!-- Theme JS files -->
-    <!--<script src="~/js/d3.min.js"></script>
-    <script src="~/js/d3_tooltip.js"></script>
-    <script src="~/js/switchery.min.js"></script>
-    <script src="~/js/moment.min.js"></script>
-    <script src="~/js/daterangepicker.js"></script>
-    <script src="~/js/dashboard.js"></script>
-    <script src="~/js/streamgraph.js"></script>
-    <script src="~/js/sparklines.js"></script>
-    <script src="~/js/lines.js"></script>
-    <script src="~/js/areas.js"></script>
-    <script src="/js/donuts.js"></script>
-    <script src="~/js/bars.js"></script>
-    <script src="~/js/progress.js"></script>
-    <script src="~/js/heatmaps.js"></script>
-    <script src="~/js/pies.js"></script>
-    <script src="~/js/bullets.js"></script>-->
-    <!-- /theme JS files -->
-    <!--/theme JS files-->
 
 
 
@@ -139,11 +65,12 @@
 
 
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @*<footer class="border-top footer text-muted fixed-bottom">
+            <div class="container">
+                &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+   
 
 
 </body>

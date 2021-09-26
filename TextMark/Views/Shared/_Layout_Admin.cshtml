@@ -19,6 +19,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
+   
     <script src="~/js/bootstrap.bundle.min.js"></script>
     <style type="text/css">
 
@@ -86,10 +87,10 @@
 
             </span>
             @*<div class="nav-item">
-                <form id="logoutForm" class="form-inline"  >
-                    <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
-                </form>
-            </div>*@
+                    <form id="logoutForm" class="form-inline"  >
+                        <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
+                    </form>
+                </div>*@
         }
         else
         {
@@ -108,131 +109,121 @@
         @*</ul>*@
 
     </header>
-    <div class="container-fluid">
+    <div class="container">
+
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_ProjectsTB")">
-                                <span data-feather="command"></span>
-                                Projects
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
-                                <span data-feather="key"></span>
-                                Roles
-                            </a>
-                        </li>
-                        <li class="nav-item has-submenu">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
-                                <span data-feather="users"></span>
-                                Users
-                            </a>
-                            @*<ul class="collapse submenu" id="UsersSubmenu">
-                <li>
-                    <a class="nav-link" href="#"><span data-feather="list"></span> List </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="#"><span data-feather="plus"></span> New </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="/admin/Details"><span data-feather="airplay"></span> Details </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="#"><span data-feather="edit"></span> Edit </a>
-                </li>
-            </ul>*@
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Labels_BG_ColoursTB")">
-                                <span data-feather="key"></span>
-                                Labels Background Colours and Shortkeys
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
-                                <span data-feather="tag"></span>
-                                Labels
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_AnnoTextsTB")">
-                                <span data-feather="file-text"></span>
-                                Annotations Texts
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Assigned_AnnotationsTB")">
-                                <span data-feather="list"></span>
-                                Assigned Annotations
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <div class="col-2">
+                <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_ProjectsTB")">
+                                    <span data-feather="command"></span>
+                                    Projects
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
+                                    <span data-feather="key"></span>
+                                    Roles
+                                </a>
+                            </li>
+                            <li class="nav-item has-submenu">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
+                                    <span data-feather="users"></span>
+                                    Users
+                                </a>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="container" id="Users_Container">
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Labels_BG_ColoursTB")">
+                                    <span data-feather="key"></span>
+                                    Labels Background Colours and Shortkeys
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
+                                    <span data-feather="tag"></span>
+                                    Labels
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_AnnoTextsTB")">
+                                    <span data-feather="file-text"></span>
+                                    Annotations Texts
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Assigned_AnnotationsTB")">
+                                    <span data-feather="list"></span>
+                                    Assigned Annotations
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 
-                </div>
-            </main>
+            </div>
+
+            <div class="col-10">
+                <main>
+                    <div class="container" id="Users_Container">
+                        <div class="container">
+                            <main role="main">
+                                @RenderBody()
+                            </main>
+                        </div>
+
+
+
+
+                        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+
+                        <script src="~/js/feather.js"></script>
+
+                        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                        <script src="~/js/site.js" asp-append-version="true"></script>
+
+                        <script src="~/js/bootstrap-colorpicker.js"></script>
+
+                        <script>
+                            $(function () {
+                                // Basic instantiation:
+                                $('#demo-input').colorpicker();
+
+                                // Example using an event, to change the color of the #demo div background:
+                                $('#demo-input').on('colorpickerChange', function (event) {
+                                    $('#demo').css('background-color', event.color.toString());
+                                });
+                            });
+                        </script>
+
+
+
+                        @RenderSection("Scripts", required: false)
+
+
+
+
+
+
+
+                    </div>
+                </main>
+            </div>
         </div>
     </div>
 
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="container" id="Users_Container">
-            <div class="container">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
 
 
-
-
-            <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-           
-            <script src="~/js/feather.js"></script>
-
-            <script src="~/lib/jquery/dist/jquery.min.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-
-            <script src="~/js/bootstrap-colorpicker.js"></script>
-
-            <script>
-                $(function () {
-                    // Basic instantiation:
-                    $('#demo-input').colorpicker();
-
-                    // Example using an event, to change the color of the #demo div background:
-                    $('#demo-input').on('colorpickerChange', function (event) {
-                        $('#demo').css('background-color', event.color.toString());
-                    });
-                });
-            </script>
-
-
-
-            @RenderSection("Scripts", required: false)
-
-
-
-
-
-
-            <footer class="border-top footer text-muted">
-                <div class="container">
-                    &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </div>
-            </footer>
-
+    <footer class="border-top footer text-muted fixed-bottom">
+        <div class="container">
+            &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </main>
+    </footer>
 
 
 </body>

@@ -88,7 +88,8 @@ namespace TextMark.Controllers
                     HttpContext.Session.SetString("UserID", login_user.User_ID.ToString());
                     HttpContext.Session.SetString("ProjectID", login_user.Project_ID.ToString());
 
-                   TempData["Username"] = username;
+                    TempData["UserID"] = login_user.User_ID.ToString();
+                    TempData["Username"] = username;
                     return RedirectToAction("Index", "Home");
                 }
             }

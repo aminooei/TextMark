@@ -188,7 +188,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Annotation_ID,Annotation_Text,Project_ID")] Annotations_TB Anno_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Annotation_ID,Annotation_ID_InFile,Annotation_Title,Annotation_Text,Annotation_Date,Annotation_Source,Source_File_Name,Project_ID")] Annotations_TB Anno_tb)
         {
             Select_All_Projects();
             if (!IsValidUser())

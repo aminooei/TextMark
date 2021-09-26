@@ -171,7 +171,7 @@ namespace TextMark.Models
         [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
         public string Annotated_Text { get; set; }
 
-        [Display(Name = "Annotation ID")]
+        [Display(Name = "Number of Annotations")]
         public int Count_Annotations { get; set; }
 
         [Display(Name = "Project ID")]
@@ -212,4 +212,5 @@ namespace TextMark.Models
 
         public HtmlString ShortcutKeys_Press_Script { get; set; }
     }
+
 }

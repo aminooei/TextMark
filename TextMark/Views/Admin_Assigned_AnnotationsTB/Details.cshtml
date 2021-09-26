@@ -1,4 +1,6 @@
-﻿@model TextMark.Models.Assigned_Annotations_ToUsers_TB
+﻿@model TextMark.Models.CL_Users_Home_Page
+
+
 
 @{
     ViewData["Title"] = "Assigned Annotations To Users - Details";
@@ -7,37 +9,211 @@
 
 <h1>Assigned Annotations To Users - Details</h1>
 
+<style>
+@{var Label_text = "";
+        var Label_Color = "";
+        var Style_Text = "";
+        if (Model.allLabels != null)
+        {
+             @foreach (var item in Model.allLabels)
+             {
+                 Label_text = @item.Label_Text;
+                 Label_Color = @item.Labels_BG_Colours_TB.Label_Background_Color;
+                 Style_Text += "annotation[type = " + Label_text + "] {background-color: " + Label_Color + " !important;}";
+             }
+        }
+        }
+    @Style_Text
+</style>
+<div class="card-header-title has-background-royalblue" style="padding: 1.5rem;">
+    <div class="field is-grouped is-grouped-multiline">
+        <div class="row">
+            @foreach (var item in Model.allLabels)
+            {
+                @*<div class="col-1 control">*@
+                @* <div id="Tag_btn" name="@item.Label_Text" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('@item.Label_Text');">*@
+                @*<a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Labels_BG_Colours_TB.Label_Background_Color;">
+                @item.Label_Text
+            </a>*@
+                <div style="width:100px; height:40px; text-align:center; background-color: @item.Labels_BG_Colours_TB.Label_Background_Color;">@item.Label_Text</div>
+                @* </div>
+            </div>*@
+            }
+        </div>
+    </div>
+</div>
 <div>
-   
+
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+            @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Projects_TB.Project_Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Projects_TB.Project_Name)
+            @Html.DisplayFor(model => model.Selected_Assigned_Annotation.Projects_TB.Project_Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Users_TB.Username)
+            @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Users_TB.Username)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Users_TB.Username)
+            @Html.DisplayFor(model => model.Selected_Assigned_Annotation.Users_TB.Username)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
+            @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Annotations_TB.Annotation_Text)
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Annotations_TB.Annotation_Text)
+
+        <dd class="example col-sm-10">
+            <div class="content" id="Annotated_Text_tobesaved">
+                @Html.DisplayFor(model => model.Selected_Assigned_Annotation.Annotated_Text)
+            </div>
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Count_Annotations)
+            @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Count_Annotations)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Count_Annotations)
+            @Html.DisplayFor(model => model.Selected_Assigned_Annotation.Count_Annotations)
         </dd>
     </dl>
+    
+
 </div>
+
+@*<div>
+
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Projects_TB.Project_Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Users_TB.Username)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Users_TB.Username)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
+            </dt>
+            <dd class="example ui col-sm-10">
+                <div class="content" id="Annotated_Text_tobesaved">
+                    @Html.DisplayFor(model => model.Annotated_Text)
+                </div>
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Count_Annotations)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Count_Annotations)
+            </dd>
+        </dl>
+    </div>*@
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Assigned_Anno_ID">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
+<!--Annotator Popover Contents-->
+<div id="annotate_settings" class="ui form raised segments" style="margin: 0px; display: none;">
+    <!--Notes-->
+    <div class="required field p-around_small">
+        <label>Type some notes</label>
+        <textarea rows="5" onchange="App.handlers.captureNotes( this )"></textarea>
+    </div>
+    <!--Tags-->
+    <div class="p-around_small m-bottom_medium">
+        <div class="ui dropdown labeled icon fluid button upward" tabindex="0">
+            <i class="tag icon"></i>
+            <span class="text">Select Tag</span>
+            <div class="menu transition hidden" tabindex="-1">
+                <div class="ui icon search input">
+                    <i class="search icon"></i>
+                    <input type="text" placeholder="Search tags...">
+                </div>
+                <div class="divider"></div>
+                <div class="header">
+                    <i class="tags icon"></i>
+                    Tag Label
+                </div>
+                <div class="scrolling menu">
+                    @*NO EFFECT*@
+                    @*<div name="Requirement" class="item">
+                            <div class="ui orange empty circular label"></div>
+                            Requirement
+                        </div>
+                        <div name="Backlog" class="item">
+                            <div class="ui teal empty circular label"></div>
+                            Backlog
+                        </div>
+                        <div name="Internal" class="item">
+                            <div class="ui blue empty circular label"></div>
+                            Internal
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Action Buttons-->
+    <div class="field p-around_small m-bottom_medium">
+        <button class="ui right floated olive button" onclick="App.handlers.saveAnnotation();">Save</button>
+        <button class="ui left floated button" onclick="App.handlers.cancelAnnotation();">Cancel</button>
+    </div>
+    <!--Placeholder-->
+    <div class="field p-around_small m-bottom_medium">
+    </div>
+    <!--Arrow-->
+    <div id="arrow" data-popper-arrow="" style=""></div>
+</div>
+
+
+<link rel="stylesheet" href="~/css/annotator.css">
+<!--Custom Styles-->
+<link rel="stylesheet" href="~/css/styles.css">
+
+@section Scripts
+{
+    
+    <!--Required for Annotator.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Required for Annotator.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.2/umd/popper.min.js"></script>
+    <!--Optional (used for Templating)-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.6/jsrender.min.js"></script>-->
+    <!--Optional (used for Semantic UI)-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>-->
+    <!--Annotator jQuery Plugin-->
+    <script type="text/javascript" src="~/js/annotator.js"></script>
+    @*<script type="text/javascript" src="~/js/app.js"></script>
+    <script type="text/javascript" src="~/js/Amin.js"></script>*@
+    <script>
+
+        function Exchange_Text() {
+            Edited_Text = document.getElementById("Annotated_Text_tobesaved");
+            $("#Annotated_Text_tobesaved").val(Edited_Text.innerHTML);
+        }
+
+        function Run_Save_Functions() {
+            Exchange_Text();
+            window.location.href = "/Home/Edit";
+        }
+
+        $(document).ready(function () {
+            Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
+            $("#Annotated_Text_tobesaved").html(Loaded_Text);
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            for (let i = 1; i <= @Model.Selected_Assigned_Annotation.Count_Annotations; i++)
+            {
+                $("#BtnClosing_annotation_" + i).hide();
+            }
+        });
+    </script>
+}

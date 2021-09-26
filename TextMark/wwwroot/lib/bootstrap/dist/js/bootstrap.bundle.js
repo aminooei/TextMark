@@ -3284,9 +3284,9 @@
 
     // Loop trough the offsets arrays and execute the operations
     ops.forEach(function (op, index) {
-      op.forEach(function (frag, index2) {
+      op.forEach(function (frag, ViewProject) {
         if (isNumeric(frag)) {
-          offsets[index] += frag * (op[index2 - 1] === '-' ? -1 : 1);
+          offsets[index] += frag * (op[ViewProject - 1] === '-' ? -1 : 1);
         }
       });
     });

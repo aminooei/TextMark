@@ -26,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,18 +38,15 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Catalyst": {
               "target": "Package",
-              "version": "[1.0.16767, )"
-            },
-            "ClosedXML": {
-              "target": "Package",
-              "version": "[0.95.4, )"
+              "version": "[0.0.16396, )"
             },
             "Ductus.FluentDocker": {
               "target": "Package",
-              "version": "[2.10.6, )"
+              "version": "[2.8.2, )"
             },
             "EntityFramework": {
               "target": "Package",
@@ -58,35 +56,25 @@
               "target": "Package",
               "version": "[3.6.0, )"
             },
-            "MahApps.Metro.IconPacks.FeatherIcons": {
-              "target": "Package",
-              "version": "[4.8.0, )"
-            },
-            "Microsoft.AspNetCore.Identity.UI": {
-              "target": "Package",
-              "version": "[3.1.0, )"
-            },
-            "Microsoft.AspNetCore.Session": {
-              "target": "Package",
-              "version": "[2.2.0, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.6, )"
+              "version": "[5.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.6, )"
+              "version": "[5.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.6, )"
+              "version": "[5.0.10, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.6, )"
+              "version": "[5.0.10, )"
             },
             "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
               "target": "Package",
@@ -96,13 +84,9 @@
               "target": "Package",
               "version": "[3.1.5, )"
             },
-            "ServiceStack.Interfaces": {
+            "ServiceStack": {
               "target": "Package",
               "version": "[5.12.0, )"
-            },
-            "System.Text.Encoding.CodePages": {
-              "target": "Package",
-              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -121,12 +105,9 @@
             },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
-            },
-            "Microsoft.WindowsDesktop.App.WPF": {
-              "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.413\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

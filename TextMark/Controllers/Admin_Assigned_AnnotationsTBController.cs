@@ -30,8 +30,8 @@ namespace TextMark.Controllers
             }
             Select_All_Users();
             Select_All_Projects();
-            return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-          
+            return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+        
         }
 
 
@@ -70,11 +70,11 @@ namespace TextMark.Controllers
             }
             else if (User_ID == 0)
             {
-                return RedirectToAction("Index", "Admin_Assigned_AnnotationsTB", await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Project_ID ).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Project_ID ).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             }
             else if (Project_ID == 0)
             {
-                return RedirectToAction("Index", "Admin_Assigned_AnnotationsTB", await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             }
             return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
         }

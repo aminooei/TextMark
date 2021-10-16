@@ -6204,7 +6204,7 @@ jQuery.extend( {
 		return clone;
 	},
 	clickAction1: function(type) {
-		alert("clickAction OK");
+		//alert("clickAction OK");
 		if (selection.rangeCount) {
 
 			range = selection.getRangeAt(0);

@@ -27,7 +27,8 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View(await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").ToListAsync());            
+            //return View(await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").ToListAsync());
+            return View(await _context.Labels_TB.Include("Projects_TB").ToListAsync());
         }
 
         private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID)
@@ -76,28 +77,64 @@ namespace TextMark.Controllers
             Select_All_Projects();
             return View();
         }
+        private async Task<bool> IsBGColour_Shortcut_Duplicated(string Shortcut_Key, int? ProjectID)
+        {
+            var ShortcutKey = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_ShortCut_Key == Shortcut_Key && m.Project_ID == ProjectID);
+           
+            if (ShortcutKey == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
+        private async Task<bool> IsBGColour_Duplicated(string Label_Background_Color, int? ProjectID)
+        {
+            var BG_Colour = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_Background_Color == Label_Background_Color && m.Project_ID == ProjectID);
+
+            if (BG_Colour == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         // POST: Logins/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text,Project_ID,Label_BGColour_ID")] Labels_TB labels_tb)
+        //   public async Task<IActionResult> Create([Bind("Label_ID,Label_Text,Project_ID,Label_BGColour_ID")] Labels_TB labels_tb)
+        public async Task<IActionResult> Create([Bind("Label_ID,Label_Text,Project_ID,Label_Background_Color,Label_ShortCut_Key")] Labels_TB labels_tb)
         {
            
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
+
             if (await IsLabelDuplicated(labels_tb.Label_Text, labels_tb.Project_ID))
             {
-                ViewBag.Error = "This Label is already registered for this Project";
-
+                ViewBag.Error = "This Label is already registered for this Project";             
+            }
+            else if (await IsBGColour_Shortcut_Duplicated(labels_tb.Label_ShortCut_Key, labels_tb.Project_ID))
+            {
+                ViewBag.Error = "This Shortcut Key is already registered";               
+            }
+            else if (await IsBGColour_Duplicated(labels_tb.Label_Background_Color, labels_tb.Project_ID))
+            {
+                ViewBag.Error = "This Background Colour is already registered";              
             }
             else
             {
                 if (ModelState.IsValid)
                 {
+                    labels_tb.Label_ShortCut_Key = labels_tb.Label_ShortCut_Key.ToUpper();
                     _context.Add(labels_tb);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -149,7 +186,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var label = await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
+            var label = await _context.Labels_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
             //var login = await _context.Labels_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
             if (label == null)
             {
@@ -162,7 +199,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text,Project_ID,Label_BGColour_ID")] Labels_TB Labels_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("Label_ID,Label_Text,Project_ID,Label_Background_Color,Label_ShortCut_Key")] Labels_TB Labels_tb)
         {
             Select_All_Labels_BGColours();
             Select_All_Projects();
@@ -171,6 +208,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
+
             if (id != Labels_tb.Label_ID)
             {
                 return NotFound();
@@ -178,7 +216,14 @@ namespace TextMark.Controllers
             if (await IsLabelDuplicated(Labels_tb.Label_Text, Labels_tb.Project_ID))
             {
                 ViewBag.Error = "This Label is already registered for this Project";
-
+            }
+            else if (await IsBGColour_Shortcut_Duplicated(Labels_tb.Label_ShortCut_Key, Labels_tb.Project_ID))
+            {
+                ViewBag.Error = "This Shortcut Key is already registered";
+            }
+            else if (await IsBGColour_Duplicated(Labels_tb.Label_Background_Color, Labels_tb.Project_ID))
+            {
+                ViewBag.Error = "This Background Colour is already registered";
             }
             else
             {
@@ -186,6 +231,7 @@ namespace TextMark.Controllers
                 {
                     try
                     {
+                        Labels_tb.Label_ShortCut_Key = Labels_tb.Label_ShortCut_Key.ToUpper();
                         _context.Update(Labels_tb);
                         await _context.SaveChangesAsync();
                     }
@@ -256,9 +302,9 @@ namespace TextMark.Controllers
 
             return ViewBag.Projects;
         }
-        public List<Labels_BG_Colours_TB> Select_All_Labels_BGColours()
+        public List<Labels_TB> Select_All_Labels_BGColours()
         {
-            ViewBag.Labels = _context.Labels_BG_Colours_TB.ToList();
+            ViewBag.Labels = _context.Labels_TB.ToList();
 
             return ViewBag.Labels;
         }

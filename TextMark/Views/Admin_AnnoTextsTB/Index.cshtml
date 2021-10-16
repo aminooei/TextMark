@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
+
 <h1>List of Annotations</h1>
 
 <p>
@@ -12,72 +13,74 @@
 </p>
 @*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container" id="Users_Container">*@
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotation_ID)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotation_ID_InFile)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotation_Title)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotation_Text)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotation_Date)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotation_Source)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Source_File_Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_Text)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_Source)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Source_File_Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Annotation_ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Annotation_ID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Annotation_ID">Delete</a>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-        @*</div>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Annotation_ID)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Annotation_ID_InFile)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annotation_Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annotation_Text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annotation_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Annotation_Source)
+            </th>
+            <th style="border-left: 1px solid #cdd0d4;">
+                @Html.DisplayNameFor(model => model.Source_File_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Annotation_ID)
+        </td>*@
+            @*<td style="border-left: 1px solid #cdd0d4;">*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation_Title)
+            </td>
+            <td>
+                @item.Annotation_Text.ToString().Substring(0, 15) ...
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Annotation_Source)
+            </td>
+            <td style="border-left: 1px solid #cdd0d4;">
+                @Html.DisplayFor(modelItem => item.Source_File_Name)
+            </td>
+            @*<td style="border-right: 1px solid #cdd0d4;">*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Annotation_ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Annotation_ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Annotation_ID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+@*</div>
     </main>*@

@@ -54,7 +54,7 @@ namespace TextMark.Controllers
                 Create_Project();
                 Create_Role();
                 Create_User();
-                Create_Labels_BG_Colour_ShortKey();
+                //Create_Labels_BG_Colour_ShortKey();
                 Create_Labels();
                 Create_Annotation_Texts();
                 Create_Assigned_Anno();
@@ -140,41 +140,47 @@ namespace TextMark.Controllers
             _context.SaveChanges();
         }
 
-        public void Create_Labels_BG_Colour_ShortKey()
-        {
-            Labels_BG_Colours_TB LBG1 = new Labels_BG_Colours_TB();
-            LBG1.Label_Background_Color = "#f2711c";
-            LBG1.Label_ShortCut_Key = "R";
-            _context.Add(LBG1);
+        //public void Create_Labels_BG_Colour_ShortKey()
+        //{
+        //    Labels_BG_Colours_TB LBG1 = new Labels_BG_Colours_TB();
+        //    LBG1.Label_Background_Color = "#f2711c";
+        //    LBG1.Label_ShortCut_Key = "R";
+        //    _context.Add(LBG1);
 
-            Labels_BG_Colours_TB LBG2 = new Labels_BG_Colours_TB();
-            LBG2.Label_Background_Color = "#009c95";
-            LBG2.Label_ShortCut_Key = "B";
-            _context.Add(LBG2);
+        //    Labels_BG_Colours_TB LBG2 = new Labels_BG_Colours_TB();
+        //    LBG2.Label_Background_Color = "#009c95";
+        //    LBG2.Label_ShortCut_Key = "B";
+        //    _context.Add(LBG2);
 
-            Labels_BG_Colours_TB LBG3 = new Labels_BG_Colours_TB();
-            LBG3.Label_Background_Color = "#2185d0";
-            LBG3.Label_ShortCut_Key = "G";
-            _context.Add(LBG3);
-            _context.SaveChanges();
-        }
+        //    Labels_BG_Colours_TB LBG3 = new Labels_BG_Colours_TB();
+        //    LBG3.Label_Background_Color = "#2185d0";
+        //    LBG3.Label_ShortCut_Key = "G";
+        //    _context.Add(LBG3);
+        //    _context.SaveChanges();
+        //}
 
         public void Create_Labels()
         {
             Labels_TB LB1 = new Labels_TB();
-            LB1.Label_BGColour_ID = 1;
+            // LB1.Label_BGColour_ID = 1;
+            LB1.Label_Background_Color = "#f2711c";
+            LB1.Label_ShortCut_Key = "R";
             LB1.Label_Text = "Location";
             LB1.Project_ID = 1;
             _context.Add(LB1);
 
             Labels_TB LB2 = new Labels_TB();
-            LB2.Label_BGColour_ID = 2;
+            //LB2.Label_BGColour_ID = 2;
+            LB2.Label_Background_Color = "#009c95";
+            LB2.Label_ShortCut_Key = "B";
             LB2.Label_Text = "City";
             LB2.Project_ID = 1;
             _context.Add(LB2);
 
             Labels_TB LB3 = new Labels_TB();
-            LB3.Label_BGColour_ID = 3;
+            //LB3.Label_BGColour_ID = 3;
+            LB3.Label_Background_Color = "#2185d0";
+            LB3.Label_ShortCut_Key = "G";
             LB3.Label_Text = "Country";
             LB3.Project_ID = 1;
             _context.Add(LB3);

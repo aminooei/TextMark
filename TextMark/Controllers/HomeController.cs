@@ -80,13 +80,13 @@ namespace TextMark.Controllers
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
             HP.allAnnotations = All_Assigned_Anno_ToUsers(Selected_Project_ID);
             HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
-            //   return View("Index", HP);
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = Selected_Assigned_Anno_ID, UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
+            
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID +1) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
         }
         public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
         {
@@ -96,7 +96,8 @@ namespace TextMark.Controllers
             Code_STR += " apparea.addEventListener(\"keydown\", (e) => { ";
             foreach (var item in List_Labels)
             {
-                Code_STR += " if (e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToLower() +"\" || e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToUpper() +"\")  App.handlers.applyOnclickAnnotation('"+ item.Label_Text  +"'); ";                       
+                //Code_STR += " if (e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToLower() +"\" || e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToUpper() +"\")  App.handlers.applyOnclickAnnotation('"+ item.Label_Text  +"'); ";                       
+                Code_STR += " if (e.key == \"" + item.Label_ShortCut_Key.ToLower() + "\" || e.key == \"" + item.Label_ShortCut_Key.ToUpper() + "\")  App.handlers.applyOnclickAnnotation('" + item.Label_Text + "'); ";
             }
 
             Code_STR += " else { $(\".example\").attr(\"contenteditable\", false); }";
@@ -118,6 +119,24 @@ namespace TextMark.Controllers
             {
                 var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
                .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
+                if (Selected_Annotation == null)
+                {
+                    return new Assigned_Annotations_ToUsers_TB();
+                }
+                return Selected_Annotation;
+            }
+
+            return new Assigned_Annotations_ToUsers_TB();
+        }
+
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation_AfterSave(int id, int UserID, int? Project_ID = 0)
+        {
+            string ActiveUserID = HttpContext.Session.GetString("UserID");
+
+            if (ActiveUserID == UserID.ToString())
+            {
+                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefault(m => m.Assigned_Anno_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
                     return new Assigned_Annotations_ToUsers_TB();
@@ -169,7 +188,7 @@ namespace TextMark.Controllers
         }
         public List<Labels_TB> Select_Annotation_Labels(int? Project_ID = 0)
         {
-            var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID == Project_ID).ToList();
+            var Labels = _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();
             //var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
             return Labels;
             }

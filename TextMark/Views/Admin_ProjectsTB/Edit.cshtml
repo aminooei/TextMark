@@ -14,7 +14,7 @@
     <input type="hidden" asp-for="Project_ID" />
     <div class="form-group">
         <label asp-for="Project_Name" class="control-label"></label>
-        <input asp-for="Project_Name" class="form-control" autocomplete="false" />
+        <input asp-for="Project_Name" class="form-control" autocomplete="off" />
         <span asp-validation-for="Project_Name" class="text-danger"></span>
     </div>
     @if (ViewBag.Error != null)

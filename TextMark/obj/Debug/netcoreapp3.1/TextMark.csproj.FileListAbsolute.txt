@@ -716,7 +716,6 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\un
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs
@@ -746,11 +745,6 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_LabelsTB\Details.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_LabelsTB\Edit.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_LabelsTB\Index.cshtml.g.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Labels_BG_ColoursTB\Create.cshtml.g.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Labels_BG_ColoursTB\Delete.cshtml.g.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Labels_BG_ColoursTB\Details.cshtml.g.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Labels_BG_ColoursTB\Edit.cshtml.g.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Labels_BG_ColoursTB\Index.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_ProjectsTB\Create.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_ProjectsTB\Delete.cshtml.g.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_ProjectsTB\Details.cshtml.g.cs
@@ -782,3 +776,4 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache

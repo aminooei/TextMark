@@ -39,41 +39,8 @@ namespace TextMark.Models
         public Roles_TB Roles_TB { get; set; }
        
     }
-    //public class Annotations_Labels_TB
-    //{
-    //    [Key]
-    //    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    //    public int Anno_Label_ID { get; set; }
-
-    //    public int Annotation_ID { get; set; }
-    //    [ForeignKey("Annotation_ID")]
-    //    public Annotations_TB Annotations_TB { get; set; }
-
-    //    public int Label_ID { get; set; }
-    //    [ForeignKey("Label_ID")]
-    //    public Labels_TB Labels_TB { get; set; }
-    //}
-
-    public class Labels_BG_Colours_TB
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Label_BGColour_ID { get; set; }
-
-        [Display(Name = "Background Color")]
-        [Required(ErrorMessage = "Background Color  is required")]
-        [StringLength(20, ErrorMessage = "Must be between 3 and 20 characters", MinimumLength = 3)]
-        public string Label_Background_Color { get; set; }
-
-        [Display(Name = "Shortcut Key")]
-        [Required(ErrorMessage = "Shortcut Key  is required")]
-        [StringLength(1, ErrorMessage = "Must be between 1 character", MinimumLength = 1)]
-        public string Label_ShortCut_Key { get; set; }
-
-    }
-
-
-    public class Labels_TB
+    
+       public class Labels_TB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -84,11 +51,20 @@ namespace TextMark.Models
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Label_Text { get; set; }
 
-        [Display(Name = "Label BGColour ID")]
-        public int Label_BGColour_ID { get; set; }
-        [ForeignKey("Label_BGColour_ID")]
-        public Labels_BG_Colours_TB Labels_BG_Colours_TB { get; set; }
+        //[Display(Name = "Label BGColour ID")]
+        //public int Label_BGColour_ID { get; set; }
+        //[ForeignKey("Label_BGColour_ID")]
+        //public Labels_BG_Colours_TB Labels_BG_Colours_TB { get; set; }
 
+        [Display(Name = "Background Color")]
+        [Required(ErrorMessage = "Background Color  is required")]
+        [StringLength(20, ErrorMessage = "Must be between 3 and 20 characters", MinimumLength = 3)]
+        public string Label_Background_Color { get; set; }
+
+        [Display(Name = "Shortcut Key")]
+        [Required(ErrorMessage = "Shortcut Key  is required")]
+        [StringLength(1, ErrorMessage = "Must be between 1 character", MinimumLength = 1)]
+        public string Label_ShortCut_Key { get; set; }
 
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
@@ -116,25 +92,25 @@ namespace TextMark.Models
         public int Annotation_ID { get; set; }
 
       
-        [Display(Name = "Annotation ID in the Original File")]
+        [Display(Name = "ID")]
         public string Annotation_ID_InFile { get; set; }
 
-        [Display(Name = "Annotation Tilte")]
+        [Display(Name = "Tilte")]
         [Required(ErrorMessage = "Annotation Title is required")]
         [StringLength(200, ErrorMessage = "Must be between 5 and 200 characters", MinimumLength = 5)]
         public string Annotation_Title { get; set; }
 
-        [Display(Name = "Annotation Body")]
+        [Display(Name = "Body")]
         [Required(ErrorMessage = "Annotation Text is required")]
         [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
         public string Annotation_Text { get; set; }
 
-        [Display(Name = "Annotation Date")]
+        [Display(Name = "Date")]
         [Required(ErrorMessage = "Annotation Date is required")]
         [StringLength(10, ErrorMessage = "Must be between 8 and 10 characters", MinimumLength = 8)]
         public string Annotation_Date { get; set; }
 
-        [Display(Name = "Annotation Source")]
+        [Display(Name = "Source")]
         [Required(ErrorMessage = "Annotation Source is required")]
         [StringLength(100, ErrorMessage = "Must be between 3 and 100 characters", MinimumLength = 3)]
         public string Annotation_Source { get; set; }
@@ -193,7 +169,7 @@ namespace TextMark.Models
 
 
         [Display(Name = "Project ID")]
-        public int? Project_ID { get; set; }
+        public int Project_ID { get; set; }
         [ForeignKey("Project_ID")]
         public virtual Projects_TB Projects_TB { get; set; }    
     }

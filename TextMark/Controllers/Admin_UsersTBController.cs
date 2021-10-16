@@ -104,11 +104,38 @@ namespace TextMark.Controllers
                 {
                     _context.Add(users_tb);
                     await _context.SaveChangesAsync();
+
+                    var a = await _context.Roles_TB.Include("Projects_TB")
+                .FirstOrDefaultAsync(m => m.Role_ID == users_tb.Role_ID);
+                    await Assign_Project_To_User(a.Project_ID, users_tb.User_ID);
                     return RedirectToAction(nameof(Index));
                 }
             }
             Select_All_Roles();
             return View(users_tb);
+        }
+
+        public async Task<IActionResult> Assign_Project_To_User(int Project_ID, int User_ID)
+        {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            var a = _context.Annotations_TB.Where(m => m.Project_ID == Project_ID).ToList();
+
+            foreach (var item in a)
+            {
+                // assigned_annotations_tousers_tb.Annotated_Text = item.Annotation_Text;
+                Assigned_Annotations_ToUsers_TB Assigned_Anno = new Assigned_Annotations_ToUsers_TB { Annotation_ID = item.Annotation_ID, Annotated_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Annotations = 0 };
+                _context.Add(Assigned_Anno);
+                await _context.SaveChangesAsync();
+            }
+
+
+           
+            return RedirectToAction(nameof(Index));
         }
         //public async Task<IActionResult> Details()
         //{            

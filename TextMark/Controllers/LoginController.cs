@@ -87,7 +87,7 @@ namespace TextMark.Controllers
                     HttpContext.Session.SetString("UserType", "USER");
                     HttpContext.Session.SetString("UserID", login_user.User_ID.ToString());
                     HttpContext.Session.SetString("ProjectID", login_user.Project_ID.ToString());
-
+                    HttpContext.Session.SetString("Username", username);
                     TempData["UserID"] = login_user.User_ID.ToString();
                     TempData["Username"] = username;
                     return RedirectToAction("Index", "Home");
@@ -192,7 +192,7 @@ namespace TextMark.Controllers
             Annotations_TB Anno1 = new Annotations_TB();
             Anno1.Project_ID = 1;
             Anno1.Annotation_ID_InFile = "abcd1";
-            Anno1.Annotation_Title = "Anno Title 1";
+            Anno1.Annotation_Title = "Anno Title 1 dfgadsgagasdgasdgasdgadgasdgasd";
             Anno1.Annotation_Text = "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             Anno1.Annotation_Date = "01/01/2020";
             Anno1.Annotation_Source = "Yahoo";
@@ -202,7 +202,7 @@ namespace TextMark.Controllers
             Annotations_TB Anno2 = new Annotations_TB();
             Anno2.Project_ID = 1;
             Anno2.Annotation_ID_InFile = "abcd2";
-            Anno2.Annotation_Title = "Anno Title 2";
+            Anno2.Annotation_Title = "Anno Title 2 asdgasdgahgah dfg dgjdfgj hsfghshsdfhsdfhs";
             Anno2.Annotation_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             Anno2.Annotation_Date = "05/11/2021";
             Anno2.Annotation_Source = "Google";
@@ -227,6 +227,8 @@ namespace TextMark.Controllers
             Assigned_Anno1.Project_ID = 1;
             Assigned_Anno1.User_ID = 2;
             Assigned_Anno1.Annotation_ID = 1;
+            Assigned_Anno1.Not_Sure = false;
+            Assigned_Anno1.Comments = "";
             Assigned_Anno1.Annotated_Text= "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno1);
 
@@ -234,6 +236,8 @@ namespace TextMark.Controllers
             Assigned_Anno2.Project_ID = 1;
             Assigned_Anno2.User_ID = 2;
             Assigned_Anno2.Annotation_ID = 2;
+            Assigned_Anno2.Not_Sure = false;
+            Assigned_Anno2.Comments = "";
             Assigned_Anno2.Annotated_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno2);
 
@@ -241,6 +245,8 @@ namespace TextMark.Controllers
             Assigned_Anno3.Project_ID = 1;
             Assigned_Anno3.User_ID = 2;
             Assigned_Anno3.Annotation_ID = 3;
+            Assigned_Anno3.Not_Sure = true;
+            Assigned_Anno3.Comments = "";
             Assigned_Anno3.Annotated_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno3);
             _context.SaveChanges();

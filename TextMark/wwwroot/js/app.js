@@ -19,8 +19,9 @@
     },
     helpers: {
         resetControls: function () {
-            App.elements.tags.dropdown("clear").dropdown("set text", "Select Tag");
-            $("textarea").val("");
+           
+            //App.elements.tags.dropdown("clear").dropdown("set text", "Select Tag");  //removed by Amin
+            //$("textarea").val("");
         },
         showBackdrop: function (isShown) {
             $(".backdrop")[isShown ? "show" : "hide"]();
@@ -75,7 +76,7 @@
             $.Annotator.api.destroyActiveAnnotation();
         },
         saveAnnotation: function () {
-          //  alert("saveAnnotation begin");
+           // alert("saveAnnotation begin");
 
             var result = $.Annotator.api.saveActiveAnnotation();
 
@@ -105,7 +106,7 @@
                     return item;
                 })
             });
-
+           
             $("#annotations_list").html(html);
             
         },

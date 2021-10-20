@@ -79,16 +79,49 @@
 
                             @foreach (var item in Model.allAnnotations)
                             {
-                                <tr>
-                                    <td>
-                                        @item.Annotations_TB.Annotation_Title
-                                    </td>
-                                    <td>
-                                        <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
-                                    </td>
-                                </tr>
-                            }
 
+
+                            <tr>
+
+                                @try
+                                {
+                                    <td>
+                                        @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                    </td>
+                                }
+                                catch
+                                {
+                                    
+                                        @item.Annotations_TB.Annotation_Title
+                                   
+                                }
+
+                                    
+                              <td>
+                                  <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
+                              </td>
+                              <td>
+
+                                  @if (item.Count_Annotations == 0 && item.Not_Sure == false)
+                                  {                                      
+                                      <i class="bi bi-arrow-return-right" style="font-size: 2rem; color: cornflowerblue;"></i>
+                                  }
+                                  else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                  {
+                                      <i class="bi bi-check" style="font-size: 2rem; color: green;"></i>
+                                  }
+                                  else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                  {
+                                      <i class="bi bi-question" style="font-size: 2rem; color: red;"></i>
+                                  }
+                                  else if (item.Count_Annotations == 0 && item.Not_Sure == true)
+                                  {
+                                      <i class="bi bi-question" style="font-size: 2rem; color: red;"></i>
+                                  }
+                              </td>
+                            </tr>
+                            }
+                                
                         </tbody>
                     </table>
                     @*</div>*@
@@ -117,7 +150,7 @@
                             @foreach (var item in Model.allLabels)
                             {
                                 <div class="control">
-                                    <div id="Tag_btn" name="Requirement" class="item active selected tags has-addons" onmousedown="App.handlers.applyOnclickAnnotation('@item.Label_Text');">
+                                    <div id="Tag_btn" name="Requirement" class="item active selected tags has-addons" onmousedown=" App.handlers.applyOnclickAnnotation('@item.Label_Text');">
                                         @*<a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Labels_BG_Colours_TB.Label_Background_Color;">*@
                                         <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Label_Background_Color;">
                                             @item.Label_Text
@@ -155,17 +188,37 @@
                             {
                                 <br />
                                 <br />
+                               
+                                <div>
+                                    <label asp-for="@Model.Selected_Assigned_Annotation.Comments"></label><br />
+                                    <textarea asp-for="@Model.Selected_Assigned_Annotation.Comments" class="form-control" style="min-width: 100%" rows="5"></textarea>
+                                </div>
                                 <br />
                                 <div class="form-group">
-                                    <input id="btn_Next" onclick="Run_Save_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
+
+                                    @if (Model.Selected_Assigned_Annotation.Not_Sure == true)
+                                    {
+                                        <input class="float-right align-content-center" asp-for="@Model.Selected_Assigned_Annotation.Not_Sure" type="checkbox" checked="checked" />
+                                        <label class="float-right" asp-for="@Model.Selected_Assigned_Annotation.Not_Sure"> </label>
+                                    }
+                                    else
+                                    {
+                                        <input class="float-right" asp-for="@Model.Selected_Assigned_Annotation.Not_Sure" type="checkbox" />
+                                        <label class="float-right" asp-for="@Model.Selected_Assigned_Annotation.Not_Sure"> </label>
+                                    }
+                                </div>
+
+                                <br />
+                                <br />
+                                <br />
+                                <input id="btn_Next" onclick="Run_Save_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
+                            }
+                            else if (Model.Selected_Assigned_Annotation.Annotated_Text == null)
+                            {
+                                <div>
+                                    <p class="text-danger">No Record is selected</p>
                                 </div>
                             }
-                            else @if (Model.Selected_Assigned_Annotation.Annotated_Text == null)
-                       {
-                        <div>
-                            <p class="text-danger">No Record is selected</p>
-                        </div>
-                    }
                         </div>
                     </div>
                 </form>
@@ -292,11 +345,27 @@
             $("#Txtbx_Annotated_Text").val(Edited_Text.innerHTML);
         }
 
-        function Run_Save_Functions() {          
-            Exchange_Text();           
-            window.location.href = "/Home/Edit";            
+        function Run_Save_Functions() {
+            Exchange_Text();
+            window.location.href = "/Home/Edit";
         }
 
+        //function Annotate(LabelText) {
+        //    App.handlers.applyOnclickAnnotation(LabelText);   
+        //}
+
+        //function Save() {
+        //    alert("before onclick");
+        //    //var el = document.getElementById('btn_Next');
+        //    //el.onclick();
+        //    document.getElementById("btn_Next").click();
+        //    alert("after onclick");
+        //}
+
+        //function run_both_functions(LabelText) {
+        //    Annotate(LabelText);
+        //    save();
+        //}
         $(document).ready(function () {
             Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
             $("#Annotated_Text_tobesaved").html(Loaded_Text);

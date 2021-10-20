@@ -70,6 +70,26 @@
             </div>
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Comments)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Selected_Assigned_Annotation.Comments)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Not_Sure)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Selected_Assigned_Annotation.Not_Sure == true)
+            {
+                <label>Yes</label>
+            }
+            else
+            {
+                <label>No</label>
+            }
+            @*@Html.DisplayFor(model => model.Selected_Assigned_Annotation.Not_Sure)*@
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Selected_Assigned_Annotation.Count_Annotations)
         </dt>
         <dd class="col-sm-10">

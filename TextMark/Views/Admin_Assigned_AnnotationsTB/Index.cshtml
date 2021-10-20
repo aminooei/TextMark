@@ -67,6 +67,12 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Count_Annotations)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comments)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Not_Sure)
+                    </th>
 
                     <th></th>
                 </tr>
@@ -82,17 +88,33 @@
                         @Html.DisplayFor(modelItem => item.Users_TB.Username)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Title)
+                        @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 15) ...
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
+                    </td>*@
+                    <td>
+                        @item.Annotations_TB.Annotation_Text.ToString().Substring(0, 25) ...
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Count_Annotations)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @if (item.Not_Sure == true)
+                        {
+                            <label>Yes</label>
+                        }
+                        else
+                        {
+                            <label>No</label>
+                        }
+                    </td>
+                    <td>
                         @*<a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |*@
-                        <a class="btn btn-info" asp-action="Details" asp-route-projectID="@item.Project_ID" asp-route-id="@item.Assigned_Anno_ID">Details</a> 
+                        <a class="btn btn-info" asp-action="Details" asp-route-projectID="@item.Project_ID" asp-route-id="@item.Assigned_Anno_ID">Details</a>
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>
                     </td>
                 </tr>

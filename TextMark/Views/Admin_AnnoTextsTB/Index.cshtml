@@ -55,10 +55,10 @@
                 @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Annotation_Title)
+                @item.Annotation_Title.ToString().Substring(0, 15) ...
             </td>
             <td>
-                @item.Annotation_Text.ToString().Substring(0, 15) ...
+                @item.Annotation_Text.ToString().Substring(0, 25) ...
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Annotation_Date)

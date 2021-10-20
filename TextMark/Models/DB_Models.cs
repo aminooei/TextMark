@@ -147,6 +147,13 @@ namespace TextMark.Models
         [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
         public string Annotated_Text { get; set; }
 
+        [Display(Name = "Not Sure?")]
+        public bool Not_Sure { get; set; }
+
+        [Display(Name = "Comments: ")]        
+        [StringLength(1000, ErrorMessage = "Must be Maximum 1000 characters", MinimumLength = 0)]
+        public string Comments { get; set; }
+
         [Display(Name = "Number of Annotations")]
         public int Count_Annotations { get; set; }
 

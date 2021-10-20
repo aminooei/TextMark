@@ -51,7 +51,7 @@ namespace TextMark.Controllers
 
         public List<Labels_TB> Select_Annotation_Labels(int? Project_ID = 0)
         {
-            var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID == Project_ID).ToList();
+            var Labels = _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();
             //var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
             return Labels;
         }
@@ -177,7 +177,7 @@ namespace TextMark.Controllers
             foreach (var item in a)
             {
                // assigned_annotations_tousers_tb.Annotated_Text = item.Annotation_Text;
-              Assigned_Annotations_ToUsers_TB Assigned_Anno = new Assigned_Annotations_ToUsers_TB { Annotation_ID = item.Annotation_ID, Annotated_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Annotations = 0 };
+              Assigned_Annotations_ToUsers_TB Assigned_Anno = new Assigned_Annotations_ToUsers_TB { Annotation_ID = item.Annotation_ID, Annotated_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Annotations = 0, Not_Sure = false, Comments = "" };
                 _context.Add(Assigned_Anno);
                 await _context.SaveChangesAsync();
             }
@@ -204,28 +204,8 @@ namespace TextMark.Controllers
             
         }
 
-        // GET: Logins/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (!IsValidUser())
-        //    {
-        //        return RedirectToAction("Index", "Login");
-        //    }
+       
 
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var Assigned_Anno_TB = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-        //        .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id);
-        //    if (Assigned_Anno_TB == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(Assigned_Anno_TB);
-        //}
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -256,7 +236,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID,Count_Annotations")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
+        public async Task<IActionResult> Edit(int id, [Bind("Assigned_Anno_ID,User_ID,Annotation_ID,Project_ID,Count_Annotations,Not_Sure,Comments")] Assigned_Annotations_ToUsers_TB Assigned_Anno)
         {
             Select_All_Users();
             Select_All_Annotations();

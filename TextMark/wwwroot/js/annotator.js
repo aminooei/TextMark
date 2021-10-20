@@ -54,7 +54,7 @@
 
         jQuery.Annotator.api = {      
             clickAction1: function (type, Count_Annotations) {
-               // alert("selection 2 = " + selection);
+               // alert("selection 2 ");
                     if (selection.rangeCount) {
 
                         range = selection.getRangeAt(0);
@@ -172,7 +172,7 @@
                 jQuery($activeAnnotation).append("<button id=\"BtnClosing_annotation_" + txtbx_value + "\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('annotation_" + txtbx_value + "')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
 
               //  jQuery($activeAnnotation).append("<button id=\"BtnClosing_"+id+"\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('"+id+"')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
-             
+               
                 
                 //#############################
 
@@ -193,7 +193,7 @@
                         })
                     });
                 }
-
+               
                 return {
                     isSaved: true
                 };
@@ -246,7 +246,7 @@
             };
 
             cache.activeAnnotation = cache.annotations[id];
-
+           
             return id;
         };
 
@@ -269,7 +269,7 @@
                 settings.onselectioncomplete.apply($annotation);
             }
 
-
+           
             App.handlers.saveAnnotation(); //##Added by Amin
         };
         var selection;
@@ -296,9 +296,10 @@
                  
                 //    $("[name='Internal']").click(handleMouseUp);
                 }
-            );
+            );           
         };
 
         init();
+       
     };
 }(jQuery));

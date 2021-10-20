@@ -80,13 +80,16 @@ namespace TextMark.Controllers
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
             HP.allAnnotations = All_Assigned_Anno_ToUsers(Selected_Project_ID);
             HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
+           // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID +1) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
+           // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
         }
         public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
         {
@@ -280,7 +283,7 @@ namespace TextMark.Controllers
                     catch (DbUpdateConcurrencyException)
                     {
                        
-                }
+                    }
 
                 return RedirectToAction("ViewRecord_AfterSave", "Home");
              

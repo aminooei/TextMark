@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -37,14 +39,58 @@
     <link href="~/css/dashboard.css" rel="stylesheet">
     @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
 </head>
-<body>
 
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        @if (Context.Session.GetString("Username") != "")
+        {
+
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">AI-Land | @Context.Session.GetString("Username")</a>
+            @*<span>*@
+                @*<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-white"> User : @Context.Session.GetString("Username")</a>*@
+            @*</span>*@
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
+
+            @*<ul class="navbar-nav">*@
+
+
+            <span class="nav-item">
+                @*<a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>*@
+                <a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Logout</a>
+
+            </span>
+            @*<div class="nav-item">
+                <form id="logoutForm" class="form-inline"  >
+                    <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
+                </form>
+            </div>*@
+        }
+        else
+        {
+            <span class="nav-item">
+                @*<a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>*@
+
+            </span>
+            <span class="nav-item">
+
+                @*<a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Login</a>*@
+
+            </span>
+        }
+
+
+        @*</ul>*@
+
+    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <script src="~/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
@@ -70,7 +116,7 @@
                 &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>*@
-   
+
 
 
 </body>

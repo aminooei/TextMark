@@ -15,11 +15,7 @@ services:
       context: .
       dockerfile: TextMark/Dockerfile    
     ports:
-<<<<<<< Updated upstream
       - "8080:80"
-=======
-      - "81:80"
->>>>>>> Stashed changes
 
 
 

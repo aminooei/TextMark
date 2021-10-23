@@ -102,21 +102,25 @@
                               </td>
                               <td>
 
-                                  @if (item.Count_Annotations == 0 && item.Not_Sure == false)
-                                  {                                      
-                                      <i class="bi bi-arrow-return-right" style="font-size: 2rem; color: cornflowerblue;"></i>
+                                  @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                  {
+                                      <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                  }
+                                  else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
+                                  {
+                                      <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>                                      
                                   }
                                   else if (item.Count_Annotations != 0 && item.Not_Sure == false)
                                   {
-                                      <i class="bi bi-check" style="font-size: 2rem; color: green;"></i>
+                                      <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
                                   }
                                   else if (item.Count_Annotations != 0 && item.Not_Sure == true)
                                   {
-                                      <i class="bi bi-question" style="font-size: 2rem; color: red;"></i>
+                                      <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
                                   }
                                   else if (item.Count_Annotations == 0 && item.Not_Sure == true)
                                   {
-                                      <i class="bi bi-question" style="font-size: 2rem; color: red;"></i>
+                                      <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
                                   }
                               </td>
                             </tr>

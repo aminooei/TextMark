@@ -6203,8 +6203,49 @@ jQuery.extend( {
 		// Return the cloned set
 		return clone;
 	},
+	clickAction1: function(type) {
+		//alert("clickAction OK");
+		if (selection.rangeCount) {
 
-	cleanData: function( elems ) {
+			range = selection.getRangeAt(0);
+
+			if (range.toString().length > settings.minimumCharacters) {
+				var $annotation = document.createElement(settings.surroundWith);
+
+				jQuery($annotation).html(
+					$("<div>").append(range.cloneContents()).html()
+				);
+
+				jQuery($annotation).attr("id", storeAnnotation());
+				jQuery($annotation).attr("current", "true");
+				jQuery($annotation).attr("onselectstart", "return false;");
+				/*jQuery($annotation).attr("type", "Backlog"); */ //Added by Amin - After click on the annotation choice, the chosen attribute will be replaced here
+				jQuery($annotation).attr("type", type); 
+
+				////####################
+				////var cache = jQuery.Annotator.cache;
+
+				////var id = `annotation_${Object.keys(cache.annotations).length}`;
+
+				////jQuery($annotation).append("<button id=\"BtnClosing_" + id + "\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('" + id + "')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
+
+
+				////####################
+
+				range.deleteContents();
+
+				range.insertNode($annotation);
+
+				showPopover($annotation);  //#1
+			} else if (range.toString().length !== 0 && range.toString().length < settings.minimumCharacters) {
+				if (settings.onerror) {
+					settings.onerror.apply("INSUFFICIENT_CHARS");
+				}
+			}
+		}
+	},
+
+	cleanData: function (elems) {		
 		var data, elem, type,
 			special = jQuery.event.special,
 			i = 0;

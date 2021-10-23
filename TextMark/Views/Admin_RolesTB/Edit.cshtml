@@ -1,0 +1,44 @@
+﻿@model TextMark.Models.Roles_TB
+
+@{
+    ViewData["Title"] = "Role Edit";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Login</h4>
+<hr />
+<form asp-action="Edit" autocomplete="off">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Role_ID" />
+    <div class="form-group">
+        <label asp-for="Role_Text" class="control-label"></label>
+        <input asp-for="Role_Text" class="form-control" autocomplete="off" />
+        <span asp-validation-for="Role_Text" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
+        @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+          new { @class = "form-control" })
+        <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+    </div>
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger">@ViewBag.Error</p>
+
+    }
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+    @*</div>
+    </main>*@
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

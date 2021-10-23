@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
   ms-sql-server:
-    image:  mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server
     environment:
-      ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Amin3420"
-      MSSQL_PID: Express
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "Amin3420"
+        MSSQL_PID: Express
     ports:
       - "1433:1433"
   textmark:
@@ -15,7 +15,11 @@ services:
       context: .
       dockerfile: TextMark/Dockerfile    
     ports:
-      - "80:80"
+<<<<<<< Updated upstream
+      - "8080:80"
+=======
+      - "81:80"
+>>>>>>> Stashed changes
 
 
 

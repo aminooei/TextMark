@@ -1,0 +1,41 @@
+﻿@model TextMark.Models.Projects_TB
+
+@{
+    ViewData["Title"] = "Create a Project";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Create a Project</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Project_Name" class="control-label"></label>
+                <input asp-for="Project_Name" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Project_Name" class="text-danger"></span>
+            </div>
+            <div>
+                @if (ViewBag.Error != null)
+                {
+                    <p class="text-danger">@ViewBag.Error</p>
+                    
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

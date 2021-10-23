@@ -1,0 +1,75 @@
+﻿@model TextMark.Models.Annotations_TB
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Edit Annotation Text</h1>
+
+<hr />
+
+<form asp-action="Edit" autocomplete="off">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Annotation_ID" />
+    <div class="form-group">
+        <label asp-for="Annotation_ID_InFile" class="control-label"></label>
+        <textarea asp-for="Annotation_ID_InFile" class="form-control" autocomplete="off" rows="1" cols="30"></textarea>
+        <span asp-validation-for="Annotation_ID_InFile" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Annotation_Title" class="control-label"></label>
+        <textarea asp-for="Annotation_Title" class="form-control" autocomplete="off" rows="1" cols="30"></textarea>
+        <span asp-validation-for="Annotation_Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Annotation_Text" class="control-label"></label>
+        <textarea asp-for="Annotation_Text" class="form-control" autocomplete="off" rows="10" cols="50"></textarea>
+        <span asp-validation-for="Annotation_Text" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Annotation_Date" class="control-label"></label>
+        <textarea asp-for="Annotation_Date" class="form-control" autocomplete="off" rows="1" cols="10"></textarea>
+        <span asp-validation-for="Annotation_Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Annotation_Source" class="control-label"></label>
+        <textarea asp-for="Annotation_Source" class="form-control" autocomplete="off" rows="1" cols="100"></textarea>
+        <span asp-validation-for="Annotation_Source" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Source_File_Name" class="control-label"></label>
+        <textarea asp-for="Source_File_Name" class="form-control" autocomplete="off" rows="1" cols="100"></textarea>
+        <span asp-validation-for="Source_File_Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
+        @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+new { @class = "form-control" })
+        <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+    </div>
+    @if (ViewBag.Error != null)
+    {
+        <p class="text-danger">@ViewBag.Error</p>
+
+    }
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <br />
+</form>
+    @*</div>
+    </main>*@
+
+    
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    document.getElementById('Date_Input').value = new Date().toISOString().substring(0, 16);
+</script>
+    }

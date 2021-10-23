@@ -1,0 +1,43 @@
+﻿@model TextMark.Models.Users_TB
+
+@{
+    ViewData["Title"] = "User Details";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Login</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Roles_TB.Role_Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Roles_TB.Role_Text)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Roles_TB.Projects_TB.Project_Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Roles_TB.Projects_TB.Project_Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.User_ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

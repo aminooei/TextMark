@@ -1,122 +1,123 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TextMark</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.83.1">
+    <title>AILand Dashboard</title>
 
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-          crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="~/css/Forum.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
-    <!-- favicon settings -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/static/images/favicons/apple-icon-57x57.8a1176835bdc.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/static/images/favicons/apple-icon-60x60.f6d2109f7b7a.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/favicons/apple-icon-72x72.303b25968886.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/images/favicons/apple-icon-76x76.4755cc9048ed.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/favicons/apple-icon-114x114.b78bf539f981.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/static/images/favicons/apple-icon-120x120.a3e265586842.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/static/images/favicons/apple-icon-144x144.6e46e25fec16.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/static/images/favicons/apple-icon-152x152.fcc497cae68e.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/favicons/apple-icon-180x180.4638d05a17a1.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/static/images/favicons/android-icon-192x192.84e3fb4da7e7.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicons/favicon-32x32.61bbc480a0cc.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/images/favicons/favicon-96x96.55c5bde0bf86.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicons/favicon-16x16.804ac198e26b.png">
-    <link rel="manifest" href="~/js/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/static/images/favicons/ms-icon-144x144.6e46e25fec16.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <link rel="stylesheet" href="~/css/annotation.css">
-    <script src="https://unpkg.com/marked@0.3.6/lib/marked.js"></script>
-    <script src="https://unpkg.com/lodash@4.16.0/lodash.js"></script>
-   
+    <!-- Bootstrap core CSS -->
+    @*<link href="~/css/bootstrap.min.css" rel="stylesheet">*@
 
     <style>
-        html, body, h1, h2, h3, h4, h5, h6 {
-            font-family: "Roboto", sans-serif
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @@media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
         }
     </style>
 
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TextMark</a>
-                @{ if (TempData.Peek("Loggedin_User") != null)
-                    {
-                        <label class="col-md-4 text-right">Loggedin User : @TempData.Peek("Loggedin_User")</label>
-                    }
-                }
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @{ if (TempData.Peek("Loggedin_User") == null)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                                </li>
-                            }
-                        }
 
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <!-- Custom styles for this template -->
+    <link href="~/css/dashboard.css" rel="stylesheet">
+    @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
+</head>
+
+<body>
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        @if (Context.Session.GetString("Username") != "")
+        {
+
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">AI-Land | @Context.Session.GetString("Username")</a>
+            @*<span>*@
+                @*<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 text-white"> User : @Context.Session.GetString("Username")</a>*@
+            @*</span>*@
+            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
+
+            @*<ul class="navbar-nav">*@
+
+
+            <span class="nav-item">
+                @*<a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>*@
+                <a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Logout</a>
+
+            </span>
+            @*<div class="nav-item">
+                <form id="logoutForm" class="form-inline"  >
+                    <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
+                </form>
+            </div>*@
+        }
+        else
+        {
+            <span class="nav-item">
+                @*<a class="nav-link " id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>*@
+
+            </span>
+            <span class="nav-item">
+
+                @*<a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Login</a>*@
+
+            </span>
+        }
+
+
+        @*</ul>*@
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="~/js/bootstrap.bundle.min.js"></script>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+
+    <script src="~/js/feather.js"></script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script src="~/js/demo_named_entity.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
-    <script>
-        var mySwiper = new Swiper('.swiper-container', {
-            // Optional parameters
-            loop: true,
-            autoplay: {
-                delay: 5000,
-            },
-            // Navigation arrows
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        })
-    </script>
+
+
 
     @RenderSection("Scripts", required: false)
+
+
+
+
+
+    @*<footer class="border-top footer text-muted fixed-bottom">
+            <div class="container">
+                &copy; 2021 - TextMark - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+
+
+
 </body>
 </html>

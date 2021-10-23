@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TextMark.Models.Users_TB>
+
+@{
+    ViewData["Title"] = "UsersTB Admin Page";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>List of Users</h1>
+
+<p>
+    <a asp-action="Create">Create New User</a>
+</p>
+@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container" id="Users_Container">*@
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Roles_TB.Role_Text)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Roles_TB.Projects_TB.Project_Name)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.Raw("\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles_TB.Role_Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles_TB.Projects_TB.Project_Name)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        @*</div>
+    </main>*@

@@ -1,0 +1,61 @@
+﻿@model TextMark.Models.Labels_TB
+
+@{
+    ViewData["Title"] = "Create a Label";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Create a Label</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Label_Text" class="control-label"></label>
+                <input asp-for="Label_Text" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Label_Text" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                 <label asp-for="Label_BGColour_ID" class="control-label"></label>
+                 @Html.DropDownList("Label_BGColour_ID", new SelectList(ViewBag.Labels, "Label_BGColour_ID", "Label_Background_Color"), "Select a Label",
+        new { @class = "form-control" })
+                 <span asp-validation-for="Label_BGColour_ID" class="text-danger"></span>
+             </div>*@
+            <div class="form-group">
+                <label asp-for="Label_Background_Color" class="control-label"></label>
+                @Html.TextBoxFor(model => model.Label_Background_Color, new { @class = "form-control", type = "color" })
+                <span asp-validation-for="Label_Background_Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Label_ShortCut_Key" class="control-label"></label>
+                <input asp-for="Label_ShortCut_Key" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Label_ShortCut_Key" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
+                @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+       new { @class = "form-control" })
+                <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+            </div>
+            @if (ViewBag.Error != null)
+            {
+                <p class="text-danger">@ViewBag.Error</p>
+
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

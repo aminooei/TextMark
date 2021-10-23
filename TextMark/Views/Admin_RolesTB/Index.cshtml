@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TextMark.Models.Roles_TB>
+
+@{
+    ViewData["Title"] = "Roles Admin Page";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>List of Roles</h1>
+
+<p>
+    <a asp-action="Create">Create New Role</a>
+</p>
+@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container" id="Users_Container">*@
+        <table class="table">
+            <thead>
+                <tr>
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Role_ID)
+                    </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role_Text)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                    </th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>
+                            @Html.DisplayFor(modelItem => item.Role_ID)
+                        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role_Text)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Role_ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Role_ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Role_ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @*</div>
+    </main>*@

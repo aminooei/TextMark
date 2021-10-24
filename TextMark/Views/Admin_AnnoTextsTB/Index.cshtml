@@ -54,12 +54,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
             </td>
-            <td>
-                @item.Annotation_Title.ToString().Substring(0, 15) ...
-            </td>
-            <td>
+
+            @try
+            {
+                <td>
+                    @item.Annotation_Title.ToString().Substring(0, 15)...
+                </td>
+            }
+            catch
+            {
+                @item.Annotation_Title
+            }
+
+            @try
+            {
+                <td>
+                    @item.Annotation_Text.ToString().Substring(0, 25)...
+                </td>
+            }
+            catch
+            {
+                @item.Annotation_Text
+            }
+
+            @*<td>
                 @item.Annotation_Text.ToString().Substring(0, 25) ...
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Annotation_Date)
             </td>

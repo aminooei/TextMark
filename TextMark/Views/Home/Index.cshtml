@@ -102,11 +102,11 @@
                               </td>
                               <td>
 
-                                  @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                  @if (item.Count_Annotations == 0 && item.Comments.Length == 0 && item.Not_Sure == false)
                                   {
                                       <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
                                   }
-                                  else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
+                                  else if (item.Count_Annotations == 0 && item.Comments.Length != 0 && item.Not_Sure == false)
                                   {
                                       <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>                                      
                                   }

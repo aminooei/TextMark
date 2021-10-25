@@ -106,10 +106,10 @@ namespace TextMark.Controllers
                             _context.Add(annoTB);
                             await _context.SaveChangesAsync();                            
                         }
-                        catch(Exception ex)
+                        catch
                         {
-                            ViewBag.Error = ex.Message;
-                            continue;
+                            //ViewBag.Error = ex.Message;
+                           break;
                         }
                     }
                 }

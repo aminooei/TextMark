@@ -28,18 +28,18 @@ namespace TextMark.Controllers
         }
         
        
-        public ActionResult Index(int Selected_Assigned_Anno_ID, int UserID)
+        public async Task<IActionResult> Index(int Selected_Assigned_Anno_ID, int UserID)
         {           
 
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers();
-            HP.allLabels = Select_Annotation_Labels();
-            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
+            HP.allAnnotations = await All_Assigned_Anno_ToUsers();
+            HP.allLabels = await Select_Annotation_Labels();
+            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
-            Select_All_Users();
-            Select_All_Annotations();
-            Select_All_Projects();
+            await Select_All_Users();
+            await Select_All_Annotations();
+            await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32( HttpContext.Session.GetString("UserID"));
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
@@ -47,45 +47,45 @@ namespace TextMark.Controllers
         }
 
        
-        public ActionResult ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID)
+        public async Task<IActionResult> ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID)
         {
 
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(Project_ID);
-            HP.allLabels = Select_Annotation_Labels(Project_ID);
-            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID, Project_ID);
+            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Project_ID);
+            HP.allLabels = await Select_Annotation_Labels(Project_ID);
+            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID, Project_ID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
             HttpContext.Session.SetString("Selected_Assigned_Anno_ID", Selected_Assigned_Anno_ID.ToString());
             HttpContext.Session.SetString("Selected_Project_ID", Project_ID.ToString());
 
 
-            Select_All_Users();
-            Select_All_Annotations();
-            Select_All_Projects();
+            await Select_All_Users();
+            await Select_All_Annotations();
+            await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             return  View("Index", HP);
         }
 
-        public ActionResult ViewRecord_AfterSave()
-        {    
-            Select_All_Users();
-            Select_All_Annotations();
-            Select_All_Projects();
+        public async Task<IActionResult> ViewRecord_AfterSave()
+        {
+            await Select_All_Users();
+            await Select_All_Annotations();
+            await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_Users_Home_Page HP = new CL_Users_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
+            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
+            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
 
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
-            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+              Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             
            // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
@@ -114,14 +114,14 @@ namespace TextMark.Controllers
             Code_STR += "  </script> ";
             return new HtmlString(Code_STR);
         }
-        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int id, int UserID, int? Project_ID = 0 )
+        public async Task<Assigned_Annotations_ToUsers_TB> Selected_Assigned_Annotation(int id, int UserID, int? Project_ID = 0 )
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
+                var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
                     return new Assigned_Annotations_ToUsers_TB();
@@ -132,14 +132,14 @@ namespace TextMark.Controllers
             return new Assigned_Annotations_ToUsers_TB();
         }
 
-        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation_AfterSave(int id, int UserID, int? Project_ID = 0)
+        public async Task<Assigned_Annotations_ToUsers_TB> Selected_Assigned_Annotation_AfterSave(int id, int UserID, int? Project_ID = 0)
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefault(m => m.Assigned_Anno_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
+                var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
                     return new Assigned_Annotations_ToUsers_TB();
@@ -149,7 +149,7 @@ namespace TextMark.Controllers
 
             return new Assigned_Annotations_ToUsers_TB();
         }
-        private List<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers(int? Project_ID = 0)
+        private async Task<List<Assigned_Annotations_ToUsers_TB>> All_Assigned_Anno_ToUsers(int? Project_ID = 0)
         {
             var UserID = "";
 
@@ -161,7 +161,7 @@ namespace TextMark.Controllers
             {
                 UserID = HttpContext.Session.GetString("UserID").ToUpper();
             }
-            return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToList();
+            return await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToListAsync();
 
         }
         private bool IsValidUser()
@@ -189,9 +189,9 @@ namespace TextMark.Controllers
             }
 
         }
-        public List<Labels_TB> Select_Annotation_Labels(int? Project_ID = 0)
+        public async Task<List<Labels_TB>> Select_Annotation_Labels(int? Project_ID = 0)
         {
-            var Labels = _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();
+            var Labels = await  _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToListAsync();
             //var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
             return Labels;
             }
@@ -267,9 +267,9 @@ namespace TextMark.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit( CL_Users_Home_Page Assigned_Anno)
         {
-            Select_All_Users();
-            Select_All_Annotations();
-            Select_All_Projects();
+            await Select_All_Users();
+            await Select_All_Annotations();
+            await Select_All_Projects();
           
 
             
@@ -293,37 +293,31 @@ namespace TextMark.Controllers
             
         }
 
-        private bool AnnoExists(int id)
+        private async Task<bool> AnnoExists(int id)
         {
-            return _context.Assigned_Annotations_ToUsers_TB.Any(e => e.Assigned_Anno_ID == id);
+            return await _context.Assigned_Annotations_ToUsers_TB.AnyAsync(e => e.Assigned_Anno_ID == id);
         }
 
-        public List<Users_TB> Select_All_Users()
+        public async Task<List<Users_TB>> Select_All_Users()
         {           
-            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToList();
+            ViewBag.Users = await _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToListAsync();
             return ViewBag.Users;
         }
-        public List<Annotations_TB> Select_All_Annotations()
+        public async Task<List<Annotations_TB>> Select_All_Annotations()
         {            
-            ViewBag.Annotations = _context.Annotations_TB.ToList();
+            ViewBag.Annotations = await _context.Annotations_TB.ToListAsync();
             return ViewBag.Annotations;
         }
-        public List<Projects_TB> Select_All_Projects()
+        public async Task<List<Projects_TB>> Select_All_Projects()
         {
-            ViewBag.Projects = _context.Projects_TB.ToList();
+            ViewBag.Projects = await _context.Projects_TB.ToListAsync();
             return ViewBag.Projects;
         }
         //public List<Assigned_Annotations_ToUsers_TB> Select_All_Projects_of_LoggedInUser(int userID)
-        public void Select_All_Projects_of_LoggedInUser(int userID)
+        public  void Select_All_Projects_of_LoggedInUser(int userID)
         {
-            /// var UserRecords = _context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == userID).ToList();
-
-            //ViewBag.UserProjects = UserRecords.GroupBy(t => new { Project_ID = t.Project_ID , Project_Name = t.Projects_TB.Project_Name }).Select(b => b).ToList();
-
-
-            //ViewBag.UserProjects = _context.Assigned_Annotations_ToUsers_TB.GroupBy(c => new { Project_ID = c.Project_ID, User_ID = c.User_ID, Project_Name = c.Projects_TB.Project_Name }).Where(d => d.Key.User_ID == userID).ToList();
-          ViewBag.UserProjects = _context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == userID).Select(c => new { Project_ID = c.Project_ID , Project_Name = c.Projects_TB.Project_Name }).Distinct().ToList();
-
+            ViewBag.UserProjects =  _context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == userID).Select(c => new { Project_ID = c.Project_ID , Project_Name = c.Projects_TB.Project_Name }).Distinct().ToList();
+           // return ViewBag.UserProjects;
         }    
     }
 }

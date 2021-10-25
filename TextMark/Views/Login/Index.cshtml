@@ -21,28 +21,19 @@
                     <label asp-for="Password"></label>
                     <input asp-for="Password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                @*<div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>*@
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary m-3" asp-controller="Login" asp-action="Details">Login</button>
-                @*<a asp-action="Details" asp-route-id="@item.ID">Details</a> |*@
-            </div>
+                </div>               
                 <div class="form-group">
+                    <button type="submit" class="btn btn-primary" asp-controller="Login" asp-action="Details">Login</button>
+                </div>
+                <!--<div class="form-group">-->
                     @*<p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>*@
-                    <p>
+                    <!--<p>-->
                         @*<a asp-action="Register">Register as a new user</a>*@
                      
-                    </p>
-                </div>
+                    <!--</p>
+                </div>-->
             </form>
         </section>
     </div>

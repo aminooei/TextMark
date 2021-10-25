@@ -87,15 +87,28 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Users_TB.Username)
                     </td>
-                    <td>
-                        @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 15) ...
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.Annotations_TB.Annotation_Text)
-                    </td>*@
-                    <td>
-                        @item.Annotations_TB.Annotation_Text.ToString().Substring(0, 25) ...
-                    </td>
+                    @try
+                    {
+                        <td>
+                            @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 15)...
+                        </td>
+                    }
+                    catch
+                    {
+                        @item.Annotations_TB.Annotation_Title
+                    }
+
+                    @try
+                    {
+                        <td>
+                            @item.Annotations_TB.Annotation_Text.ToString().Substring(0, 25)...
+                        </td>
+                    }
+                    catch
+                    {
+                        @item.Annotations_TB.Annotation_Text
+                    }
+                    
                     <td>
                         @Html.DisplayFor(modelItem => item.Count_Annotations)
                     </td>

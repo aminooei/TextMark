@@ -9,7 +9,7 @@
 <h1>List of Annotations</h1>
 
 <p>
-    <a asp-action="Create">Create New Annotation Text</a>
+    <a asp-action="Create" class="btn btn-success">Upload a New Annotation File</a>
 </p>
 @*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container" id="Users_Container">*@
@@ -54,12 +54,32 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
             </td>
-            <td>
-                @item.Annotation_Title.ToString().Substring(0, 15) ...
-            </td>
-            <td>
+
+            @try
+            {
+                <td>
+                    @item.Annotation_Title.ToString().Substring(0, 15)...
+                </td>
+            }
+            catch
+            {
+                @item.Annotation_Title
+            }
+
+            @try
+            {
+                <td>
+                    @item.Annotation_Text.ToString().Substring(0, 25)...
+                </td>
+            }
+            catch
+            {
+                @item.Annotation_Text
+            }
+
+            @*<td>
                 @item.Annotation_Text.ToString().Substring(0, 25) ...
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Annotation_Date)
             </td>

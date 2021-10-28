@@ -4,8 +4,23 @@
     ViewData["Title"] = "ProjectsTB Admin Page";
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<h2>Manage Projects</h2>
+<form asp-action="Activate_Project" asp-controller="Admin_ProjectsTB" method="post">
+    <div class=".container-fluid">
+        <div class="d-flex flex-row align-content-start">
 
-<h1>List of Projects</h1>
+            <div>
+                @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project to Activate", new { @class = "form-control" })
+            </div>
+            <div class="col-sm">
+                <input type="submit" value="Activate" class="form-group btn btn-primary" />
+            </div>
+
+        </div>
+    </div>
+</form>
+
+@*<h1>List of Projects</h1>*@
 
 <p>
     <a asp-action="Create" class="btn btn-success">Create New Project</a>
@@ -14,26 +29,32 @@
     <div class="container" id="Users_Container">*@
         <table class="table">
             <thead>
-                <tr>                    
+                <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Project_Name)
-                    </th>   
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Is_Active)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>                       
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Project_Name)
-                        </td>                        
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Project_ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Project_ID">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Project_ID">Delete</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                       @Html.DisplayFor(modelItem => item.Project_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Is_Active)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Project_ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Project_ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Project_ID">Delete</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

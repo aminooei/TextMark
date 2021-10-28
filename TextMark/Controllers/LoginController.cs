@@ -98,16 +98,16 @@ namespace TextMark.Controllers
 
         }
         public  void Create_Role()
-        {
-            Roles_TB RT1 = new Roles_TB();
-            RT1.Role_Text = "Admin";
-            RT1.Project_ID = 1;
-            _context.Add(RT1);
-
+        {    
             Roles_TB RT2 = new Roles_TB();
             RT2.Role_Text = "User";
             RT2.Project_ID = 1;
             _context.Add(RT2);
+
+            Roles_TB RT1 = new Roles_TB();
+            RT1.Role_Text = "Admin";
+            RT1.Project_ID = 1;
+            _context.Add(RT1);
 
             _context.SaveChanges(); 
             
@@ -115,9 +115,15 @@ namespace TextMark.Controllers
 
         public void Create_Project()
         {  
-            Projects_TB PT = new Projects_TB();
-            PT.Project_Name = "Project 1";
-            _context.Add(PT); 
+            Projects_TB PT1 = new Projects_TB();
+            PT1.Project_Name = "Project 1";
+            PT1.Is_Active = true;
+            _context.Add(PT1);
+
+            Projects_TB PT2 = new Projects_TB();
+            PT2.Project_Name = "Project 2";
+            PT2.Is_Active = false;
+            _context.Add(PT2);
             _context.SaveChanges();
         }
 

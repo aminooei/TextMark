@@ -1,4 +1,5 @@
 ﻿@model TextMark.Models.Roles_TB
+@using Microsoft.AspNetCore.Http;
 
 @{
     ViewData["Title"] = "Role Edit";
@@ -18,11 +19,16 @@
         <span asp-validation-for="Role_Text" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
-        @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
-          new { @class = "form-control" })
-        <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+        @*<label asp-for="Projects_TB.Project_Name" class="control-label" type="hidden"></label>*@
+        <input asp-for="Project_ID" class="form-control" autocomplete="off" value=@Context.Session.GetString("Active_ProjectID") type="hidden" />
+        <span asp-validation-for="Project_ID" class="text-danger"></span>
     </div>
+    @*<div class="form-group">
+            <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
+            @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+              new { @class = "form-control" })
+            <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+        </div>*@
     @if (ViewBag.Error != null)
     {
         <p class="text-danger">@ViewBag.Error</p>
@@ -32,13 +38,13 @@
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
-    @*</div>
+@*</div>
     </main>*@
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

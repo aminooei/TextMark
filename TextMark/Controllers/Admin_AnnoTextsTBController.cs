@@ -30,7 +30,8 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View(await _context.Annotations_TB.Include("Projects_TB").ToListAsync());
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToListAsync());
           
         }
 

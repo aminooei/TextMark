@@ -50,8 +50,7 @@
         </div>
     </div>
 </form>
-@if (Model.allLabels.Count > 0)
-{
+
 <div class="ui grid container " id="apparea">
     <div class="col-6">
         @*<div class="two column row">*@
@@ -101,28 +100,29 @@
                                   <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
                               </td>
                               <td>
-
-                                  @if (item.Count_Annotations == 0 && item.Comments.Length == 0 && item.Not_Sure == false)
-                                  {
-                                      <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
-                                  }
-                                  else if (item.Count_Annotations == 0 && item.Comments.Length != 0 && item.Not_Sure == false)
-                                  {
-                                      <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>                                      
-                                  }
-                                  else if (item.Count_Annotations != 0 && item.Not_Sure == false)
-                                  {
-                                      <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
-                                  }
-                                  else if (item.Count_Annotations != 0 && item.Not_Sure == true)
-                                  {
-                                      <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                  }
-                                  else if (item.Count_Annotations == 0 && item.Not_Sure == true)
-                                  {
-                                      <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                  }
-                              </td>
+                                 
+                                      @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                      {
+                                          <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                      }
+                                      else if (item.Count_Annotations == 0 && item.Comments.Length != 0 && item.Not_Sure == false)
+                                      {
+                                          <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                      }
+                                      else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                      {
+                                          <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
+                                      }
+                                      else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                      {
+                                          <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                      }
+                                      else if (item.Count_Annotations == 0 && item.Not_Sure == true)
+                                      {
+                                          <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                      }
+                                                      
+                                  </td>
                             </tr>
                             }
                                 

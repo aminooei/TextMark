@@ -28,8 +28,8 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
-            return View(await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB").ToListAsync());
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            return View(await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB").Where(m => m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToListAsync());
            // return View(await _context.Users_TB.Include("Roles_TB").Select(x => new { Username = x.Username, Password = x.Password, Role = x.Roles_TB.Role_Text + "(" + x.Roles_TB.Projects_TB.Project_Name + ")" }).ToListAsync());
             
             
@@ -281,10 +281,12 @@ namespace TextMark.Controllers
         }
 
         public void Select_All_Roles()
-        {           
-            ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text + "("+x.Projects_TB.Project_Name+")"  }).ToList();
-           
-           // return ViewBag.Roles;
+        {
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            // ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text + "("+x.Projects_TB.Project_Name+")"  }).ToList();
+            ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text }).ToList();
+
+            // return ViewBag.Roles;
         }        
     }
 }

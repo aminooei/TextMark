@@ -29,7 +29,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
             Select_All_Users();
-            Select_All_Projects();
+          //  Select_All_Projects();
             return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
         
         }
@@ -56,23 +56,24 @@ namespace TextMark.Controllers
             return Labels;
         }
         [HttpPost]
-        public async Task<IActionResult> Index(int User_ID, int Project_ID)
+        public async Task<IActionResult> Index(int User_ID /*, int Project_ID*/)
         {
+            var Active_ProjectID = Convert.ToInt32( HttpContext.Session.GetString("Active_ProjectID"));
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
             Select_All_Users();
             Select_All_Projects();
-            if (User_ID > 0 && Project_ID > 0)
+            if (User_ID > 0 && Active_ProjectID > 0)
             {
-                return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Project_ID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             }
             else if (User_ID == 0)
             {
-                return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Project_ID ).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             }
-            else if (Project_ID == 0)
+            else if (Active_ProjectID == 0)
             {
                 return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             }

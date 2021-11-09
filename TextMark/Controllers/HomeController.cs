@@ -91,6 +91,29 @@ namespace TextMark.Controllers
            // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
             return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
         }
+
+        public async Task<IActionResult> SaveRecord()
+        {
+            await Select_All_Users();
+            await Select_All_Annotations();
+            await Select_All_Projects();
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
+            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
+            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+
+            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+
+
+            // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+        }
         public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
         {
             string Code_STR = "";
@@ -293,6 +316,33 @@ namespace TextMark.Controllers
             
         }
 
+        public async Task<IActionResult> Save(CL_Users_Home_Page Assigned_Anno)
+        {
+            await Select_All_Users();
+            await Select_All_Annotations();
+            await Select_All_Projects();
+
+
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                }
+
+                return RedirectToAction("SaveRecord", "Home");
+
+            }
+
+            return RedirectToAction("Index", "Home");
+
+        }
         private async Task<bool> AnnoExists(int id)
         {
             return await _context.Assigned_Annotations_ToUsers_TB.AnyAsync(e => e.Assigned_Anno_ID == id);

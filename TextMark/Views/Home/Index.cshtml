@@ -105,7 +105,7 @@
                                       {
                                           <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
                                       }
-                                      else if (item.Count_Annotations == 0 && item.Comments.Length != 0 && item.Not_Sure == false)
+                                      else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
                                       {
                                           <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
                                       }
@@ -169,6 +169,8 @@
                 <form asp-action="Edit" method="post" id="submit_form">
                     <div class="example card-content h5">
                         <div class="content ">
+                            @*<input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit" asp-action="Save" />*@
+
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Project_ID" />
@@ -192,7 +194,7 @@
                             {
                                 <br />
                                 <br />
-                               
+
                                 <div>
                                     <label asp-for="@Model.Selected_Assigned_Annotation.Comments"></label><br />
                                     <textarea asp-for="@Model.Selected_Assigned_Annotation.Comments" class="form-control" style="min-width: 100%" rows="5"></textarea>
@@ -215,7 +217,17 @@
                                 <br />
                                 <br />
                                 <br />
-                                <input id="btn_Next" onclick="Run_Save_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
+                                <div class="d-flex flex-row">
+                                    <div class="p-2 align-self-start">
+                                        <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
+                                    </div>
+                                    <div class="p-2 align-self-start">
+                                        <button id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-info btn-lg" type="submit" asp-action="Save">Save  <i class="fa fa-save" style="font-size:24px"></i></button>
+                                    </div>
+                                   
+                                </div>
+                                 
+
                             }
                             else if (Model.Selected_Assigned_Annotation.Annotated_Text == null)
                             {
@@ -349,11 +361,15 @@
             $("#Txtbx_Annotated_Text").val(Edited_Text.innerHTML);
         }
 
-        function Run_Save_Functions() {
+        function Run_Save_GoNext_Functions() {
             Exchange_Text();
             window.location.href = "/Home/Edit";
         }
 
+        function Run_Save_Functions() {
+            Exchange_Text();
+            window.location.href = "/Home/Save";
+        }
         //function Annotate(LabelText) {
         //    App.handlers.applyOnclickAnnotation(LabelText);   
         //}

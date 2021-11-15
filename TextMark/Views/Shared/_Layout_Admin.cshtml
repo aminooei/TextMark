@@ -69,6 +69,11 @@
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        @if (Context.Session.GetString("Active_ProjectID") != null)
+        {
+
+            <span class="align-content-center text-white"> Active Project :  @Context.Session.GetString("Active_Project_Name")</span>
+        }
         @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
 
         @*<ul class="navbar-nav">*@
@@ -77,20 +82,17 @@
         //if (TempData["Username"] != null)
         //(SignInManager.IsSignedIn(User))
         {
-            <span class="nav-item">
-                <a id="manage" class="nav-link " title="Manage">@Context.Session.GetString("Username")</a>
+           
+   
+        <span class="align-content-end text-white">     @Context.Session.GetString("Username")   <a id="login" asp-controller="Login" asp-action="Index">Logout</a>    </span>
+       
 
-            </span>
-            <span class="nav-item">
-                @*<a class="nav-link " id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>*@
-                <a class="nav-link " id="login" asp-controller="Login" asp-action="Index">Logout</a>
-
-            </span>
+   
             @*<div class="nav-item">
-                    <form id="logoutForm" class="form-inline"  >
-                        <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
-                    </form>
-                </div>*@
+                <form id="logoutForm" class="form-inline"  >
+                    <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
+                </form>
+            </div>*@
         }
         else
         {

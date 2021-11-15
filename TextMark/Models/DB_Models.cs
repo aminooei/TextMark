@@ -83,6 +83,9 @@ namespace TextMark.Models
         [Required(ErrorMessage = "Project Name is required")]
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Project_Name { get; set; }
+
+        [Display(Name = "Is Activated?")]
+        public bool Is_Active { get; set; }
     }
     public class Annotations_TB
     {

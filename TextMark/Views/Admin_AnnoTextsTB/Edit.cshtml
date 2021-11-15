@@ -1,4 +1,5 @@
 ﻿@model TextMark.Models.Annotations_TB
+@using Microsoft.AspNetCore.Http;
 
 @{
     ViewData["Title"] = "Edit";
@@ -43,11 +44,15 @@
         <span asp-validation-for="Source_File_Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
-        @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
-new { @class = "form-control" })
-        <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+        <input asp-for="Project_ID" class="form-control" autocomplete="off" value=@Context.Session.GetString("Active_ProjectID") type="hidden" />
+        <span asp-validation-for="Project_ID" class="text-danger"></span>
     </div>
+    @*<div class="form-group">
+                <label asp-for="Projects_TB.Project_Name" class="control-label"></label>
+                @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project",
+        new { @class = "form-control" })
+                <span asp-validation-for="Projects_TB.Project_Name" class="text-danger"></span>
+            </div>*@
     @if (ViewBag.Error != null)
     {
         <p class="text-danger">@ViewBag.Error</p>
@@ -61,15 +66,15 @@ new { @class = "form-control" })
     </div>
     <br />
 </form>
-    @*</div>
+@*</div>
     </main>*@
 
-    
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script>
-    document.getElementById('Date_Input').value = new Date().toISOString().substring(0, 16);
-</script>
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.getElementById('Date_Input').value = new Date().toISOString().substring(0, 16);
+    </script>
+}

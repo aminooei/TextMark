@@ -14,8 +14,8 @@ services:
       protocol: tcp
   textmark:
     build:
-      context: C:\Users\Amin\source\repos\TextMark
-      dockerfile: C:\Users\Amin\source\repos\TextMark\TextMark\Dockerfile
+      context: .
+      dockerfile: TextMark/Dockerfile
     image: textmark
     networks:
       default: null

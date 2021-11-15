@@ -23,6 +23,9 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Select_All_Projects();
+            Select_Active_Project();
+            
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
@@ -204,6 +207,61 @@ namespace TextMark.Controllers
             return View(Projects_TB);
         }
 
+        public async void Reset_All_Projects_IsActiveStatus()
+        {
+            var All_projects = await _context.Projects_TB.ToListAsync();
+            foreach (var item in All_projects)
+            {
+                item.Is_Active = false;
+                _context.Update(item);               
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IActionResult> Activate_Project(int Project_ID, [Bind("Project_ID,Is_Active")] Projects_TB Projects_TB)
+        {
+            var All_projects = await _context.Projects_TB.ToListAsync();
+            foreach (var item in All_projects)
+            {
+                item.Is_Active = false;
+                _context.Update(item);
+                await _context.SaveChangesAsync();
+            }
+            // Reset_All_Projects_IsActiveStatus();
+
+            var project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_ID == Project_ID);
+
+            project.Is_Active = true;           
+            _context.Update(project);
+            await _context.SaveChangesAsync();
+
+            HttpContext.Session.SetString("Active_ProjectID", Project_ID.ToString());
+            HttpContext.Session.SetString("Active_Project_Name", project.Project_Name.ToString());
+
+
+            return RedirectToAction("Index");
+           
+        }
+
+        public void Select_Active_Project()
+        {
+
+
+            var All_projects =  _context.Projects_TB.ToList();
+            foreach (var item in All_projects)
+            {
+                if (item.Is_Active)
+                {
+                    HttpContext.Session.SetString("Active_ProjectID", item.Project_ID.ToString());
+                    HttpContext.Session.SetString("Active_Project_Name", item.Project_Name.ToString());
+                }
+            }   
+
+           
+
+            
+        }
+
         private bool ProjectExists(int id)
         {
             return _context.Projects_TB.Any(e => e.Project_ID == id);
@@ -252,7 +310,7 @@ namespace TextMark.Controllers
         {
 
             //ViewBag.Roles = new SelectList(_context.Roles_TB, "Role_ID", "Role_Text");
-            ViewBag.Projects = _context.Projects_TB.ToList();
+            ViewBag.Projects =  _context.Projects_TB.ToList();
             return ViewBag.Projects;
         }
     }

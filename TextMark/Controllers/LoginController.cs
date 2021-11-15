@@ -98,16 +98,16 @@ namespace TextMark.Controllers
 
         }
         public  void Create_Role()
-        {
-            Roles_TB RT1 = new Roles_TB();
-            RT1.Role_Text = "Admin";
-            RT1.Project_ID = 1;
-            _context.Add(RT1);
-
+        {    
             Roles_TB RT2 = new Roles_TB();
             RT2.Role_Text = "User";
             RT2.Project_ID = 1;
             _context.Add(RT2);
+
+            Roles_TB RT1 = new Roles_TB();
+            RT1.Role_Text = "Admin";
+            RT1.Project_ID = 1;
+            _context.Add(RT1);
 
             _context.SaveChanges(); 
             
@@ -115,9 +115,15 @@ namespace TextMark.Controllers
 
         public void Create_Project()
         {  
-            Projects_TB PT = new Projects_TB();
-            PT.Project_Name = "Project 1";
-            _context.Add(PT); 
+            Projects_TB PT1 = new Projects_TB();
+            PT1.Project_Name = "Project 1";
+            PT1.Is_Active = true;
+            _context.Add(PT1);
+
+            Projects_TB PT2 = new Projects_TB();
+            PT2.Project_Name = "Project 2";
+            PT2.Is_Active = false;
+            _context.Add(PT2);
             _context.SaveChanges();
         }
 
@@ -228,7 +234,7 @@ namespace TextMark.Controllers
             Assigned_Anno1.User_ID = 2;
             Assigned_Anno1.Annotation_ID = 1;
             Assigned_Anno1.Not_Sure = false;
-            Assigned_Anno1.Comments = "";
+            Assigned_Anno1.Comments = null;
             Assigned_Anno1.Annotated_Text= "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno1);
 
@@ -237,7 +243,7 @@ namespace TextMark.Controllers
             Assigned_Anno2.User_ID = 2;
             Assigned_Anno2.Annotation_ID = 2;
             Assigned_Anno2.Not_Sure = false;
-            Assigned_Anno2.Comments = "";
+            Assigned_Anno2.Comments = "Some comments ......";
             Assigned_Anno2.Annotated_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno2);
 
@@ -246,7 +252,7 @@ namespace TextMark.Controllers
             Assigned_Anno3.User_ID = 2;
             Assigned_Anno3.Annotation_ID = 3;
             Assigned_Anno3.Not_Sure = true;
-            Assigned_Anno3.Comments = "";
+            Assigned_Anno3.Comments = null;
             Assigned_Anno3.Annotated_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno3);
             _context.SaveChanges();

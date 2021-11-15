@@ -27,13 +27,13 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            //return View(await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").ToListAsync());
-            return View(await _context.Labels_TB.Include("Projects_TB").ToListAsync());
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            return View(await _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToListAsync());
         }
 
-        private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID)
+        private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID , string Label_ShortCut_Key)
         {
-            var Label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_Text == LabelText && m.Project_ID == ProjectID);
+            var Label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_Text == LabelText && m.Project_ID == ProjectID && m.Label_ShortCut_Key == Label_ShortCut_Key);
             if (Label == null)
             {
                 return false;
@@ -118,18 +118,18 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            if (await IsLabelDuplicated(labels_tb.Label_Text, labels_tb.Project_ID))
+            if (await IsLabelDuplicated(labels_tb.Label_Text, labels_tb.Project_ID, labels_tb.Label_ShortCut_Key))
             {
                 ViewBag.Error = "This Label is already registered for this Project";             
             }
-            else if (await IsBGColour_Shortcut_Duplicated(labels_tb.Label_ShortCut_Key, labels_tb.Project_ID))
-            {
-                ViewBag.Error = "This Shortcut Key is already registered";               
-            }
-            else if (await IsBGColour_Duplicated(labels_tb.Label_Background_Color, labels_tb.Project_ID))
-            {
-                ViewBag.Error = "This Background Colour is already registered";              
-            }
+            //else if (await IsBGColour_Shortcut_Duplicated(labels_tb.Label_ShortCut_Key, labels_tb.Project_ID))
+            //{
+            //    ViewBag.Error = "This Shortcut Key is already registered";               
+            //}
+            //else if (await IsBGColour_Duplicated(labels_tb.Label_Background_Color, labels_tb.Project_ID))
+            //{
+            //    ViewBag.Error = "This Background Colour is already registered";              
+            //}
             else
             {
                 if (ModelState.IsValid)
@@ -213,40 +213,47 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-            if (await IsLabelDuplicated(Labels_tb.Label_Text, Labels_tb.Project_ID))
+            if (await IsLabelDuplicated(Labels_tb.Label_Text, Labels_tb.Project_ID, Labels_tb.Label_ShortCut_Key))
             {
-                ViewBag.Error = "This Label is already registered for this Project";
+                ViewBag.Error = "This Label with this Shortcut Key is already registered for this Project";
             }
-            else if (await IsBGColour_Shortcut_Duplicated(Labels_tb.Label_ShortCut_Key, Labels_tb.Project_ID))
-            {
-                ViewBag.Error = "This Shortcut Key is already registered";
-            }
-            else if (await IsBGColour_Duplicated(Labels_tb.Label_Background_Color, Labels_tb.Project_ID))
-            {
-                ViewBag.Error = "This Background Colour is already registered";
-            }
+            //else if (await IsBGColour_Shortcut_Duplicated(Labels_tb.Label_ShortCut_Key, Labels_tb.Project_ID))
+            //{
+            //    ViewBag.Error = "This Shortcut Key is already registered";
+            //}
+            //else if (await IsBGColour_Duplicated(Labels_tb.Label_Background_Color, Labels_tb.Project_ID))
+            //{
+            //    ViewBag.Error = "This Background Colour is already registered";
+            //}
             else
             {
                 if (ModelState.IsValid)
                 {
                     try
                     {
+                        var entry = _context.Labels_TB.First(e => e.Label_ID == id);
                         Labels_tb.Label_ShortCut_Key = Labels_tb.Label_ShortCut_Key.ToUpper();
-                        _context.Update(Labels_tb);
+                        _context.Entry(entry).CurrentValues.SetValues(Labels_tb);
                         await _context.SaveChangesAsync();
+                        //return true;
+
+
+                        //Labels_tb.Label_ShortCut_Key = Labels_tb.Label_ShortCut_Key.ToUpper();
+                        //_context.Update(Labels_tb);
+                        //await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
+                {
+                    if (!LabelExists(Labels_tb.Label_ID))
                     {
-                        if (!LabelExists(Labels_tb.Label_ID))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        return NotFound();
                     }
-                    return RedirectToAction(nameof(Index));
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
                 }
             }
             return View(Labels_tb);

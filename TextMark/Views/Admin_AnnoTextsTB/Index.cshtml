@@ -11,8 +11,39 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Upload a New Annotation File</a>
 </p>
-@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="container" id="Users_Container">*@
+
+<form asp-action="Index" asp-controller="Admin_AnnoTextsTB">
+    <div>
+        <div class="form-group flex-row">
+            <label>Select a Source File Name: </label>
+            @Html.DropDownList("Source_File_Name", new SelectList(ViewBag.FileNames, "Source_File_Name", "Source_File_Name"), "Select a Source File Name", new { @class = "form-control" })
+        </div>
+        <div class="flex-row">
+            <input type="submit" value="Show" class="btn btn-primary" />
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">DELETE</button>
+        </div>
+
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">DELETE ALERT !!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to DELETE?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+                    <button type="submit" value="Delete" class="btn btn-danger" asp-action="DeleteFilter" asp-controller="Admin_AnnoTextsTB">YES, DELETE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>

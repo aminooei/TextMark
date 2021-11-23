@@ -26,6 +26,7 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Select_All_File_Names();
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
@@ -33,6 +34,62 @@ namespace TextMark.Controllers
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
             return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToListAsync());
           
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string Source_File_Name)
+        {
+            Select_All_File_Names();
+            var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
+           
+            // Select_All_Projects();
+            if (Source_File_Name != "" && Active_ProjectID > 0)
+            {
+                return View(await _context.Annotations_TB.Where(m => m.Project_ID == Active_ProjectID && m.Source_File_Name == Source_File_Name).ToListAsync());
+            }
+            else if (Source_File_Name == "")
+            {
+                return View(await _context.Annotations_TB.Where(m => m.Project_ID == Active_ProjectID).ToListAsync());
+            }
+            else if (Active_ProjectID == 0)
+            {
+                return View(await _context.Annotations_TB.Where(m => m.Source_File_Name == Source_File_Name).ToListAsync());
+            }
+
+            return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID.ToString()).ToListAsync());
+        }
+
+        public async Task<IActionResult> DeleteFilter(string Source_File_Name)
+        {
+            int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            //  var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.FindAsync(id);
+            // _context.Assigned_Annotations_ToUsers_TB.Remove(Assigned_Anno);
+            if (Source_File_Name != "" && Active_ProjectID > 0)
+            {
+                _context.Annotations_TB.RemoveRange(_context.Annotations_TB.Where(x => x.Source_File_Name == Source_File_Name && x.Project_ID == Active_ProjectID));
+            }
+            else if (Source_File_Name == "")
+            {
+                _context.Annotations_TB.RemoveRange(_context.Annotations_TB.Where(x => x.Project_ID == Active_ProjectID));
+            }
+            //else if (Active_ProjectID == 0)
+            //{
+            //    _context.Annotations_TB.RemoveRange(_context.Annotations_TB.Where(x => x.User_ID == User_ID));
+            //}
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         private async Task<bool> IsAnnoDuplicated(string Anno_Text, int? ProjectID)
@@ -283,6 +340,12 @@ namespace TextMark.Controllers
             ViewBag.Projects = _context.Projects_TB.ToList();
 
             return ViewBag.Projects;
+        }
+        public void Select_All_File_Names()
+        {
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");    
+            ViewBag.FileNames = _context.Annotations_TB.Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Source_File_Name = x.Source_File_Name }).Distinct().ToList();
+           // return ViewBag.FileNames;
         }
     }
 }

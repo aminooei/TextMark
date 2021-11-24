@@ -86,7 +86,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB users_tb)
+        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB users_tb)
         {
             if (!IsValidUser())
             {
@@ -107,15 +107,43 @@ namespace TextMark.Controllers
 
                     var a = await _context.Roles_TB.Include("Projects_TB")
                 .FirstOrDefaultAsync(m => m.Role_ID == users_tb.Role_ID);
-                    await Assign_Project_To_User(a.Project_ID, users_tb.User_ID);
+                    if (users_tb.Text_Annotation_Allowed)
+                    {
+                        await Assign_TextAnnotations_To_User(a.Project_ID, users_tb.User_ID);
+                    }
+                    if (users_tb.Text_Classification_Allowed)
+                    {
+                        await Assign_TextClassifications_To_User(a.Project_ID, users_tb.User_ID);
+                    }
                     return RedirectToAction(nameof(Index));
                 }
             }
             Select_All_Roles();
             return View(users_tb);
         }
+        public async Task<IActionResult> Assign_TextClassifications_To_User(int Project_ID, int User_ID)
+        {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
-        public async Task<IActionResult> Assign_Project_To_User(int Project_ID, int User_ID)
+
+            var a = _context.Annotations_TB.Where(m => m.Project_ID == Project_ID).ToList();
+
+            foreach (var item in a)
+            {
+                // assigned_annotations_tousers_tb.Annotated_Text = item.Annotation_Text;
+                Assigned_TextClassifications_ToUsers_TB Assigned_Classififcation = new Assigned_TextClassifications_ToUsers_TB { TextClassification_ID = item.Annotation_ID, TextClassification_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Classifications = 0 };
+                _context.Add(Assigned_Classififcation);
+                await _context.SaveChangesAsync();
+            }
+
+
+
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Assign_TextAnnotations_To_User(int Project_ID, int User_ID)
         {
             if (!IsValidUser())
             {
@@ -192,7 +220,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Role_ID")] Users_TB Users_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB Users_tb)
         {
             Select_All_Roles();
             if (!IsValidUser())
@@ -205,13 +233,13 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            if (await IsUserDuplicated(Users_tb.Username, Users_tb.Role_ID))
-            {
-                ViewBag.Error = "This Username is already registered for this role";
+            //if (await IsUserDuplicated(Users_tb.Username, Users_tb.Role_ID))
+            //{
+            //    ViewBag.Error = "This Username is already registered for this role";
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 if (ModelState.IsValid)
                 {
                     try
@@ -232,7 +260,7 @@ namespace TextMark.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
-            }
+           // }
             return View(Users_tb);
         }
 

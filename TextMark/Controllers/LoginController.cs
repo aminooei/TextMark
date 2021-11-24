@@ -57,7 +57,8 @@ namespace TextMark.Controllers
                 //Create_Labels_BG_Colour_ShortKey();
                 Create_Labels();
                 Create_Annotation_Texts();
-                Create_Assigned_Anno();
+                Create_Assigned_TextAnnotations();
+                Create_Assigned_TextClassifications();
             }
         }
         public  IActionResult DetailsAsync(string username, string password)
@@ -227,7 +228,9 @@ namespace TextMark.Controllers
             _context.SaveChanges();
         }
 
-        public void Create_Assigned_Anno()
+       
+
+        public void Create_Assigned_TextAnnotations()
         {
             Assigned_Annotations_ToUsers_TB Assigned_Anno1 = new Assigned_Annotations_ToUsers_TB();
             Assigned_Anno1.Project_ID = 1;
@@ -255,6 +258,37 @@ namespace TextMark.Controllers
             Assigned_Anno3.Comments = null;
             Assigned_Anno3.Annotated_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno3);
+            _context.SaveChanges();
+        }
+
+        public void Create_Assigned_TextClassifications()
+        {
+            Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification1 = new Assigned_TextClassifications_ToUsers_TB();
+            Assigned_TextClassification1.Project_ID = 1;
+            Assigned_TextClassification1.User_ID = 2;
+            Assigned_TextClassification1.TextClassification_ID = 1;
+            Assigned_TextClassification1.Not_Sure = false;
+            Assigned_TextClassification1.Comments = null;
+            Assigned_TextClassification1.TextClassification_Text = "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            _context.Add(Assigned_TextClassification1);
+
+            Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification2 = new Assigned_TextClassifications_ToUsers_TB();
+            Assigned_TextClassification2.Project_ID = 1;
+            Assigned_TextClassification2.User_ID = 2;
+            Assigned_TextClassification2.TextClassification_ID = 2;
+            Assigned_TextClassification2.Not_Sure = false;
+            Assigned_TextClassification2.Comments = "Some comments ......";
+            Assigned_TextClassification2.TextClassification_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            _context.Add(Assigned_TextClassification2);
+
+            Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification3 = new Assigned_TextClassifications_ToUsers_TB();
+            Assigned_TextClassification3.Project_ID = 1;
+            Assigned_TextClassification3.User_ID = 2;
+            Assigned_TextClassification3.TextClassification_ID = 3;
+            Assigned_TextClassification3.Not_Sure = true;
+            Assigned_TextClassification3.Comments = null;
+            Assigned_TextClassification3.TextClassification_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            _context.Add(Assigned_TextClassification3);
             _context.SaveChanges();
         }
     }

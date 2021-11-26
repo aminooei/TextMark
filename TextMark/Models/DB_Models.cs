@@ -83,7 +83,7 @@ namespace TextMark.Models
 
     }
     
-       public class Labels_TB
+    public class Labels_TB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -115,8 +115,36 @@ namespace TextMark.Models
         public Projects_TB Projects_TB { get; set; }
 
     }
-   
-   
+
+    public class ClassificationLabels_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ClassificationLabel_ID { get; set; }
+
+        [Display(Name = "Classification Label")]
+        [Required(ErrorMessage = "Classification Label Text is required")]
+        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
+        public string ClassificationLabel_Text { get; set; }
+       
+        [Display(Name = "Classification Background Color")]
+        [Required(ErrorMessage = "Classification Background Color  is required")]
+        [StringLength(20, ErrorMessage = "Must be between 3 and 20 characters", MinimumLength = 3)]
+        public string ClassificationLabel_Background_Color { get; set; }
+
+        [Display(Name = "Classification Shortcut Key")]
+        [Required(ErrorMessage = "Classification Shortcut Key  is required")]
+        [StringLength(1, ErrorMessage = "Must be between 1 character", MinimumLength = 1)]
+        public string ClassificationLabel_ShortCut_Key { get; set; }
+
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+    }
+
+
+
     public class Annotations_TB
     {
         [Key]

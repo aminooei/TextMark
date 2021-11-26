@@ -59,6 +59,7 @@ namespace TextMark.Controllers
                 Create_Annotation_Texts();
                 Create_Assigned_TextAnnotations();
                 Create_Assigned_TextClassifications();
+                Create_ClassificationLabels();
             }
         }
         public  IActionResult DetailsAsync(string username, string password)
@@ -189,6 +190,34 @@ namespace TextMark.Controllers
             LB3.Label_Background_Color = "#2185d0";
             LB3.Label_ShortCut_Key = "G";
             LB3.Label_Text = "Country";
+            LB3.Project_ID = 1;
+            _context.Add(LB3);
+            _context.SaveChanges();
+        }
+
+        public void Create_ClassificationLabels()
+        {
+            ClassificationLabels_TB LB1 = new ClassificationLabels_TB();
+            // LB1.Label_BGColour_ID = 1;
+            LB1.ClassificationLabel_Background_Color = "#f2711c";
+            LB1.ClassificationLabel_ShortCut_Key = "R";
+            LB1.ClassificationLabel_Text = "Location";
+            LB1.Project_ID = 1;
+            _context.Add(LB1);
+
+            ClassificationLabels_TB LB2 = new ClassificationLabels_TB();
+            //LB2.Label_BGColour_ID = 2;
+            LB2.ClassificationLabel_Background_Color = "#009c95";
+            LB2.ClassificationLabel_ShortCut_Key = "B";
+            LB2.ClassificationLabel_Text = "City";
+            LB2.Project_ID = 1;
+            _context.Add(LB2);
+
+            ClassificationLabels_TB LB3 = new ClassificationLabels_TB();
+            //LB3.Label_BGColour_ID = 3;
+            LB3.ClassificationLabel_Background_Color = "#2185d0";
+            LB3.ClassificationLabel_ShortCut_Key = "G";
+            LB3.ClassificationLabel_Text = "Country";
             LB3.Project_ID = 1;
             _context.Add(LB3);
             _context.SaveChanges();

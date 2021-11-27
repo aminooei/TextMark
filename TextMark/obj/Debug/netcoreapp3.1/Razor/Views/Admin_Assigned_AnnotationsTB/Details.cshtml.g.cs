@@ -28,7 +28,7 @@ using TextMark.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a69a20e172a7d1e233012d7b0ff2ce2dbaa228b6", @"/Views/Admin_Assigned_AnnotationsTB/Details.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"42febadfbd89ac97c00366c611a07bf2235dd9d3", @"/Views/_ViewImports.cshtml")]
-    public class Views_Admin_Assigned_AnnotationsTB_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<TextMark.Models.CL_Users_Home_Page>
+    public class Views_Admin_Assigned_AnnotationsTB_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<TextMark.Models.CL_UsersAnnotations_Home_Page>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Edit", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Index", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -466,7 +466,7 @@ WriteAttributeValue(" ", 1753, item.Label_Background_Color, 1754, 28, false);
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<TextMark.Models.CL_Users_Home_Page> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<TextMark.Models.CL_UsersAnnotations_Home_Page> Html { get; private set; }
     }
 }
 #pragma warning restore 1591

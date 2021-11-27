@@ -260,9 +260,17 @@ namespace TextMark.Models
         [ForeignKey("Project_ID")]
         public Projects_TB Projects_TB { get; set; }
     }
-   
-   
-    public class CL_Users_Home_Page
+
+    public class CL_UsersAnnotations_Home_Page
+    {
+        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
+        public List<Labels_TB> allLabels { get; set; }
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
+
+        public HtmlString ShortcutKeys_Press_Script { get; set; }
+    }
+
+    public class CL_UsersClassifications_Home_Page
     {
         public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
         public List<Labels_TB> allLabels { get; set; }

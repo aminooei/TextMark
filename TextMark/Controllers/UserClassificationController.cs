@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Html;
 
 namespace TextMark.Controllers
 {
-    public class HomeController : Controller
+    public class UserClassificationController : Controller
     {        
         private readonly TextMarkContext _context;
         int LoggedIn_User_ID = 0;
@@ -22,7 +22,7 @@ namespace TextMark.Controllers
         int Selected_Assigned_Anno_ID = 0;
         
 
-        public HomeController(TextMarkContext context)
+        public UserClassificationController(TextMarkContext context)
         {
             _context = context;            
         }
@@ -31,7 +31,7 @@ namespace TextMark.Controllers
         public async Task<IActionResult> Index(int Selected_Assigned_Anno_ID, int UserID)
         {           
 
-            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
             HP.allAnnotations = await All_Assigned_Anno_ToUsers();
             HP.allLabels = await Select_Annotation_Labels();
             HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
@@ -46,11 +46,12 @@ namespace TextMark.Controllers
             return View(HP);
         }
 
-       
-        public async Task<IActionResult> ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID)
+      
+
+            public async Task<IActionResult> ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID)
         {
 
-            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
             HP.allAnnotations = await All_Assigned_Anno_ToUsers(Project_ID);
             HP.allLabels = await Select_Annotation_Labels(Project_ID);
             HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID, Project_ID);
@@ -77,7 +78,7 @@ namespace TextMark.Controllers
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
-            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
             HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
             HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
@@ -100,7 +101,7 @@ namespace TextMark.Controllers
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
-            CL_Users_Home_Page HP = new CL_Users_Home_Page();
+            CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
             HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
             HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
@@ -288,7 +289,7 @@ namespace TextMark.Controllers
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( CL_Users_Home_Page Assigned_Anno)
+        public async Task<IActionResult> Edit( CL_UsersClassifications_Home_Page Assigned_Anno)
         {
             await Select_All_Users();
             await Select_All_Annotations();
@@ -316,7 +317,7 @@ namespace TextMark.Controllers
             
         }
 
-        public async Task<IActionResult> Save(CL_Users_Home_Page Assigned_Anno)
+        public async Task<IActionResult> Save(CL_UsersClassifications_Home_Page Assigned_Anno)
         {
             await Select_All_Users();
             await Select_All_Annotations();

@@ -1,13 +1,13 @@
-﻿@model TextMark.Models.CL_Users_Home_Page
+﻿@model TextMark.Models.CL_UsersClassifications_Home_Page
 @using TextMark.Models;
 @using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "AILand";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h1>AI Land</h1>
+<h1>Text Classification</h1>
 
 <!DOCTYPE html>
 
@@ -36,7 +36,7 @@
 </div>
 <!--Page Header-->
 <!--Body-->
-<form asp-action="ViewProject" asp-controller="Home" method="post" class="my-4 ">
+<form asp-action="ViewProject" asp-controller="UserHome" method="post" class="my-4 ">
     <div class=".container-fluid">
         <div class="d-flex flex-row align-content-start">
 
@@ -52,11 +52,11 @@
 </form>
 
 <div class="ui grid container " id="apparea">
-    <div class="col-6">
+    <div class="col-4">
         @*<div class="two column row">*@
         <!--Saved Annotations-->
         <div class="six wide">
-            <div class="ui fluid card">
+            <div class="fluid card">    @*ui*@
                 <div class="content">
                     <!--Header-->
                     @*<h5 class="ui header">*@
@@ -145,7 +145,7 @@
     @*<div class="ten wide column">*@
     <div class ="col-6">
           @*<div class="container ">*@
-    <div class="ui fluid card feed">
+    <div class="fluid card feed">  @*ui*@
         <div class="content">
             <div class="text card ">
                 <header class="card-header">
@@ -245,7 +245,7 @@
     </div>
 
     @*</div>*@
-}
+
 
 
 
@@ -323,7 +323,7 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="~/css/bulma.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="~/css/forum.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
 

@@ -219,11 +219,11 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-            if (await IsClassificationLabelDuplicated(ClassificationLabels_tb.ClassificationLabel_Text, ClassificationLabels_tb.Project_ID))
+            if (await IsClassificationLabelDuplicated(ClassificationLabels_tb.ClassificationLabel_Text, ClassificationLabels_tb.Project_ID, ClassificationLabels_tb.ClassificationLabel_ID))
             {
                 ViewBag.Error = "This Classification Label is already registered for this Project";
             }
-            else if (await IsClassification_ShortCut_Duplicated(ClassificationLabels_tb.Project_ID, ClassificationLabels_tb.ClassificationLabel_ShortCut_Key))
+            else if (await IsClassification_ShortCut_Duplicated(ClassificationLabels_tb.Project_ID, ClassificationLabels_tb.ClassificationLabel_ShortCut_Key, ClassificationLabels_tb.ClassificationLabel_ID))
             {
                 ViewBag.Error = "This Classification Shortcut Key is already registered for this Project";                
             }            

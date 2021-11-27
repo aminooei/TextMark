@@ -133,7 +133,6 @@ namespace TextMark.Controllers
 
             foreach (var item in a)
             {
-                // assigned_annotations_tousers_tb.Annotated_Text = item.Annotation_Text;
                 Assigned_TextClassifications_ToUsers_TB Assigned_Classififcation = new Assigned_TextClassifications_ToUsers_TB { TextClassification_ID = item.Annotation_ID, TextClassification_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Classifications = 0 };
                 _context.Add(Assigned_Classififcation);
                 await _context.SaveChangesAsync();

@@ -194,7 +194,7 @@ namespace TextMark.Controllers
 
         public ActionResult Details(int id, int projectID)
         {
-            CL_Users_Home_Page HP = new CL_Users_Home_Page();           
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();           
             HP.allLabels = Select_Annotation_Labels(projectID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(id);
             

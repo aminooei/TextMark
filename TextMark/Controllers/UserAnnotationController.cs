@@ -37,8 +37,8 @@ namespace TextMark.Controllers
             HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Annotations();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32( HttpContext.Session.GetString("UserID"));
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
@@ -60,8 +60,8 @@ namespace TextMark.Controllers
             HttpContext.Session.SetString("Selected_Project_ID", Project_ID.ToString());
 
 
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Annotations();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
              Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
@@ -71,8 +71,8 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> ViewRecord_AfterSave()
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Annotations();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
@@ -94,8 +94,8 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> SaveRecord()
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Annotations();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
@@ -308,11 +308,11 @@ namespace TextMark.Controllers
                        
                     }
 
-                return RedirectToAction("ViewRecord_AfterSave", "Home");
+                return RedirectToAction("ViewRecord_AfterSave", "UserAnnotation");
              
             }
           
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "UserAnnotation");
             
         }
 
@@ -336,11 +336,11 @@ namespace TextMark.Controllers
 
                 }
 
-                return RedirectToAction("SaveRecord", "Home");
+                return RedirectToAction("SaveRecord", "UserAnnotation");
 
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "UserAnnotation");
 
         }
         private async Task<bool> AnnoExists(int id)

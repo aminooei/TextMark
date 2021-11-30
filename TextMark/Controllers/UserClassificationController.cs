@@ -19,7 +19,7 @@ namespace TextMark.Controllers
         private readonly TextMarkContext _context;
         int LoggedIn_User_ID = 0;
         int? Selected_Project_ID = 0;
-        int Selected_Assigned_Anno_ID = 0;
+        int Selected_Assigned_Classification_ID = 0;
         
 
         public UserClassificationController(TextMarkContext context)
@@ -28,17 +28,17 @@ namespace TextMark.Controllers
         }
         
        
-        public async Task<IActionResult> Index(int Selected_Assigned_Anno_ID, int UserID)
+        public async Task<IActionResult> Index(int Selected_Assigned_Classification_ID, int UserID)
         {           
 
             CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers();
-            HP.allLabels = await Select_Annotation_Labels();
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
-            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+            HP.allClassifications = await All_Assigned_Classifications_ToUsers();
+            HP.allClassificationLabels = await Select_Classification_Labels();
+            HP.Selected_Assigned_Classification = await Selected_Assigned_Classification(Selected_Assigned_Classification_ID, UserID);
+            HP.ClassificationShortcutKeys_Press_Script = Create_ClassificationShortcutKeys_Press_Script(HP.allClassificationLabels);
 
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Classifications();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32( HttpContext.Session.GetString("UserID"));
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
@@ -52,17 +52,17 @@ namespace TextMark.Controllers
         {
 
             CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID, Project_ID);
-            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+            HP.allClassifications = await All_Assigned_Classifications_ToUsers(Project_ID);
+            HP.allClassificationLabels = await Select_Classification_Labels(Project_ID);
+            HP.Selected_Assigned_Classification = await Selected_Assigned_Classification(Selected_Assigned_Anno_ID, UserID, Project_ID);
+            HP.ClassificationShortcutKeys_Press_Script = Create_ClassificationShortcutKeys_Press_Script(HP.allClassificationLabels);
 
             HttpContext.Session.SetString("Selected_Assigned_Anno_ID", Selected_Assigned_Anno_ID.ToString());
             HttpContext.Session.SetString("Selected_Project_ID", Project_ID.ToString());
 
 
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Classifications();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
              Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
@@ -72,59 +72,59 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> ViewRecord_AfterSave()
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Classifications();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-            Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Assigned_Classification_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            HP.allClassifications = await All_Assigned_Classifications_ToUsers(Selected_Project_ID);
+            HP.allClassificationLabels = await Select_Classification_Labels(Selected_Project_ID);
            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Classification = await Selected_Assigned_Classification_AfterSave(Selected_Assigned_Classification_ID, LoggedIn_User_ID, Selected_Project_ID);
 
-            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+            HP.ClassificationShortcutKeys_Press_Script = Create_ClassificationShortcutKeys_Press_Script(HP.allClassificationLabels);
 
               Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             
            // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Classification_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
         }
 
         public async Task<IActionResult> SaveRecord()
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
+            //await Select_All_Users();
+            //await Select_All_Classifications();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-            Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Assigned_Classification_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            HP.allClassifications = await All_Assigned_Classifications_ToUsers(Selected_Project_ID);
+            HP.allClassificationLabels = await Select_Classification_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Classification = await Selected_Assigned_Classification_AfterSave(Selected_Assigned_Classification_ID, LoggedIn_User_ID, Selected_Project_ID);
 
-            HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
+            HP.ClassificationShortcutKeys_Press_Script = Create_ClassificationShortcutKeys_Press_Script(HP.allClassificationLabels);
 
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
 
             // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Classification_ID), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
         }
-        public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
+        public HtmlString Create_ClassificationShortcutKeys_Press_Script(List<ClassificationLabels_TB> List_ClassLabels)
         {
             string Code_STR = "";
             Code_STR += " <script> ";
             Code_STR += " let apparea = document.getElementById('apparea'); ";
             Code_STR += " apparea.addEventListener(\"keydown\", (e) => { ";
-            foreach (var item in List_Labels)
+            foreach (var item in List_ClassLabels)
             {
                 //Code_STR += " if (e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToLower() +"\" || e.key == \""+ item.Labels_BG_Colours_TB.Label_ShortCut_Key.ToUpper() +"\")  App.handlers.applyOnclickAnnotation('"+ item.Label_Text  +"'); ";                       
-                Code_STR += " if (e.key == \"" + item.Label_ShortCut_Key.ToLower() + "\" || e.key == \"" + item.Label_ShortCut_Key.ToUpper() + "\")  App.handlers.applyOnclickAnnotation('" + item.Label_Text + "'); ";
+                Code_STR += " if (e.key == \"" + item.ClassificationLabel_ShortCut_Key.ToLower() + "\" || e.key == \"" + item.ClassificationLabel_ShortCut_Key.ToUpper() + "\")  App.handlers.applyOnclickAnnotation('" + item.ClassificationLabel_Text + "'); ";
             }
 
             Code_STR += " else { $(\".example\").attr(\"contenteditable\", false); }";
@@ -138,42 +138,42 @@ namespace TextMark.Controllers
             Code_STR += "  </script> ";
             return new HtmlString(Code_STR);
         }
-        public async Task<Assigned_Annotations_ToUsers_TB> Selected_Assigned_Annotation(int id, int UserID, int? Project_ID = 0 )
+        public async Task<Assigned_TextClassifications_ToUsers_TB> Selected_Assigned_Classification(int id, int UserID, int? Project_ID = 0 )
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
-                if (Selected_Annotation == null)
+                var Selected_Classification = await _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefaultAsync(m => m.Assigned_TextClassification_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
+                if (Selected_Classification == null)
                 {
-                    return new Assigned_Annotations_ToUsers_TB();
+                    return new Assigned_TextClassifications_ToUsers_TB();
                 }
-                return Selected_Annotation;
+                return Selected_Classification;
             }
 
-            return new Assigned_Annotations_ToUsers_TB();
+            return new Assigned_TextClassifications_ToUsers_TB();
         }
 
-        public async Task<Assigned_Annotations_ToUsers_TB> Selected_Assigned_Annotation_AfterSave(int id, int UserID, int? Project_ID = 0)
+        public async Task<Assigned_TextClassifications_ToUsers_TB> Selected_Assigned_Classification_AfterSave(int id, int UserID, int? Project_ID = 0)
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
+                var Selected_Annotation = await _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefaultAsync(m => m.Assigned_TextClassification_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
-                    return new Assigned_Annotations_ToUsers_TB();
+                    return new Assigned_TextClassifications_ToUsers_TB();
                 }
                 return Selected_Annotation;
             }
 
-            return new Assigned_Annotations_ToUsers_TB();
+            return new Assigned_TextClassifications_ToUsers_TB();
         }
-        private async Task<List<Assigned_Annotations_ToUsers_TB>> All_Assigned_Anno_ToUsers(int? Project_ID = 0)
+        private async Task<List<Assigned_TextClassifications_ToUsers_TB>> All_Assigned_Classifications_ToUsers(int? Project_ID = 0)
         {
             var UserID = "";
 
@@ -185,7 +185,7 @@ namespace TextMark.Controllers
             {
                 UserID = HttpContext.Session.GetString("UserID").ToUpper();
             }
-            return await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToListAsync();
+            return await _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToListAsync();
 
         }
         private bool IsValidUser()
@@ -213,11 +213,11 @@ namespace TextMark.Controllers
             }
 
         }
-        public async Task<List<Labels_TB>> Select_Annotation_Labels(int? Project_ID = 0)
+        public async Task<List<ClassificationLabels_TB>> Select_Classification_Labels(int? Project_ID = 0)
         {
-            var Labels = await  _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToListAsync();
+            var ClassificationLabels = await  _context.ClassificationLabels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToListAsync();
             //var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
-            return Labels;
+            return ClassificationLabels;
             }
         public async Task<IActionResult> Details(int? AnnotaionID)
         {           
@@ -292,7 +292,7 @@ namespace TextMark.Controllers
         public async Task<IActionResult> Edit( CL_UsersClassifications_Home_Page Assigned_Anno)
         {
             await Select_All_Users();
-            await Select_All_Annotations();
+            await Select_All_Classifications();
             await Select_All_Projects();
           
 
@@ -301,7 +301,7 @@ namespace TextMark.Controllers
                 {
                     try
                     {
-                        _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+                        _context.Update(Assigned_Anno.Selected_Assigned_Classification);
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
@@ -309,18 +309,18 @@ namespace TextMark.Controllers
                        
                     }
 
-                return RedirectToAction("ViewRecord_AfterSave", "Home");
+                return RedirectToAction("ViewRecord_AfterSave", "UserClassification");
              
             }
           
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "UserClassification");
             
         }
 
         public async Task<IActionResult> Save(CL_UsersClassifications_Home_Page Assigned_Anno)
         {
             await Select_All_Users();
-            await Select_All_Annotations();
+            await Select_All_Classifications();
             await Select_All_Projects();
 
 
@@ -329,7 +329,7 @@ namespace TextMark.Controllers
             {
                 try
                 {
-                    _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+                    _context.Update(Assigned_Anno.Selected_Assigned_Classification);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -337,11 +337,11 @@ namespace TextMark.Controllers
 
                 }
 
-                return RedirectToAction("SaveRecord", "Home");
+                return RedirectToAction("SaveRecord", "UserClassification");
 
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "UserClassification");
 
         }
         private async Task<bool> AnnoExists(int id)
@@ -354,10 +354,10 @@ namespace TextMark.Controllers
             ViewBag.Users = await _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToListAsync();
             return ViewBag.Users;
         }
-        public async Task<List<Annotations_TB>> Select_All_Annotations()
+        public async Task<List<Annotations_TB>> Select_All_Classifications()
         {            
-            ViewBag.Annotations = await _context.Annotations_TB.ToListAsync();
-            return ViewBag.Annotations;
+            ViewBag.Classifcations = await _context.Annotations_TB.ToListAsync();
+            return ViewBag.Classifcations;
         }
         public async Task<List<Projects_TB>> Select_All_Projects()
         {

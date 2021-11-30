@@ -224,6 +224,21 @@ namespace TextMark.Models
         public Projects_TB Projects_TB { get; set; }   
     }
 
+    public class ClassifiedTexts_Tags
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ClassifiedText_Tag_ID { get; set; }
+        public int Assigned_TextClassification_ID { get; set; }
+        [ForeignKey("Assigned_TextClassification_ID")]
+        public Assigned_TextClassifications_ToUsers_TB Assigned_TextClassifications_ToUsers_TB { get; set; }
+
+        public int ClassificationLabel_ID { get; set; }
+        [ForeignKey("ClassificationLabel_ID")]
+        public ClassificationLabels_TB ClassificationLabels_TB { get; set; }
+
+    }
+
     public class Assigned_TextClassifications_ToUsers_TB
     {
         [Key]
@@ -237,7 +252,7 @@ namespace TextMark.Models
 
         [Display(Name = "TextClassification ID")]
         public int TextClassification_ID { get; set; }
-        [ForeignKey("Annotation_ID")]
+        [ForeignKey("TextClassification_ID")]
         public Annotations_TB Annotations_TB { get; set; }
 
         [Display(Name = "Classification Text")]
@@ -272,11 +287,11 @@ namespace TextMark.Models
 
     public class CL_UsersClassifications_Home_Page
     {
-        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
-        public List<Labels_TB> allLabels { get; set; }
-        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
+        public List<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
+        public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
+        public Assigned_TextClassifications_ToUsers_TB Selected_Assigned_Classification { get; set; }
 
-        public HtmlString ShortcutKeys_Press_Script { get; set; }
+        public HtmlString ClassificationShortcutKeys_Press_Script { get; set; }
     }
 
 }

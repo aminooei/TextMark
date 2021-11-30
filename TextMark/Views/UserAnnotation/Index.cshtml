@@ -36,7 +36,7 @@
 </div>
 <!--Page Header-->
 <!--Body-->
-<form asp-action="ViewProject" asp-controller="UserHome" method="post" class="my-4 ">
+<form asp-action="ViewProject" asp-controller="UserAnnotation" method="post" class="my-4 ">
     <div class=".container-fluid">
         <div class="d-flex flex-row align-content-start">
 
@@ -363,12 +363,12 @@
 
         function Run_Save_GoNext_Functions() {
             Exchange_Text();
-            window.location.href = "/Home/Edit";
+            window.location.href = "/UserAnnotation/Edit";
         }
 
         function Run_Save_Functions() {
             Exchange_Text();
-            window.location.href = "/Home/Save";
+            window.location.href = "/UserAnnotation/Save";
         }
         //function Annotate(LabelText) {
         //    App.handlers.applyOnclickAnnotation(LabelText);   

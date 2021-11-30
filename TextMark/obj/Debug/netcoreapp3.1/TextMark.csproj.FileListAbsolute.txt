@@ -532,6 +532,7 @@ D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\s
 D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs

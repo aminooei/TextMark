@@ -5,9 +5,44 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Html;
+using System.ComponentModel;
 
 namespace TextMark.Models
 {
+    public class Projects_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Project_ID { get; set; }
+
+
+        [Display(Name = "Project Name")]
+        [Required(ErrorMessage = "Project Name is required")]
+        [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
+        public string Project_Name { get; set; }
+
+        [Display(Name = "Is Activated?")]
+        public bool Is_Active { get; set; }
+    }
+
+    public class Roles_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Role_ID { get; set; }
+
+        [Required(ErrorMessage = "Role Text is required")]
+        [StringLength(20, ErrorMessage = "Must be between 4 and 20 characters", MinimumLength = 4)]
+        [Display(Name = "Role")]
+        public string Role_Text { get; set; }
+
+
+        [Display(Name = "Project ID")]
+        public int Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public virtual Projects_TB Projects_TB { get; set; }
+    }
+
     public class Users_TB
     {   
         [Key]            
@@ -37,10 +72,18 @@ namespace TextMark.Models
 
         [ForeignKey("Role_ID")]
         public Roles_TB Roles_TB { get; set; }
-       
+
+        [DefaultValue(true)]
+        [Display(Name = "Text Annotation Allowed?")]
+        public bool Text_Annotation_Allowed { get; set; }
+
+        [DefaultValue(true)]
+        [Display(Name = "Text Classification Allowed?")]
+        public bool Text_Classification_Allowed { get; set; }
+
     }
     
-       public class Labels_TB
+    public class Labels_TB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -72,21 +115,36 @@ namespace TextMark.Models
         public Projects_TB Projects_TB { get; set; }
 
     }
-    public class Projects_TB
+
+    public class ClassificationLabels_TB
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Project_ID { get; set; }
+        public int ClassificationLabel_ID { get; set; }
 
-        
-        [Display(Name = "Project Name")]
-        [Required(ErrorMessage = "Project Name is required")]
+        [Display(Name = "Classification Label")]
+        [Required(ErrorMessage = "Classification Label Text is required")]
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
-        public string Project_Name { get; set; }
+        public string ClassificationLabel_Text { get; set; }
+       
+        [Display(Name = "Classification Background Color")]
+        [Required(ErrorMessage = "Classification Background Color  is required")]
+        [StringLength(20, ErrorMessage = "Must be between 3 and 20 characters", MinimumLength = 3)]
+        public string ClassificationLabel_Background_Color { get; set; }
 
-        [Display(Name = "Is Activated?")]
-        public bool Is_Active { get; set; }
+        [Display(Name = "Classification Shortcut Key")]
+        [Required(ErrorMessage = "Classification Shortcut Key  is required")]
+        [StringLength(1, ErrorMessage = "Must be between 1 character", MinimumLength = 1)]
+        public string ClassificationLabel_ShortCut_Key { get; set; }
+
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
     }
+
+
+
     public class Annotations_TB
     {
         [Key]
@@ -166,37 +224,74 @@ namespace TextMark.Models
         public Projects_TB Projects_TB { get; set; }   
     }
 
-    public class Roles_TB
+    public class ClassifiedTexts_Tags
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Role_ID { get; set; }
+        public int ClassifiedText_Tag_ID { get; set; }
+        public int Assigned_TextClassification_ID { get; set; }
+        [ForeignKey("Assigned_TextClassification_ID")]
+        public Assigned_TextClassifications_ToUsers_TB Assigned_TextClassifications_ToUsers_TB { get; set; }
 
-        [Required(ErrorMessage = "Role Text is required")]
-        [StringLength(20, ErrorMessage = "Must be between 4 and 20 characters", MinimumLength = 4)]
-        [Display(Name = "Role")]
-        public string Role_Text { get; set; }
+        public int ClassificationLabel_ID { get; set; }
+        [ForeignKey("ClassificationLabel_ID")]
+        public ClassificationLabels_TB ClassificationLabels_TB { get; set; }
 
-
-        [Display(Name = "Project ID")]
-        public int Project_ID { get; set; }
-        [ForeignKey("Project_ID")]
-        public virtual Projects_TB Projects_TB { get; set; }    
     }
 
-    //public class ReadExcel
-    //{
-    //    [Required(ErrorMessage = "Please select file")]
-    //    [FileExt(Allow = ".xls,.xlsx", ErrorMessage = "Only excel file")]
-    //    public HttpPostedFileBase file { get; set; }
-    //}
-    public class CL_Users_Home_Page
+    public class Assigned_TextClassifications_ToUsers_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Assigned_TextClassification_ID { get; set; }
+
+        [Display(Name = "User ID")]
+        public int User_ID { get; set; }
+        [ForeignKey("User_ID")]
+        public Users_TB Users_TB { get; set; }
+
+        [Display(Name = "TextClassification ID")]
+        public int TextClassification_ID { get; set; }
+        [ForeignKey("TextClassification_ID")]
+        public Annotations_TB Annotations_TB { get; set; }
+
+        [Display(Name = "Classification Text")]
+        //[Required(ErrorMessage = "Annotated Text is required")]
+        [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
+        public string TextClassification_Text { get; set; }
+
+        [Display(Name = "Not Sure?")]
+        public bool Not_Sure { get; set; }
+
+        [Display(Name = "Comments: ")]
+        [StringLength(1000, ErrorMessage = "Must be Maximum 1000 characters", MinimumLength = 0)]
+        public string Comments { get; set; }
+
+        [Display(Name = "Number of Classifications")]
+        public int Count_Classifications { get; set; }
+
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+    }
+
+    public class CL_UsersAnnotations_Home_Page
     {
         public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
         public List<Labels_TB> allLabels { get; set; }
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
 
         public HtmlString ShortcutKeys_Press_Script { get; set; }
+    }
+
+    public class CL_UsersClassifications_Home_Page
+    {
+        public List<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
+        public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
+        public Assigned_TextClassifications_ToUsers_TB Selected_Assigned_Classification { get; set; }
+
+        public HtmlString ClassificationShortcutKeys_Press_Script { get; set; }
     }
 
 }

@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TextMark.Data;
 using TextMark.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace TextMark.Controllers
@@ -31,9 +28,9 @@ namespace TextMark.Controllers
             return View(await _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToListAsync());
         }
 
-        private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID , string Label_ShortCut_Key)
+        private async Task<bool> IsLabelDuplicated(string LabelText, int? ProjectID, int Label_ID)
         {
-            var Label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_Text == LabelText && m.Project_ID == ProjectID && m.Label_ShortCut_Key == Label_ShortCut_Key);
+            var Label = await _context.Labels_TB.FirstOrDefaultAsync(m => m.Label_Text.ToUpper() == LabelText.ToUpper() && m.Project_ID == ProjectID && m.Label_ID !=Label_ID);
             if (Label == null)
             {
                 return false;
@@ -43,7 +40,18 @@ namespace TextMark.Controllers
                 return true;
             }
         }
-
+        private async Task<bool> Is_ShortCut_Duplicated(int? ProjectID, string ClassificationLabel_ShortCut_Key, int Label_ID)
+        {
+            var Label = await _context.ClassificationLabels_TB.FirstOrDefaultAsync(m => m.ClassificationLabel_ShortCut_Key.ToUpper() == ClassificationLabel_ShortCut_Key.ToUpper() && m.Project_ID == ProjectID && m.ClassificationLabel_ID != Label_ID);
+            if (Label == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         private bool IsValidUser()
         {
 
@@ -118,18 +126,14 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            if (await IsLabelDuplicated(labels_tb.Label_Text, labels_tb.Project_ID, labels_tb.Label_ShortCut_Key))
+            if (await IsLabelDuplicated(labels_tb.Label_Text, labels_tb.Project_ID, labels_tb.Label_ID))
             {
-                ViewBag.Error = "This Label is already registered for this Project";             
+                ViewBag.Error = "This Label Text is already registered for this Project";             
             }
-            //else if (await IsBGColour_Shortcut_Duplicated(labels_tb.Label_ShortCut_Key, labels_tb.Project_ID))
-            //{
-            //    ViewBag.Error = "This Shortcut Key is already registered";               
-            //}
-            //else if (await IsBGColour_Duplicated(labels_tb.Label_Background_Color, labels_tb.Project_ID))
-            //{
-            //    ViewBag.Error = "This Background Colour is already registered";              
-            //}
+            else if (await Is_ShortCut_Duplicated(labels_tb.Project_ID, labels_tb.Label_ShortCut_Key, labels_tb.Label_ID))
+            {
+                ViewBag.Error = "This Label Shortcut Key is already registered for this Project";
+            }            
             else
             {
                 if (ModelState.IsValid)
@@ -162,8 +166,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Labels_tb = await _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB")
-                .FirstOrDefaultAsync(m => m.Label_ID == id);
+            var Labels_tb = await _context.Labels_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Label_ID == id);
             if (Labels_tb == null)
             {
                 return NotFound();
@@ -213,7 +216,7 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-            if (await IsLabelDuplicated(Labels_tb.Label_Text, Labels_tb.Project_ID, Labels_tb.Label_ShortCut_Key))
+            if (await IsLabelDuplicated(Labels_tb.Label_Text, Labels_tb.Project_ID, Labels_tb.Label_ID))
             {
                 ViewBag.Error = "This Label with this Shortcut Key is already registered for this Project";
             }

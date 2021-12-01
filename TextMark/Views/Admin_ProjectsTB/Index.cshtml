@@ -44,11 +44,22 @@
                 {
                 <tr>
                     <td>
-                       @Html.DisplayFor(modelItem => item.Project_Name)
+                        @Html.DisplayFor(modelItem => item.Project_Name)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Is_Active)
-                    </td>
+                    @if (item.Is_Active == true)
+                    {
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Is_Active, new { @style = "color: green;" })*@
+                    <i class="bi bi-check-square" style="font-size: 1rem; color: green;"></i>
+                </td>
+                    }
+                    else
+                    {
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Is_Active)*@
+                    @*<i class="bi bi-square" style="font-size: 2rem; color: gray;"></i>*@
+                </td>
+                    }
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Project_ID">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Project_ID">Details</a> |

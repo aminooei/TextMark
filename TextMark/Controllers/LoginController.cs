@@ -298,7 +298,7 @@ namespace TextMark.Controllers
             Assigned_TextClassification1.TextClassification_ID = 1;
             Assigned_TextClassification1.Not_Sure = false;
             Assigned_TextClassification1.Comments = null;
-            Assigned_TextClassification1.TextClassification_Text = "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            Assigned_TextClassification1.TextClassification_HtmlTags = "";
             _context.Add(Assigned_TextClassification1);
 
             Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification2 = new Assigned_TextClassifications_ToUsers_TB();
@@ -307,7 +307,7 @@ namespace TextMark.Controllers
             Assigned_TextClassification2.TextClassification_ID = 2;
             Assigned_TextClassification2.Not_Sure = false;
             Assigned_TextClassification2.Comments = "Some comments ......";
-            Assigned_TextClassification2.TextClassification_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            Assigned_TextClassification2.TextClassification_HtmlTags = "";
             _context.Add(Assigned_TextClassification2);
 
             Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification3 = new Assigned_TextClassifications_ToUsers_TB();
@@ -316,7 +316,7 @@ namespace TextMark.Controllers
             Assigned_TextClassification3.TextClassification_ID = 3;
             Assigned_TextClassification3.Not_Sure = true;
             Assigned_TextClassification3.Comments = null;
-            Assigned_TextClassification3.TextClassification_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            Assigned_TextClassification3.TextClassification_HtmlTags = "";
             _context.Add(Assigned_TextClassification3);
             _context.SaveChanges();
         }

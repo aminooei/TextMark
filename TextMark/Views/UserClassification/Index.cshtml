@@ -156,7 +156,7 @@
                                 @foreach (var item in Model.allClassificationLabels)
                                 {
                                     <div class="control">
-                                        <div id="Tag_btn" name="Requirement" class="item active selected tags has-addons" onclick="createInput('@item.ClassificationLabel_Text', '@item.ClassificationLabel_Background_Color')">
+                                        <div id="Tag_btn" name="Requirement" class="item active selected tags has-addons" onclick="createInput('@item.ClassificationLabel_Text', '@item.ClassificationLabel_Background_Color' , '@item.ClassificationLabel_ID')">
                                             @*<a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Labels_BG_Colours_TB.Label_Background_Color;">*@
                                             <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.ClassificationLabel_Background_Color;">
                                                 @item.ClassificationLabel_Text
@@ -171,7 +171,7 @@
                     <div id="pressed_tags_Place">
 
                     </div>
-                    <form asp-action="Edit" method="post" id="submit_form">
+                    <form id="submit_form">
                         <div class="example card-content h5">
                             <div class="content ">
                                 @*<input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit" asp-action="Save" />*@
@@ -180,22 +180,23 @@
                                 <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.Assigned_TextClassification_ID" />
                                 <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.Project_ID" />
                                 <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.User_ID" />
-                                <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.TextClassification_ID" />
+                                <input type="hidden" id="TextClassification_ID"  asp-for="@Model.Selected_Assigned_Classification.TextClassification_ID" />
                                 <input type="hidden" id="Txtbx_Count_Annotations" asp-for="@Model.Selected_Assigned_Classification.Count_Classifications" />
-                                <input type="hidden" id="Txtbx_Annotated_Text" asp-for="@Model.Selected_Assigned_Classification.TextClassification_Text" />
+                                <input type="hidden" id="Txtbx_Classification_Tag" asp-for="@Model.Selected_Assigned_Classification.TextClassification_HtmlTags" />
 
-                                @if (Model.Selected_Assigned_Classification.TextClassification_Text != null)
+                                @if (Model.Selected_Assigned_Classification.Annotations_TB != null)
                                 {
-                                    <div>
-                                        <p class="text-justify" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Classification.TextClassification_Text </p>
-                                    </div>
+                                <div>
+                                    <p class="text-justify" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Classification.Annotations_TB.Annotation_Text </p>
+                                </div>
                                 }
+                                
                                 @if (ViewBag.Error != null)
                                 {
                                     <p class="text-danger">@ViewBag.Error</p>
 
                                 }
-                                @if (Model.Selected_Assigned_Classification.TextClassification_Text != null)
+                                @if (Model.Selected_Assigned_Classification.Annotations_TB != null)
                                 {
                                     <br />
                                     <br />
@@ -225,17 +226,17 @@
                                     <br />
                                     <div class="d-flex flex-row">
                                         <div class="p-2 align-self-start">
-                                            <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
+                                            <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="button" />
                                         </div>
                                         <div class="p-2 align-self-start">
-                                            <button id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-info btn-lg" type="submit" asp-action="Save">Save  <i class="fa fa-save" style="font-size:24px"></i></button>
+                                            <button id="btn_Save" value="Save" class="btn btn-info btn-lg" type="button" >Save  <i class="fa fa-save" style="font-size:24px"></i></button>
                                         </div>
 
                                     </div>
 
 
                                 }
-                                else if (Model.Selected_Assigned_Classification.TextClassification_Text == null)
+                                else if (Model.Selected_Assigned_Classification.Annotations_TB == null)
                                 {
                                     <div>
                                         <p class="text-danger">No Record is selected</p>
@@ -362,46 +363,72 @@
     <script type="text/javascript" src="~/js/Amin.js"></script>
     <script>
 
-        function Exchange_Text() {
-            Edited_Text = document.getElementById("Annotated_Text_tobesaved");
-            $("#Txtbx_Annotated_Text").val(Edited_Text.innerHTML);
+        function Exchange_Tags(Classification_Tag_ID) {
+           // Edited_Tags = document.getElementById("pressed_tags_Place");
+            $("#Txtbx_Classification_Tag").val(Classification_Tag_ID);
         }
 
         function Run_Save_GoNext_Functions() {
-            Exchange_Text();
-            window.location.href = "/Home/Edit";
+            Exchange_Tags();
+            window.location.href = "/UserClassification/Edit";
         }
 
         function Run_Save_Functions() {
-            Exchange_Text();
-            window.location.href = "/Home/Save";
+            Exchange_Tags();
+            window.location.href = "/UserClassification/Save";
         }
 
-        function createInput(text, backgroundcolour) {           
+        function createInput(text, backgroundcolour, Classification_ID) {           
             if ($("#" + text).length === 0) {
-                $('#pressed_tags_Place').append("<span id=\"" +text+ "\" class=\"btn m-1\" style=\"background:" + backgroundcolour + ";\">" + text + " <a href=\"#\" class=\"btn btn-default btn-sm rounded-circle\" onclick='this.parentNode.parentNode.removeChild(this.parentNode); return false;'> <span class=\"glyphicon glyphicon-remove\"></span> </a>  </span>");
+                $('#pressed_tags_Place').append("<span id=\"" + text + "\" class=\"btn m-1\" style=\"background:" + backgroundcolour + ";\">" + text + " <a href=\"#\" class=\"btn btn-default btn-sm rounded-circle\" onclick='this.parentNode.parentNode.removeChild(this.parentNode); Delete_Tag(" + Classification_ID +"); return false;'> <span class=\"glyphicon glyphicon-remove\"></span> </a>  </span>");
             }
+            
+            Save_Tag(Classification_ID);           
            }
-        //function Annotate(LabelText) {
-        //    App.handlers.applyOnclickAnnotation(LabelText);
-        //}
-
-        //function Save() {
-        //    alert("before onclick");
-        //    //var el = document.getElementById('btn_Next');
-        //    //el.onclick();
-        //    document.getElementById("btn_Next").click();
-        //    alert("after onclick");
-        //}
-
-        //function run_both_functions(LabelText) {
-        //    Annotate(LabelText);
-        //    save();
-        //}
+       
         $(document).ready(function () {
             Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
             $("#Annotated_Text_tobesaved").html(Loaded_Text);
+
+
+
         });
+
+       
+        function Save_Tag(ClassLabel_ID) {
+           
+            Exchange_Tags(ClassLabel_ID);
+           
+            var data = $("#submit_form").serialize();               
+           
+            $.ajax({
+                type: "POST",                
+                url: "/UserClassification/Save_TextsTags",
+                data: data,               
+                success: function (response) {
+                  //  alert("Congratulations, Successfully added");
+                }
+            });
+        }
+
+
+        function Delete_Tag(Classification_ID) {
+
+            Exchange_Tags(Classification_ID);
+
+            var data = $("#submit_form").serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/UserClassification/Delete_TextsTags",
+                data: data,
+                success: function (response) {
+                   // alert("Congratulations, Successfully Deleted");
+                }
+            });
+        }
+
+       
 
     </script>
 

@@ -344,6 +344,61 @@ namespace TextMark.Controllers
             return RedirectToAction("Index", "UserClassification");
 
         }
+
+        public async Task<IActionResult> Save_TextsTags(CL_UsersClassifications_Home_Page Assigned_Anno)
+        {
+           
+
+
+            //if (ModelState.IsValid)
+            //{
+                try
+                {
+                    ClassifiedTexts_Tags tb = new ClassifiedTexts_Tags();
+                    tb.Assigned_TextClassification_ID = Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID;
+                    tb.ClassificationLabel_ID = Convert.ToInt32(Assigned_Anno.Selected_Assigned_Classification.TextClassification_HtmlTags);
+                    _context.Add(tb);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+
+                }
+
+                return RedirectToAction("SaveRecord", "UserClassification");
+
+            //}
+
+           // return RedirectToAction("Index", "UserClassification");
+
+        }
+
+        public async Task<IActionResult> Delete_TextsTags(CL_UsersClassifications_Home_Page Assigned_Anno)
+        {
+                      
+            try
+            {
+                ClassifiedTexts_Tags tb = new ClassifiedTexts_Tags();
+                tb.Assigned_TextClassification_ID = Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID;
+                tb.ClassificationLabel_ID = Convert.ToInt32(Assigned_Anno.Selected_Assigned_Classification.TextClassification_HtmlTags);
+
+                var Selected_tag = await _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassification_ID == Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID && m.ClassificationLabel_ID == Convert.ToInt32(Assigned_Anno.Selected_Assigned_Classification.TextClassification_HtmlTags)).FirstOrDefaultAsync();
+
+                var tag = await _context.ClassifiedTexts_Tags.FindAsync(Selected_tag.ClassifiedText_Tag_ID);
+                _context.ClassifiedTexts_Tags.Remove(tag);
+               // _context.Add(tb);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            return RedirectToAction("SaveRecord", "UserClassification");
+
+            
+
+        }
         private async Task<bool> AnnoExists(int id)
         {
             return await _context.Assigned_Annotations_ToUsers_TB.AnyAsync(e => e.Assigned_Anno_ID == id);

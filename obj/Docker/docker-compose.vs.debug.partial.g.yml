@@ -15,7 +15,7 @@ services:
       #- NUGET_FALLBACK_PACKAGES=$container_paths_to_fallback_packages_textmark$
     volumes:
       - C:\Users\Amin\source\repos\TextMark\TextMark:/app
-      - C:\Users\Amin\source\repos\TextMark\.:/src
+      - C:\Users\Amin\source\repos\TextMark:/src
       - C:\Users\Amin\vsdbg\vs2017u5:/remote_debugger:rw
 #$nuget_volume_mapping_textmark$
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

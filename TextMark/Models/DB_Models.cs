@@ -255,10 +255,10 @@ namespace TextMark.Models
         [ForeignKey("TextClassification_ID")]
         public Annotations_TB Annotations_TB { get; set; }
 
-        [Display(Name = "Classification Text")]
+        [Display(Name = "Classified Tags")]
         //[Required(ErrorMessage = "Annotated Text is required")]
         [StringLength(10000, ErrorMessage = "Must be between 5 and 10000 characters", MinimumLength = 5)]
-        public string TextClassification_Text { get; set; }
+        public string TextClassification_HtmlTags { get; set; }
 
         [Display(Name = "Not Sure?")]
         public bool Not_Sure { get; set; }

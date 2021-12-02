@@ -98,7 +98,7 @@
 
 
                                     <td>
-                                        <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Select</a>
+                                        <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Select</a>
                                     </td>
                                     <td>
 
@@ -169,6 +169,12 @@
                         </div>
                     </header>
                     <div id="pressed_tags_Place">
+                        
+                            @foreach (var item in Model.all_ClassifiedText_Tags)
+                            {
+                                <span id="@item.ClassificationLabels_TB.ClassificationLabel_Text" class="btn m-1" style="background: @item.ClassificationLabels_TB.ClassificationLabel_Background_Color;"> @item.ClassificationLabels_TB.ClassificationLabel_Text <a href="#" class="btn btn-default btn-sm rounded-circle" onclick='this.parentNode.parentNode.removeChild(this.parentNode); Delete_Tag(@item.ClassificationLabel_ID); return false;'> <span class="glyphicon glyphicon-remove"></span> </a>  </span>
+                            }
+                        
 
                     </div>
                     <form id="submit_form">
@@ -381,9 +387,8 @@
         function createInput(text, backgroundcolour, Classification_ID) {           
             if ($("#" + text).length === 0) {
                 $('#pressed_tags_Place').append("<span id=\"" + text + "\" class=\"btn m-1\" style=\"background:" + backgroundcolour + ";\">" + text + " <a href=\"#\" class=\"btn btn-default btn-sm rounded-circle\" onclick='this.parentNode.parentNode.removeChild(this.parentNode); Delete_Tag(" + Classification_ID +"); return false;'> <span class=\"glyphicon glyphicon-remove\"></span> </a>  </span>");
-            }
-            
-            Save_Tag(Classification_ID);           
+                Save_Tag(Classification_ID);
+            }        
            }
        
         $(document).ready(function () {
@@ -413,7 +418,7 @@
 
 
         function Delete_Tag(Classification_ID) {
-
+            alert("Classification_ID : " + Classification_ID);
             Exchange_Tags(Classification_ID);
 
             var data = $("#submit_form").serialize();

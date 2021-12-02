@@ -290,6 +290,7 @@ namespace TextMark.Models
         public List<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
         public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
         public Assigned_TextClassifications_ToUsers_TB Selected_Assigned_Classification { get; set; }
+        public List<ClassifiedTexts_Tags> all_ClassifiedText_Tags { get; set; }
 
         public HtmlString ClassificationShortcutKeys_Press_Script { get; set; }
     }

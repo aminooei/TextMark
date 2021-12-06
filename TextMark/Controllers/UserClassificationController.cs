@@ -72,7 +72,7 @@ namespace TextMark.Controllers
             return  View("Index", HP);
         }
 
-        public async Task<IActionResult> ViewRecord_AfterSave()
+        public async Task<IActionResult> ViewRecord_Next()
         {
             //await Select_All_Users();
             //await Select_All_Classifications();
@@ -92,10 +92,33 @@ namespace TextMark.Controllers
               Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             
-           // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Classification_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+           
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Cls_ID = (Selected_Assigned_Classification_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
         }
 
+        public async Task<IActionResult> ViewRecord_Prev()
+        {
+            //await Select_All_Users();
+            //await Select_All_Classifications();
+            await Select_All_Projects();
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Selected_Assigned_Classification_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
+            CL_UsersClassifications_Home_Page HP = new CL_UsersClassifications_Home_Page();
+            HP.allClassifications = await All_Assigned_Classifications_ToUsers(Selected_Project_ID);
+            HP.allClassificationLabels = await Select_Classification_Labels(Selected_Project_ID);
+            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Classification = await Selected_Assigned_Classification_AfterSave(Selected_Assigned_Classification_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.all_ClassifiedText_Tags = await Select_All_ClassifiedText_Tags(Selected_Assigned_Classification_ID);
+
+            HP.ClassificationShortcutKeys_Press_Script = Create_ClassificationShortcutKeys_Press_Script(HP.allClassificationLabels);
+
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+
+
+           
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Cls_ID = (Selected_Assigned_Classification_ID - 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+        }
         public async Task<IActionResult> SaveRecord()
         {
             //await Select_All_Users();
@@ -353,6 +376,52 @@ namespace TextMark.Controllers
 
         }
 
+        public async Task<IActionResult> Save_Comment(CL_UsersClassifications_Home_Page Assigned_Anno)
+        {
+            try
+            {      
+                _context.Update(Assigned_Anno.Selected_Assigned_Classification);
+                await _context.SaveChangesAsync();
+
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Selected_Assigned_Classification_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = Selected_Assigned_Classification_ID, UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+
+           
+
+        }
+       
+        public async Task<IActionResult> Save_NotSure(CL_UsersClassifications_Home_Page Assigned_Anno)
+        {
+            try
+            {
+                _context.Update(Assigned_Anno.Selected_Assigned_Classification);
+                await _context.SaveChangesAsync();
+
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Selected_Assigned_Classification_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = Selected_Assigned_Classification_ID, UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+
+
+
+        }
+
         public async Task<IActionResult> Save_TextsTags(CL_UsersClassifications_Home_Page Assigned_Anno)
         {
                 try
@@ -362,7 +431,14 @@ namespace TextMark.Controllers
                     tb.ClassificationLabel_ID = Convert.ToInt32(Assigned_Anno.Selected_Assigned_Classification.TextClassification_HtmlTags);
                     _context.Add(tb);
                     await _context.SaveChangesAsync();
-                  
+
+
+                var Count_Classified_Tags = await _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassification_ID == Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID).CountAsync();
+                Assigned_Anno.Selected_Assigned_Classification.Count_Classifications = Count_Classified_Tags;
+                _context.Update(Assigned_Anno.Selected_Assigned_Classification);
+                await _context.SaveChangesAsync();
+
+
             }
             catch (DbUpdateConcurrencyException)
                 {
@@ -392,8 +468,12 @@ namespace TextMark.Controllers
                 var Selected_tag = await _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassification_ID == Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID && m.ClassificationLabel_ID == Convert.ToInt32(Assigned_Anno.Selected_Assigned_Classification.TextClassification_HtmlTags)).FirstOrDefaultAsync();
 
                 var tag = await _context.ClassifiedTexts_Tags.FindAsync(Selected_tag.ClassifiedText_Tag_ID);
-                _context.ClassifiedTexts_Tags.Remove(tag);
-               // _context.Add(tb);
+                _context.ClassifiedTexts_Tags.Remove(tag);              
+                await _context.SaveChangesAsync();
+
+                var Count_Classified_Tags = await _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassification_ID == Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID).CountAsync();
+                Assigned_Anno.Selected_Assigned_Classification.Count_Classifications = Count_Classified_Tags;
+                _context.Update(Assigned_Anno.Selected_Assigned_Classification);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

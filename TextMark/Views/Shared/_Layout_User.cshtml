@@ -66,19 +66,20 @@
     <link href="~/css/dashboard.css" rel="stylesheet">
     @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
 </head>
-<body>
+<body class="overflow-auto">
 
 
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">AI-Land</a>
+    <header class=" bg-dark  d-flex justify-content-between sticky-top p-0 shadow">
+        @* navbar navbar-dark  *@
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 " href="#">AI-Land</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        @if (Context.Session.GetString("Active_ProjectID") != null)
-        {
+        <!--@if (Context.Session.GetString("Active_ProjectID") != null)
+    {
 
-            <span class="align-content-center text-white"> Active Project :  @Context.Session.GetString("Active_Project_Name")</span>
-        }
+        <span class="align-content-center text-white"> Active Project :  @Context.Session.GetString("Active_Project_Name")</span>
+    }-->
         @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
 
         @*<ul class="navbar-nav">*@
@@ -87,12 +88,12 @@
         //if (TempData["Username"] != null)
         //(SignInManager.IsSignedIn(User))
         {
-           
-   
-        <span class="align-content-end text-white">     @Context.Session.GetString("Username")   <a id="login" asp-controller="Login" asp-action="Index">Logout</a>    </span>
-       
 
-   
+
+            <span class="align-content-end text-white">     @Context.Session.GetString("Username")   <a id="login" asp-controller="Login" asp-action="Index">Logout</a>    </span>
+
+
+
             @*<div class="nav-item">
                 <form id="logoutForm" class="form-inline"  >
                     <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
@@ -116,7 +117,7 @@
         @*</ul>*@
 
     </header>
-    <div class="container">
+    <div class="container ">
 
         <div class="row">
            <div class="col-2">

@@ -7,7 +7,6 @@
     Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h1>Text Classification</h1>
 
 <!DOCTYPE html>
 
@@ -38,19 +37,26 @@
 <!--Body-->
 <form asp-action="ViewProject" asp-controller="UserClassification" method="post" class="my-4 ">
     <div class=".container-fluid">
-        <div class="d-flex flex-row align-content-start">
+        @*<div class="d-flex flex-row align-content-start">*@
+        <div class="ui grid container">
+            <div class="col-4">
+                <h1>Text Classification</h1>
+            </div>
+        </div>
 
-            <div class="col-sm">
+        <div class="ui grid container">
+            <div class="col-4">
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.UserProjects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })
             </div>
-            <div class="col-sm">
+            <div class="col-1">
                 <input type="submit" value="Select" class="form-group btn btn-primary" />
             </div>
 
         </div>
-    </div>
+        </div>
 </form>
-
+@if (Model.allClassifications.Count > 0)
+{
 <div class="ui grid container " id="apparea">
     <div class="col-4">
         @*<div class="two column row">*@
@@ -79,52 +85,101 @@
 
                             @foreach (var item in Model.allClassifications)
                             {
+                                if (item.Assigned_TextClassification_ID != Model.Selected_Assigned_Classification.Assigned_TextClassification_ID)
+                                {
+
+                                    <tr>
+
+                                        @try
+                                        {
+                                            <td>
+                                                @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                            </td>
+                                        }
+                                        catch
+                                        {
+
+                                            @item.Annotations_TB.Annotation_Title
+
+                                        }
 
 
-                                <tr>
-
-                                    @try
-                                    {
                                         <td>
-                                            @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                            <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Select</a>
                                         </td>
-                                    }
-                                    catch
-                                    {
+                                        <td>
 
-                                        @item.Annotations_TB.Annotation_Title
+                                            @if (item.Count_Classifications == 0 && item.Comments == null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                            }
+                                            else if (item.Count_Classifications == 0 && item.Comments != null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                            }
+                                            else if (item.Count_Classifications != 0 && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
+                                            }
+                                            else if (item.Count_Classifications != 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
+                                            else if (item.Count_Classifications == 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
 
-                                    }
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr class="text-light bg-dark">
 
-
-                                    <td>
-                                        <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Select</a>
-                                    </td>
-                                    <td>
-
-                                        @if (item.Count_Classifications == 0 && item.Comments == null && item.Not_Sure == false)
+                                        @try
                                         {
-                                            <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                            <td>
+                                                @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                            </td>
                                         }
-                                        else if (item.Count_Classifications == 0 && item.Comments != null && item.Not_Sure == false)
+                                        catch
                                         {
-                                            <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
-                                        }
-                                        else if (item.Count_Classifications != 0 && item.Not_Sure == false)
-                                        {
-                                            <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
-                                        }
-                                        else if (item.Count_Classifications != 0 && item.Not_Sure == true)
-                                        {
-                                            <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                        }
-                                        else if (item.Count_Classifications == 0 && item.Not_Sure == true)
-                                        {
-                                            <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+
+                                            @item.Annotations_TB.Annotation_Title
+
                                         }
 
-                                    </td>
-                                </tr>
+
+                                        <td>
+                                            <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Selected</a>
+                                        </td>
+                                        <td>
+
+                                            @if (item.Count_Classifications == 0 && item.Comments == null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                            }
+                                            else if (item.Count_Classifications == 0 && item.Comments != null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                            }
+                                            else if (item.Count_Classifications != 0 && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
+                                            }
+                                            else if (item.Count_Classifications != 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
+                                            else if (item.Count_Classifications == 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
                             }
 
                         </tbody>
@@ -186,17 +241,17 @@
                                 <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.Assigned_TextClassification_ID" />
                                 <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.Project_ID" />
                                 <input type="hidden" asp-for="@Model.Selected_Assigned_Classification.User_ID" />
-                                <input type="hidden" id="TextClassification_ID"  asp-for="@Model.Selected_Assigned_Classification.TextClassification_ID" />
-                                <input type="hidden" id="Txtbx_Count_Annotations" asp-for="@Model.Selected_Assigned_Classification.Count_Classifications" />
+                                <input type="hidden" id="TextClassification_ID" asp-for="@Model.Selected_Assigned_Classification.TextClassification_ID" />
+                                <input type="hidden"id="Txtbx_Count_Annotations" asp-for="@Model.Selected_Assigned_Classification.Count_Classifications" />
                                 <input type="hidden" id="Txtbx_Classification_Tag" asp-for="@Model.Selected_Assigned_Classification.TextClassification_HtmlTags" />
 
                                 @if (Model.Selected_Assigned_Classification.Annotations_TB != null)
                                 {
-                                <div>
-                                    <p class="text-justify" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Classification.Annotations_TB.Annotation_Text </p>
-                                </div>
+                                    <div>
+                                        <p class="text-justify" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Classification.Annotations_TB.Annotation_Text </p>
+                                    </div>
                                 }
-                                
+
                                 @if (ViewBag.Error != null)
                                 {
                                     <p class="text-danger">@ViewBag.Error</p>
@@ -205,40 +260,39 @@
                                 @if (Model.Selected_Assigned_Classification.Annotations_TB != null)
                                 {
                                     <br />
-                                    <br />
 
                                     <div>
                                         <label asp-for="@Model.Selected_Assigned_Classification.Comments"></label><br />
-                                        <textarea asp-for="@Model.Selected_Assigned_Classification.Comments" class="form-control" style="min-width: 100%" rows="5"></textarea>
+                                        <textarea asp-for="@Model.Selected_Assigned_Classification.Comments" onchange="Save_Comment()"  class="form-control" style="min-width: 100%" rows="5"></textarea>
                                     </div>
                                     <br />
                                     <div class="form-group">
 
                                         @if (Model.Selected_Assigned_Classification.Not_Sure == true)
                                         {
-                                            <input class="float-right align-content-center" asp-for="@Model.Selected_Assigned_Classification.Not_Sure" type="checkbox" checked="checked" />
+                                            <input onchange="Save_NotSure()" class="float-right align-content-center" asp-for="@Model.Selected_Assigned_Classification.Not_Sure" type="checkbox" checked="checked" />
                                             <span> <label class="float-right" asp-for="@Model.Selected_Assigned_Classification.Not_Sure"> </label> </span>
 
                                         }
                                         else
                                         {
-                                            <input class="float-right" asp-for="@Model.Selected_Assigned_Classification.Not_Sure" type="checkbox" />
+                                            <input onchange="Save_NotSure()" class="float-right" asp-for="@Model.Selected_Assigned_Classification.Not_Sure" type="checkbox" />
                                             <span> <label class="float-right" asp-for="@Model.Selected_Assigned_Classification.Not_Sure"> </label> </span>
                                         }
                                     </div>
 
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <div class="d-flex flex-row">
-                                        <div class="p-2 align-self-start">
-                                            <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="button" />
-                                        </div>
-                                        <div class="p-2 align-self-start">
-                                            <button id="btn_Save" value="Save" class="btn btn-info btn-lg" type="button" >Save  <i class="fa fa-save" style="font-size:24px"></i></button>
-                                        </div>
 
-                                    </div>
+                                    <br />
+                                    @*<div class="d-flex flex-row">
+                        <div class="p-2 align-self-start">
+                            <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="button" />
+                        </div>
+                        <div class="p-2 align-self-start">
+                            <button id="btn_Save" value="Save" class="btn btn-info btn-lg" type="button" >Save  <i class="fa fa-save" style="font-size:24px"></i></button>
+                        </div>
+
+                    </div>*@
+
 
 
                                 }
@@ -250,13 +304,23 @@
                                 }
                             </div>
                         </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="button" class="btn btn-info" aria-label="Previous" onclick="ViewRecord_GoPrev_Functions()">
+                                <span aria-hidden="true">&laquo; Previous</span>
+                            </button>                          
+                            <button type="button" class="btn btn-success" aria-label="Next" onclick="ViewRecord_GoNext_Functions()">
+                                <span aria-hidden="true">Next &raquo;</span>
+                            </button>
+                        </div>
+                        <br />
+                        <br />
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+}
 @*</div>*@
 
 
@@ -370,18 +434,17 @@
     <script>
 
         function Exchange_Tags(Classification_Tag_ID) {
-           // Edited_Tags = document.getElementById("pressed_tags_Place");
             $("#Txtbx_Classification_Tag").val(Classification_Tag_ID);
         }
 
-        function Run_Save_GoNext_Functions() {
-            Exchange_Tags();
-            window.location.href = "/UserClassification/Edit";
+        function ViewRecord_GoNext_Functions() {
+            //Exchange_Tags();
+            window.location.href = "/UserClassification/ViewRecord_Next";
         }
 
-        function Run_Save_Functions() {
+        function ViewRecord_GoPrev_Functions() {
             Exchange_Tags();
-            window.location.href = "/UserClassification/Save";
+            window.location.href = "/UserClassification/ViewRecord_Prev";
         }
 
         function createInput(text, backgroundcolour, Classification_ID) {           
@@ -411,16 +474,51 @@
                 url: "/UserClassification/Save_TextsTags",
                 data: data,               
                 success: function (response) {
-                  //  alert("Congratulations, Successfully added");
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 10);
+                    //  alert("Congratulations, Successfully added");
                 }
             });
         }
 
+        function Save_Comment() {
+          
+            var data = $("#submit_form").serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/UserClassification/Save_Comment",
+                data: data,
+                success: function (response) {
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 10);
+                    //  alert("Congratulations, Successfully added");
+                }
+            });
+        }
+
+        function Save_NotSure() {
+            
+            var data = $("#submit_form").serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/UserClassification/Save_Comment",
+                data: data,
+                success: function (response) {
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 10);  //  alert("Congratulations, Successfully added");
+                }
+            });
+        }
 
         function Delete_Tag(Classification_ID) {
-            alert("Classification_ID : " + Classification_ID);
+           
             Exchange_Tags(Classification_ID);
-
+           
             var data = $("#submit_form").serialize();
 
             $.ajax({
@@ -428,9 +526,14 @@
                 url: "/UserClassification/Delete_TextsTags",
                 data: data,
                 success: function (response) {
-                   // alert("Congratulations, Successfully Deleted");
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 10);
+                    // alert("Congratulations, Successfully Deleted");
                 }
             });
+
+           
         }
 
        

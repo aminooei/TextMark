@@ -29,7 +29,8 @@ namespace TextMark.Controllers
         
        
         public async Task<IActionResult> Index(int Selected_Assigned_Anno_ID, int UserID)
-        {           
+        {
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
 
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
             HP.allAnnotations = await All_Assigned_Anno_ToUsers();
@@ -58,6 +59,8 @@ namespace TextMark.Controllers
 
             HttpContext.Session.SetString("Selected_Assigned_Anno_ID", Selected_Assigned_Anno_ID.ToString());
             HttpContext.Session.SetString("Selected_Project_ID", Project_ID.ToString());
+
+           
 
 
             //await Select_All_Users();

@@ -7,7 +7,6 @@
     Layout = "~/Views/Shared/_Layout_User.cshtml";
 }
 
-<h1>Taxt Annotation</h1>
 
 <!DOCTYPE html>
 
@@ -38,19 +37,24 @@
 <!--Body-->
 <form asp-action="ViewProject" asp-controller="UserAnnotation" method="post" class="my-4 ">
     <div class=".container-fluid">
-        <div class="d-flex flex-row align-content-start">
-
-            <div class="col-sm">
+        <div class="ui grid container">
+            <div class="col-4">
+                <h1>Text Annotation</h1>
+            </div>
+        </div>
+        <div class="ui grid container">
+            <div class="col-4">
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.UserProjects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })
             </div>
-            <div class="col-sm">
+            <div class="col-1">
                 <input type="submit" value="Select" class="form-group btn btn-primary" />
             </div>
 
         </div>
     </div>
 </form>
-
+@if (Model.allAnnotations.Count > 0)
+{
 <div class="ui grid container " id="apparea">
     <div class="col-4">
         @*<div class="two column row">*@
@@ -79,7 +83,8 @@
                             @foreach (var item in Model.allAnnotations)
                             {
 
-
+                                if (item.Assigned_Anno_ID != Model.Selected_Assigned_Annotation.Assigned_Anno_ID)
+                                {
                             <tr>
 
                                 @try
@@ -90,9 +95,9 @@
                                 }
                                 catch
                                 {
-                                    
+
                                         @item.Annotations_TB.Annotation_Title
-                                   
+
                                 }
 
                                     
@@ -103,7 +108,7 @@
                                  
                                       @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
                                       {
-                                          <i class="bi bi-check2" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                          <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
                                       }
                                       else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
                                       {
@@ -124,8 +129,56 @@
                                                       
                                   </td>
                             </tr>
+                                }
+                                else
+                                {
+                            <tr class="text-light bg-dark">
+
+                            @try
+                            {
+                                <td>
+                                    @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                </td>
                             }
-                                
+                            catch
+                            {
+
+                                @item.Annotations_TB.Annotation_Title
+
+                            }
+
+
+                            <td>
+                                <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Selected</a>
+                            </td>
+                            <td>
+
+                                @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                {
+                                    <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                }
+                                else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
+                                {
+                                    <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                }
+                                else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                {
+                                    <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
+                                }
+                                else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                {
+                                    <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                }
+                                else if (item.Count_Annotations == 0 && item.Not_Sure == true)
+                                {
+                                    <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                }
+
+                            </td>
+                        </tr>
+                                }
+                            }
+
                         </tbody>
                     </table>
                     @*</div>*@
@@ -224,9 +277,10 @@
                                     <div class="p-2 align-self-start">
                                         <button id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-info btn-lg" type="submit" asp-action="Save">Save  <i class="fa fa-save" style="font-size:24px"></i></button>
                                     </div>
-                                   
+
                                 </div>
-                                 
+                                <br />
+                                <br />
 
                             }
                             else if (Model.Selected_Assigned_Annotation.Annotated_Text == null)
@@ -243,7 +297,7 @@
     </div>
 </div>
     </div>
-
+}
     @*</div>*@
 
 

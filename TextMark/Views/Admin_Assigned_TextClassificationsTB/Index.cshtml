@@ -1,0 +1,135 @@
+﻿@model IEnumerable<TextMark.Models.Assigned_TextClassifications_ToUsers_TB>
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "Assigned Text Classifications to Users - Admin Page";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>List of Assigned Text Classifications to Users</h1>
+
+<form asp-action="Index" asp-controller="Admin_Assigned_TextClassificationsTB">
+    <div>
+        <div class="form-group flex-row">
+            <label>Select a Username: </label>
+            @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username"), "Select a User", new { @class = "form-control" })
+
+            @*<label>Select a Project: </label>
+                @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })*@
+        </div>
+        <div class="flex-row">
+            <input type="submit" value="Show Text Classifications" class="btn btn-primary" />
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">DELETE</button>
+        </div>
+
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">DELETE ALERT !!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure to DELETE?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Cancel</button>
+                    <button type="submit" value="Delete" class="btn btn-danger" asp-action="DeleteFilter" asp-controller="Admin_Assigned_TextClassificationsTB">YES, DELETE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users_TB.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Count_Classifications)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comments)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Not_Sure)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Users_TB.Username)
+                    </td>
+                    @try
+                    {
+                        <td>
+                            @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 15)...
+                        </td>
+                    }
+                    catch
+                    {
+                        @item.Annotations_TB.Annotation_Title
+                    }
+
+                    @try
+                    {
+                        <td>
+                            @item.Annotations_TB.Annotation_Text.ToString().Substring(0, 25)...
+                        </td>
+                    }
+                    catch
+                    {
+                        @item.Annotations_TB.Annotation_Text
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Count_Classifications)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @if (item.Not_Sure == true)
+                        {
+                            <label>Yes</label>
+                        }
+                        else
+                        {
+                            <label>No</label>
+                        }
+                    </td>
+                    <td>
+                        @*<a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |*@
+                        <a class="btn btn-info" asp-action="Details" asp-route-projectID="@item.Project_ID" asp-route-id="@item.Assigned_TextClassification_ID">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Assigned_TextClassification_ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@*</div>
+    </main>*@

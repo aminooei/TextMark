@@ -336,20 +336,12 @@ namespace TextMark.Controllers
             }
 
 
-            //  var Assigned_Anno = await _context.Assigned_TextClassifications_ToUsers_TB.FindAsync(id);
-            // _context.Assigned_TextClassifications_ToUsers_TB.Remove(Assigned_Anno);
+            
             if (User_ID > 0 && Active_ProjectID > 0)
             {
                 _context.Assigned_TextClassifications_ToUsers_TB.RemoveRange(_context.Assigned_TextClassifications_ToUsers_TB.Where(x => x.User_ID == User_ID && x.Project_ID == Active_ProjectID));
             }
-            //else if (User_ID == 0)
-            //{
-            //    _context.Assigned_TextClassifications_ToUsers_TB.RemoveRange(_context.Assigned_TextClassifications_ToUsers_TB.Where(x => x.Project_ID == Active_ProjectID));
-            //}
-            //else if (Active_ProjectID == 0)
-            //{
-            //    _context.Assigned_TextClassifications_ToUsers_TB.RemoveRange(_context.Assigned_TextClassifications_ToUsers_TB.Where(x => x.User_ID == User_ID));
-            //}
+            
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

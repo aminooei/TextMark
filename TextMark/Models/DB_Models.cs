@@ -295,4 +295,11 @@ namespace TextMark.Models
         public HtmlString ClassificationShortcutKeys_Press_Script { get; set; }
     }
 
+    public class Details_Assigned_TextClassifications_ToUsers
+    {
+        public Assigned_TextClassifications_ToUsers_TB Assigned_TextClassifications_ToUsers_TB { get; set; }
+        public List<ClassifiedTexts_Tags> ClassifiedTexts_Tags { get; set; }
+        public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
+    }
+
 }

@@ -47,6 +47,14 @@
                new { @class = "form-control" })
         <span asp-validation-for="Role_ID" class="text-danger"></span>
     </div>
+    <!--<div class="form-group">
+        <label class="control-label">File Name: </label>-->
+        @*<input asp-for="Role_ID" class="form-control" />*@
+
+        <!--@Html.DropDownList("Source_File_Name", new SelectList(ViewBag.Source_File_Names, "Source_File_Name", "Source_File_Name"), "Select a File",
+               new { @class = "form-control" })
+
+    </div>-->
     <div>
         @if (ViewBag.Error != null)
         {

@@ -78,6 +78,7 @@ namespace TextMark.Controllers
             }
 
             Select_All_Roles();
+           // Select_All_FileNames();
             return View();
         }
 
@@ -86,7 +87,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB users_tb)
+        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB users_tb/*, string Source_File_Name*/)
         {
             if (!IsValidUser())
             {
@@ -100,28 +101,21 @@ namespace TextMark.Controllers
             }
             else
             {
+                
+
                 if (ModelState.IsValid)
                 {
                     _context.Add(users_tb);
                     await _context.SaveChangesAsync();
 
-                    var a = await _context.Roles_TB.Include("Projects_TB")
-                .FirstOrDefaultAsync(m => m.Role_ID == users_tb.Role_ID);
-                    if (users_tb.Text_Annotation_Allowed)
-                    {
-                        await Assign_TextAnnotations_To_User(a.Project_ID, users_tb.User_ID);
-                    }
-                    if (users_tb.Text_Classification_Allowed)
-                    {
-                        await Assign_TextClassifications_To_User(a.Project_ID, users_tb.User_ID);
-                    }
+                
                     return RedirectToAction(nameof(Index));
                 }
             }
-            Select_All_Roles();
+            //Select_All_Roles();
             return View(users_tb);
         }
-        public async Task<IActionResult> Assign_TextClassifications_To_User(int Project_ID, int User_ID)
+        public async Task<IActionResult> Assign_TextClassifications_To_User(int Project_ID, int User_ID, string Source_File_Name)
         {
             if (!IsValidUser())
             {
@@ -129,20 +123,24 @@ namespace TextMark.Controllers
             }
 
 
-            var a = _context.Annotations_TB.Where(m => m.Project_ID == Project_ID).ToList();
+            var a = _context.Annotations_TB.Where(m => (m.Project_ID == Project_ID && m.Source_File_Name == Source_File_Name)).ToList();
 
             foreach (var item in a)
             {
-                Assigned_TextClassifications_ToUsers_TB Assigned_Classififcation = new Assigned_TextClassifications_ToUsers_TB { TextClassification_ID = item.Annotation_ID, TextClassification_HtmlTags = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Classifications = 0 };
-                _context.Add(Assigned_Classififcation);
-                await _context.SaveChangesAsync();
+                var b = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => (m.TextClassification_ID == item.Annotation_ID && m.User_ID == User_ID && m.Project_ID == Project_ID)).ToList();
+                if (b.Count == 0)
+                {
+                    Assigned_TextClassifications_ToUsers_TB Assigned_Classififcation = new Assigned_TextClassifications_ToUsers_TB { TextClassification_ID = item.Annotation_ID, TextClassification_HtmlTags = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Classifications = 0 };
+                    _context.Add(Assigned_Classififcation);
+                    await _context.SaveChangesAsync();
+                }
             }
 
 
 
             return RedirectToAction(nameof(Index));
         }
-        public async Task<IActionResult> Assign_TextAnnotations_To_User(int Project_ID, int User_ID)
+        public async Task<IActionResult> Assign_TextAnnotations_To_User(int Project_ID, int User_ID, string Source_File_Name)
         {
             if (!IsValidUser())
             {
@@ -150,14 +148,17 @@ namespace TextMark.Controllers
             }
 
 
-            var a = _context.Annotations_TB.Where(m => m.Project_ID == Project_ID).ToList();
+            var a = _context.Annotations_TB.Where(m => (m.Project_ID == Project_ID && m.Source_File_Name == Source_File_Name)).ToList();
 
             foreach (var item in a)
             {
-                // assigned_annotations_tousers_tb.Annotated_Text = item.Annotation_Text;
-                Assigned_Annotations_ToUsers_TB Assigned_Anno = new Assigned_Annotations_ToUsers_TB { Annotation_ID = item.Annotation_ID, Annotated_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Annotations = 0 };
-                _context.Add(Assigned_Anno);
-                await _context.SaveChangesAsync();
+                var b = _context.Assigned_Annotations_ToUsers_TB.Where(m => (m.Annotation_ID == item.Annotation_ID && m.User_ID == User_ID && m.Project_ID == Project_ID)).ToList();
+                if (b.Count == 0)
+                {
+                    Assigned_Annotations_ToUsers_TB Assigned_Anno = new Assigned_Annotations_ToUsers_TB { Annotation_ID = item.Annotation_ID, Annotated_Text = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Annotations = 0 };
+                    _context.Add(Assigned_Anno);
+                    await _context.SaveChangesAsync();
+                }
             }
 
 
@@ -199,7 +200,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-
+            Select_All_FileNames();
             Select_All_Roles();
             if (id == null)
             {
@@ -214,13 +215,78 @@ namespace TextMark.Controllers
             }
             return View(login);
         }
+
+        public async Task<IActionResult> Assign_Source_File_Name(int? id)
+        {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            Select_All_FileNames();
+            Select_All_Roles();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+           // var login = await _context.Users_TB.FindAsync(id);
+            var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
+            if (login == null)
+            {
+                return NotFound();
+            }
+            return View(login);
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Assign_Source_File_Name(int id, string Source_File_Name)
+        {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            Select_All_FileNames();
+            Select_All_Roles();
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+
+            var users_tb = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
+           
+
+
+            var a = await _context.Roles_TB.Include("Projects_TB")
+           .FirstOrDefaultAsync(m => m.Role_ID == users_tb.Role_ID);
+
+            if (users_tb.Text_Annotation_Allowed)
+            {
+                await Assign_TextAnnotations_To_User(a.Project_ID, id, Source_File_Name);
+            }
+            if (users_tb.Text_Classification_Allowed)
+            {
+                await Assign_TextClassifications_To_User(a.Project_ID, id, Source_File_Name);
+            }
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
         // POST: Logins/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB Users_tb)
+        public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB Users_tb, string Source_File_Name, int RoleID)
         {
+            Select_All_FileNames();
             Select_All_Roles();
             if (!IsValidUser())
             {
@@ -314,6 +380,14 @@ namespace TextMark.Controllers
             ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text }).ToList();
 
             // return ViewBag.Roles;
-        }        
+        }
+        public void Select_All_FileNames()
+        {
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            // ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text + "("+x.Projects_TB.Project_Name+")"  }).ToList();
+            ViewBag.Source_File_Names = _context.Annotations_TB.Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Source_File_Name = x.Source_File_Name }).Distinct().ToList();
+
+            // return ViewBag.Roles;
+        }
     }
 }

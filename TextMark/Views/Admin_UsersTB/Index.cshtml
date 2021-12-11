@@ -61,7 +61,8 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a>
+                        <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a> |
+                        <a asp-action="Assign_Source_File_Name" asp-route-RoleID="@item.Role_ID" asp-route-id="@item.User_ID">Assign a Source File</a>
                     </td>
                 </tr>
                 }

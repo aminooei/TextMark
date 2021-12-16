@@ -467,7 +467,7 @@ namespace TextMark.Controllers
 
                 var Selected_tag = await _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassification_ID == Assigned_Anno.Selected_Assigned_Classification.Assigned_TextClassification_ID && m.ClassificationLabel_ID == Convert.ToInt32(Assigned_Anno.Selected_Assigned_Classification.TextClassification_HtmlTags)).FirstOrDefaultAsync();
 
-                var tag = await _context.ClassifiedTexts_Tags.FindAsync(Selected_tag.ClassifiedText_Tag_ID);
+                var tag = await _context.ClassifiedTexts_Tags.FindAsync(Selected_tag.ID);
                 _context.ClassifiedTexts_Tags.Remove(tag);              
                 await _context.SaveChangesAsync();
 

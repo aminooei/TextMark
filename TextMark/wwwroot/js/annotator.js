@@ -277,8 +277,16 @@
         var handleMouseUp = function () {
             
             if (window.getSelection) {
-                
+
                 selection = window.getSelection();
+
+
+                //####################### Added by Amin
+                //var start = selection.anchorOffset;
+                //var end = selection.focusOffset;
+                //console.log('start at postion', start);
+                //console.log('stop at position', end);
+                 //####################### Added by Amin
                
             }            
         };

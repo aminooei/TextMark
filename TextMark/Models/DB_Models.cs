@@ -220,15 +220,35 @@ namespace TextMark.Models
 
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
+
         [ForeignKey("Project_ID")]
         public Projects_TB Projects_TB { get; set; }   
     }
 
+    public class AnnotatedTexts_Tags
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+        public int Assigned_TextAnnotation_ID { get; set; }
+
+        [ForeignKey("Assigned_TextAnnotation_ID")]
+        public Assigned_Annotations_ToUsers_TB Assigned_Annotations_ToUsers_TB { get; set; }
+
+        public int AnnotationLabel_ID { get; set; }
+
+        [ForeignKey("AnnotationLabel_ID")]
+        public Labels_TB Labels_TB { get; set; }
+
+        public int Label_Start_Index { get; set; }
+        public int Label_End_Index { get; set; }
+
+    }
     public class ClassifiedTexts_Tags
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ClassifiedText_Tag_ID { get; set; }
+        public int ID { get; set; }
         public int Assigned_TextClassification_ID { get; set; }
         [ForeignKey("Assigned_TextClassification_ID")]
         public Assigned_TextClassifications_ToUsers_TB Assigned_TextClassifications_ToUsers_TB { get; set; }

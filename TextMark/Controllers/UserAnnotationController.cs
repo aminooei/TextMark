@@ -74,8 +74,8 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> ViewRecord_AfterSave()
         {
-            //await Select_All_Users();
-            //await Select_All_Annotations();
+            await Select_All_Users();
+            await Select_All_Annotations();
             await Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
@@ -88,13 +88,19 @@ namespace TextMark.Controllers
 
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
-              Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             
            // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
             return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
         }
 
+        public  void Insert_TagData_InDB(int Assigned_TextAnnotation_ID, int AnnotationLabel_ID, int Label_Start_Index, int Label_End_Index)
+        {
+            AnnotatedTexts_Tags TagData = new AnnotatedTexts_Tags { Assigned_TextAnnotation_ID = Assigned_TextAnnotation_ID, AnnotationLabel_ID = AnnotationLabel_ID, Label_Start_Index = Label_Start_Index, Label_End_Index = Label_End_Index};
+            _context.Add(TagData);
+            _context.SaveChanges();            
+        }
         public async Task<IActionResult> SaveRecord()
         {
             //await Select_All_Users();
@@ -289,61 +295,85 @@ namespace TextMark.Controllers
         //    return View(Assigned_Anno);
         //}
 
+        public async Task<IActionResult> Save_Comment(CL_UsersAnnotations_Home_Page Assigned_Anno)
+        {
+            try
+            {
+                _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
+                await _context.SaveChangesAsync();
+
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+
+            LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
+            Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = Selected_Assigned_Anno_ID, UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+
+
+
+        }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CL_UsersAnnotations_Home_Page Assigned_Anno)
+        public async Task<IActionResult> GoNext(CL_UsersAnnotations_Home_Page Assigned_Anno)
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
-            await Select_All_Projects();
+         //   await Select_All_Users();
+         //   await Select_All_Annotations();
+         //   await Select_All_Projects();
           
 
             
-            if (ModelState.IsValid)
-                {
-                    try
-                    {
+            //if (ModelState.IsValid)
+            //    {
+            //        try
+            //        {
                         _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
                         await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
+                    //}
+                    //catch (DbUpdateConcurrencyException)
+                    //{
                        
-                    }
+                    //}
 
                 return RedirectToAction("ViewRecord_AfterSave", "UserAnnotation");
              
-            }
+           // }
           
-        return RedirectToAction("Index", "UserAnnotation");
+       // return RedirectToAction("Index", "UserAnnotation");
             
         }
 
-        public async Task<IActionResult> Save(CL_UsersAnnotations_Home_Page Assigned_Anno)
+        //public async Task<IActionResult> Save(CL_UsersAnnotations_Home_Page Assigned_Anno)
+        public  void Save(CL_UsersAnnotations_Home_Page Assigned_Anno)
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
-            await Select_All_Projects();
+             //Select_All_Users();
+             //Select_All_Annotations();
+             //Select_All_Projects();
 
 
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
                     _context.Update(Assigned_Anno.Selected_Assigned_Annotation);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
+                     _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
 
-                }
+            //    }
 
-                return RedirectToAction("SaveRecord", "UserAnnotation");
+            //  //  return RedirectToAction("SaveRecord", "UserAnnotation");
 
-            }
+            //}
 
-            return RedirectToAction("Index", "UserAnnotation");
+         //   return RedirectToAction("Index", "UserAnnotation");
 
         }
         private async Task<bool> AnnoExists(int id)

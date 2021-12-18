@@ -218,9 +218,13 @@ namespace TextMark.Models
         [Display(Name = "Number of Annotations")]
         public int Count_Annotations { get; set; }
 
+        [Display(Name = "Annotation ID InText")]
+        public string? Annotation_ID_InText { get; set; }
+
         [Display(Name = "Project ID")]
         public int? Project_ID { get; set; }
 
+        
         [ForeignKey("Project_ID")]
         public Projects_TB Projects_TB { get; set; }   
     }
@@ -240,6 +244,11 @@ namespace TextMark.Models
         [ForeignKey("AnnotationLabel_ID")]
         public Labels_TB Labels_TB { get; set; }
 
+        [Display(Name = "Annotated Substring")]
+        public string Annotated_Substring { get; set; }
+
+        [Display(Name = "Annotation ID InText")]
+        public string Annotation_ID_InText { get; set; }
         public int Label_Start_Index { get; set; }
         public int Label_End_Index { get; set; }
 

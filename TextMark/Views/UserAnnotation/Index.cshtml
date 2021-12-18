@@ -207,7 +207,7 @@
                             @foreach (var item in Model.allLabels)
                             {
                             <div class="control">
-                                <div id="Tag_btn" name="Requirement" class="item active selected tags has-addons"    onmouseup="Run_Save_Functions()" onmousedown=" Annotate('@item.Label_Text', '@item.Label_ID');">
+                                <div id="Tag_btn" name="Requirement" class="item active selected tags has-addons"    onmouseup="Run_Save_Functions();" onmousedown="Annotate('@item.Label_Text', '@item.Label_ID');">
                                  
                                     <a class="tag is-medium" style="color: rgb(51, 51, 51); background-color:@item.Label_Background_Color;">
                                         @item.Label_Text
@@ -226,13 +226,14 @@
                             @*<input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit" asp-action="Save" />*@
 
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            Assigned_Anno_ID:
                             <input type="hidden" id="Assigned_TextAnnotation_ID" asp-for="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Project_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.User_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Annotation_ID" />
                             <input type="hidden" id="Txtbx_Count_Annotations" asp-for="@Model.Selected_Assigned_Annotation.Count_Annotations" />
                             <input type="hidden" id="Txtbx_Annotated_Text" asp-for="@Model.Selected_Assigned_Annotation.Annotated_Text" />
-
+                            <input type="hidden" id="Txtbx_Annotation_ID_InText" asp-for="@Model.Selected_Assigned_Annotation.Annotation_ID_InText" />
                             @if (Model.Selected_Assigned_Annotation.Annotated_Text != null)
                             {
                                 <div>
@@ -251,7 +252,7 @@
 
                                 <div>
                                     <label asp-for="@Model.Selected_Assigned_Annotation.Comments"></label><br />
-                                    <textarea asp-for="@Model.Selected_Assigned_Annotation.Comments" onchange="Save_Comment()"  class="form-control" style="min-width: 100%" rows="5"></textarea>
+                                    <textarea asp-for="@Model.Selected_Assigned_Annotation.Comments" onchange="Save_Comment()" class="form-control" style="min-width: 100%" rows="5"></textarea>
                                 </div>
                                 <br />
                                 <div class="form-group">
@@ -271,15 +272,15 @@
                                 <br />
                                 <br />
                                 <br />
-                                <div class="d-flex flex-row">
-                                    <div class="p-2 align-self-start">
-                                        <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
-                                    </div>
-                                    @*<div class="p-2 align-self-start">
-                            <button id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-info btn-lg" type="submit" asp-action="Save">Save  <i class="fa fa-save" style="font-size:24px"></i></button>
-                        </div>*@
+                                <!--<div class="d-flex flex-row">
+        <div class="p-2 align-self-start">
+            <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
+        </div>-->
+                                @*<div class="p-2 align-self-start">
+                <button id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-info btn-lg" type="submit" asp-action="Save">Save  <i class="fa fa-save" style="font-size:24px"></i></button>
+            </div>*@
 
-                                </div>
+                                <!--</div>-->
                                 <br />
                                 <br />
 
@@ -292,6 +293,16 @@
                             }
                         </div>
                     </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-info" aria-label="Previous" onclick="ViewRecord_GoPrev_Functions()">
+                            <span aria-hidden="true">&laquo; Previous</span>
+                        </button>
+                        <button type="button" class="btn btn-success" aria-label="Next" onclick="ViewRecord_GoNext_Functions()">
+                            <span aria-hidden="true">Next &raquo;</span>
+                        </button>
+                    </div>
+                    <br />
+                    <br />
                 </form>
             </div>
         </div>
@@ -411,10 +422,59 @@
     <script type="text/javascript" src="~/js/Amin.js"></script>
     <script>
 
+        function Annotation_ID_Calculate() {
+            var cache = jQuery.Annotator.cache;
+           // $("#Txtbx_Annotation_ID_InText").val(`annotation_${Object.keys(cache.annotations).length + 1}`);
+            $("#Txtbx_Annotation_ID_InText").val('annotation_'+(parseInt(document.getElementById("Txtbx_Count_Annotations").value) + 1));
+        }
+
+
         function Exchange_Text() {
             Edited_Text = document.getElementById("Annotated_Text_tobesaved");
             $("#Txtbx_Annotated_Text").val(Edited_Text.innerHTML);
         }
+
+        //function Exchange_AnnotationTags(Annotation_ID_InText) {
+        //    alert("Annotation_ID_InText is being deleted = " + Annotation_ID_InText);
+        //    $("#Txtbx_Annotation_ID_InText").val(Annotation_ID_InText);
+        //}
+
+
+        function ViewRecord_GoNext_Functions() {
+            //Exchange_Tags();
+            window.location.href = "/UserAnnotation/ViewRecord_Next";
+        }
+
+        function ViewRecord_GoPrev_Functions() {
+           // Exchange_Tags();
+            window.location.href = "/UserAnnotation/ViewRecord_Prev";
+        }
+
+        function Delete_Annotation_Tag(AnnotationID_InText) {
+
+          //  Exchange_AnnotationTags(AnnotationID);
+
+            var Assigned_TextAnnotation_ID = document.getElementById("Assigned_TextAnnotation_ID").value;
+            alert("Assigned_TextAnnotation_ID = " + Assigned_TextAnnotation_ID);
+            var data = { Assigned_TextAnnotation_ID: Assigned_TextAnnotation_ID, Annotation_ID_InText: AnnotationID_InText };
+            $.ajax({
+                type: "POST",
+                url: "/UserAnnotation/Delete_TextsAnnotations",
+                dataType: 'json',
+                data: data,
+                success: function (response) {
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 10);
+                    // alert("Congratulations, Successfully Deleted");
+                }
+            });
+
+            Run_Save_Functions();
+
+
+        }
+
 
         function Save_Comment() {
 
@@ -472,15 +532,11 @@
         function Run_Save_Functions() {
             console.log("inside save function");
             Exchange_Text();
-           // window.location.href = "/UserAnnotation/Save";
-
-           // var data = { Assigned_TextAnnotation_ID: Assigned_TextAnnotation_ID, AnnotationLabel_ID: AnnotationLabel_ID, Label_Start_Index: start, Label_End_Index: end }
             var data = $("#submit_form").serialize();
 
             $.ajax({
                 type: "POST",
-                url: "/UserAnnotation/Save",
-                /*dataType: 'json',*/
+                url: "/UserAnnotation/Save",               
                 data: data,
                 success: function (response) {
                     //setTimeout(function () {// wait for 5 secs(2)
@@ -502,14 +558,18 @@
                 var textOffset = $("#Annotated_Text_tobesaved").text().indexOf(document.getSelection().anchorNode.data);      
                 var start = textOffset + offset;         
                 var end = textOffset + document.getSelection().focusOffset;
-               
+
+                Annotation_ID_Calculate();
+                var Annotation_ID_InText = $("#Txtbx_Annotation_ID_InText").val();
                 
                // alert("start = " + start + "     AND    end = "+ end);
-               
 
+                var Annotated_Substring = document.getSelection().toString();
+                //alert("Annotated_Substring = " + Annotated_Substring );
                 var Assigned_TextAnnotation_ID = document.getElementById("Assigned_TextAnnotation_ID").value;
-                var AnnotationLabel_ID = LabelID;       
-                var data = { Assigned_TextAnnotation_ID: Assigned_TextAnnotation_ID, AnnotationLabel_ID: AnnotationLabel_ID, Label_Start_Index: start, Label_End_Index: end}
+                var AnnotationLabel_ID = LabelID;
+                LabelID_JS = LabelID;
+                var data = { Assigned_TextAnnotation_ID: Assigned_TextAnnotation_ID, AnnotationLabel_ID: AnnotationLabel_ID, Label_Start_Index: start, Label_End_Index: end, Annotated_Substring: Annotated_Substring, Annotation_ID_InText: Annotation_ID_InText };
                 $.ajax({
                     type: "POST",
                     url: "/UserAnnotation/Insert_TagData_InDB",
@@ -525,7 +585,9 @@
               
 
             }
-            App.handlers.applyOnclickAnnotation(LabelText);   
+           
+            LabelID = LabelID;
+            App.handlers.applyOnclickAnnotation(LabelText);
         }
 
         document.getElementById("Annotated_Text_tobesaved").addEventListener('click', e => {
@@ -546,6 +608,7 @@
         //    save();
         //}
         $(document).ready(function () {
+            var LabelID_JS = 0;
             Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
             $("#Annotated_Text_tobesaved").html(Loaded_Text);
                        

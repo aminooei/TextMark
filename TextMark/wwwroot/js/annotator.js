@@ -167,13 +167,14 @@
                 var id = `annotation_${Object.keys(cache.annotations).length}`;               
                 //jQuery($annotation).attr("background-
 
-                var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+                //var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+               // var txtbx_value = `annotation_${Object.keys(cache.annotations).length}`;
+                var txtbx_value = 'annotation_' + parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+               // jQuery($activeAnnotation).append("<button id=\"BtnClosing_annotation_" + txtbx_value + "\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('annotation_" + txtbx_value + "')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
 
-                jQuery($activeAnnotation).append("<button id=\"BtnClosing_annotation_" + txtbx_value + "\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('annotation_" + txtbx_value + "')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
-
-              //  jQuery($activeAnnotation).append("<button id=\"BtnClosing_"+id+"\" class=\"delete is-small\" onclick=\"App.handlers.deleteAnnotation('"+id+"')\">x</button>"); //<div class="fluid ui button" onclick="App.handlers.deleteAnnotation( 'annotation_1' )">Delete</div>
-               
-                
+               //  jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm rounded-circle\" onclick='this.parentNode.parentNode.removeChild(this.parentNode); Delete_Tag(" + Classification_ID + "); return false;'> <span class=\"glyphicon glyphicon-remove\"></span> </a>"
+                //jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm\" onclick=\"this.parentNode.removeChild(this); App.handlers.deleteAnnotation('annotation_" + txtbx_value + "'); return false;\"> <span class=\"glyphicon glyphicon-remove\"></span> </a>");
+                jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm\" onclick=\"this.parentNode.removeChild(this); App.handlers.deleteAnnotation('"+ txtbx_value + "');  return false;\"> <span class=\"glyphicon glyphicon-remove\"></span> </a>");
                 //#############################
 
                 cache.annotations[cache.activeAnnotation.id].attributes =
@@ -212,6 +213,9 @@
                 jQuery(settings.popoverContents).hide();
             },
             deleteAnnotation: function (annotationId) {
+
+                Delete_Tag(annotationId);
+
                 var cache = jQuery.Annotator.cache;
 
                 var delAnnotation = cache.annotations[annotationId];

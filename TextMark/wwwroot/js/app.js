@@ -110,15 +110,17 @@
             $("#annotations_list").html(html);
             
         },
-        deleteAnnotation: function (annotationId) {     
+        deleteAnnotation: function (annotationId) {
+            alert("annotationId = " + annotationId);
+            Delete_Annotation_Tag(annotationId);
             //############Added new
            $("#BtnClosing_" + annotationId).remove();            
             ///######
            // $("\"#"+annotationId+"\"").contents().unwrap();
             $("#" + annotationId ).contents().unwrap();
 
-            var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
-            document.getElementById("Txtbx_Count_Annotations").value = txtbx_value - 1;
+           //// var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
+           //// document.getElementById("Txtbx_Count_Annotations").value = txtbx_value - 1;
 
             //var remainingAnnotations = $.Annotator.api.deleteAnnotation(annotationId);
 

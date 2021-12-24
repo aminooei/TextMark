@@ -22,17 +22,76 @@ namespace TextMark.Controllers
             _context = context;           
         }
 
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
+            Details_Assigned_TextClassifications_ToUsers DT = new Details_Assigned_TextClassifications_ToUsers();
+          
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
-            Select_All_Users();      
-            return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+
+            int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
+            Select_All_Users();
+           
+            if (Selected_User_ID == 0)
+            {
+                //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
+                return View(DT);
+            }
+            else
+            {
+                //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
+                return View(DT);
+            }
+           
+        }
+        public ActionResult Index(int User_ID)
+        {
+            var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+
+            Details_Assigned_TextClassifications_ToUsers DT = new Details_Assigned_TextClassifications_ToUsers();
+
+
+            HttpContext.Session.SetString("Selected_User_ID", User_ID.ToString());
+
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            Select_All_Users();
+            Select_All_Projects();
+            if (User_ID > 0 && Active_ProjectID > 0)
+            {
+                //return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(User_ID, Active_ProjectID);
+                return View(DT);
+            }
+            //else if (User_ID == 0)
+            //{
+            //    return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+            //}
+            //else if (Active_ProjectID == 0)
+            //{
+            //    return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+            //}
+            //  return View( _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+            DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+            DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(0, 0);
+            return View(DT);
         }
 
-
+        public List<ClassifiedTexts_Tags> Select_All_Classified_Tags(int User_ID, int Project_ID)
+        {
+            var ClassifiedTexts_Tags = _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassifications_ToUsers_TB.User_ID == User_ID && m.Assigned_TextClassifications_ToUsers_TB.Project_ID == Project_ID).ToList();
+            return ClassifiedTexts_Tags;
+        }
         public Assigned_TextClassifications_ToUsers_TB Selected_Assigned_Classification(int Assigned_Anno_ID)
         {
             
@@ -54,29 +113,6 @@ namespace TextMark.Controllers
             return Labels;
         }
         [HttpPost]
-        public async Task<IActionResult> Index(int User_ID)
-        {
-            var Active_ProjectID = Convert.ToInt32( HttpContext.Session.GetString("Active_ProjectID"));
-            if (!IsValidUser())
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            Select_All_Users();
-            Select_All_Projects();
-            if (User_ID > 0 && Active_ProjectID > 0)
-            {
-                return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            }
-            else if (User_ID == 0)
-            {
-                return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            }
-            else if (Active_ProjectID == 0)
-            {
-                return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            }
-            return View(await _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-        }
 
         private async Task<bool> IsAssignedAnnoDuplicated(int Anno_ID,int UserID, int? ProjectID)
         {

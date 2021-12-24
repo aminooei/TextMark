@@ -111,7 +111,7 @@
             
         },
         deleteAnnotation: function (annotationId) {
-            alert("annotationId = " + annotationId);
+          //  alert("annotationId = " + annotationId);
             Delete_Annotation_Tag(annotationId);
             //############Added new
            $("#BtnClosing_" + annotationId).remove();            

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TextMark.Models.Assigned_Annotations_ToUsers_TB>
+﻿@*@model IEnumerable<TextMark.Models.Assigned_Annotations_ToUsers_TB>*@
+@model TextMark.Models.Details_Assigned_TextAnnotations_ToUsers
+
 @using Microsoft.AspNetCore.Http;
 
 @{
@@ -48,38 +50,46 @@
         </div>
     </div>
 </form>
-@if (Model.Count() > 0)
+
+
+<a id="btn_dl_json_annotations" class="btn btn-info btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
+    <span class="glyphicon glyphicon-export "></span> Export
+</a>
+
+@if (Model.allAnnotations.Count() > 0)
 {
-    <table class="table">
+    <table class="table" id="DataTable">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Projects_TB.Project_Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Users_TB.Username)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Users_TB.Username)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Title)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Annotations_TB.Annotation_Text)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Text)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Count_Annotations)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Count_Annotations)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Comments)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Comments)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Not_Sure)
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].Not_Sure)
                 </th>
-
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.allAnnotations[0].User_ID)
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.allAnnotations)
             {
                 <tr>
                     <td>
@@ -126,6 +136,9 @@
                             <label>No</label>
                         }
                     </td>
+                    <td style="display:none;">
+                        @Html.DisplayFor(modelItem => item.User_ID)
+                    </td>
                     <td>
                         @*<a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |*@
                         <a class="btn btn-info" asp-action="Details" asp-route-projectID="@item.Project_ID" asp-route-id="@item.Assigned_Anno_ID">Details</a>
@@ -135,6 +148,161 @@
             }
         </tbody>
     </table>
+    @*<a id="btn_dl_json" class="btn btn-info btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
+        <span class="glyphicon glyphicon-export "></span> Export
+    </a>*@
 }
-@*</div>
-    </main>*@
+
+<br />
+<br />
+<h2> All Annotations Details</h2>
+
+@if (Model.Annotated_Tags.Count() > 0)
+{
+    <table class="table" id="DataTableTags">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_TextAnnotation_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].AnnotationLabel_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Annotated_Substring)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Annotation_ID_InText)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_Start_Index)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
+                </th>
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Annotated_Tags)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assigned_TextAnnotation_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnnotationLabel_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Annotated_Substring)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Annotation_ID_InText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Label_Start_Index)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Label_End_Index)
+                </td>
+                <td style="display:none;">
+                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
+                </td>
+               
+            </tr>
+            }
+        </tbody>
+    </table>
+    
+
+
+
+}
+@section Scripts
+{
+    <script type="text/javascript">
+        function tableToJson(table) {
+            var data = [];
+            var headers = [];
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
+                headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
+            }
+            for (var i = 1; i < table.rows.length; i++) {
+                var tableRow = table.rows[i];
+                var rowData = {};
+                for (var j = 0; j < tableRow.cells.length; j++) {
+                    /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
+                    rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
+                }
+                data.push(rowData);
+            }
+            return data;
+        }
+
+
+        //function htmlToJson(table) {
+        //    var obj = {},
+        //        itemsLength = $(table.find('tbody tr')[0]).find('th').length;
+        //    for (i = 0; i < itemsLength; i++) {
+        //        key = $(table.find('tbody tr')[0]).find('th').eq(i).text();
+        //        value = $(table.find('tbody tr')[1]).find('td').eq(i).text();
+        //        obj[key] = value;
+        //    }
+        //    return JSON.stringify(obj)
+        //}
+
+        //function htmlTableToJson(table, edit = 0, del = 0) {
+        //    // If exists the cols: "edit" and "del" to remove from JSON just pass values = 1 to edit and del params
+        //    var minus = edit + del;
+        //    var data = [];
+        //    var colsLength = $(table.find('thead tr')[0]).find('th').length - minus;
+        //    var rowsLength = $(table.find('tbody tr')).length;
+
+        //    // first row needs to be headers
+        //    var headers = [];
+        //    for (var i = 0; i < colsLength; i++) {
+        //        headers[i] = $(table.find('thead tr')[0]).find('th').eq(i).text();
+        //    }
+
+        //    // go through cells
+        //    for (var i = 0; i < rowsLength; i++) {
+        //        var tableRow = $(table.find('tbody tr')[i]);
+        //        var rowData = {};
+        //        for (var j = 0; j < colsLength; j++) {
+        //            rowData[headers[j]] = tableRow.find('td').eq(j).text();
+        //        }
+        //        data.push(rowData);
+        //    }
+        //    return data;
+        //}
+
+
+        function downloadObjectAsJson(exportObj, exportName) {
+            var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", exportName + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        document.getElementById('btn_dl_json_annotations').onclick = function () {
+            var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableTags")));
+            //var myjson = htmlToJson(document.getElementById("DataTable"));
+            //var myjson = htmlTableToJson(document.getElementById("DataTable"));
+            console.log(myjson.replace(/\\n/g, ''));
+            downloadObjectAsJson(myjson, 'the-json-file');
+        }
+    </script>
+}

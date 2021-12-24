@@ -234,6 +234,8 @@ namespace TextMark.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+
+        [Display(Name = "Annotation ID")]
         public int Assigned_TextAnnotation_ID { get; set; }
 
         [ForeignKey("Assigned_TextAnnotation_ID")]
@@ -331,4 +333,15 @@ namespace TextMark.Models
         public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
     }
 
+    public class Details_Assigned_TextAnnotations_ToUsers
+    {
+        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
+        public List<AnnotatedTexts_Tags> Annotated_Tags { get; set; }
+        public List<Labels_TB> allLabels { get; set; }
+
+        
+
+        
+    }
 }

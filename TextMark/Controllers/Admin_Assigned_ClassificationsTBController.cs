@@ -28,8 +28,18 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            Select_All_Users();      
-            return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+            Select_All_Users();
+            int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
+            if (Selected_User_ID == 0)
+            {
+                return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+
+            }
         }
 
 
@@ -57,6 +67,8 @@ namespace TextMark.Controllers
         public async Task<IActionResult> Index(int User_ID)
         {
             var Active_ProjectID = Convert.ToInt32( HttpContext.Session.GetString("Active_ProjectID"));
+            HttpContext.Session.SetString("Selected_User_ID", User_ID.ToString());
+
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");

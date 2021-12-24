@@ -225,8 +225,7 @@
                         <div class="content ">
                             @*<input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit" asp-action="Save" />*@
 
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            Assigned_Anno_ID:
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>                           
                             <input type="hidden" id="Assigned_TextAnnotation_ID" asp-for="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Project_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.User_ID" />

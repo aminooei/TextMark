@@ -68,23 +68,9 @@ namespace TextMark.Controllers
                 DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
-            //else if (User_ID == 0)
-            //{
-            //   // return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            //    DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
-            // //   DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
-            //    return View(DT);
-            //}
-            //else if (Active_ProjectID == 0)
-            //{
-            //    // return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            //    DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
-            //    DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
-            //    return View(DT);
-            //}
-            // return View(await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
-            DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
+           
+            DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == 0 && m.Project_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+            DT.Annotated_Tags = Select_All_Annotated_Tags(0, 0);
             return View(DT);
         }
 

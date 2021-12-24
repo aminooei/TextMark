@@ -52,7 +52,9 @@
 </form>
 
 
-
+<a id="btn_dl_json_annotations" class="btn btn-info btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
+    <span class="glyphicon glyphicon-export "></span> Export
+</a>
 
 @if (Model.allAnnotations.Count() > 0)
 {
@@ -220,9 +222,7 @@
             }
         </tbody>
     </table>
-    <a id="btn_dl_json" class="btn btn-info btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
-        <span class="glyphicon glyphicon-export "></span> Export
-    </a>
+    
 
 
 
@@ -250,41 +250,41 @@
         }
 
 
-        function htmlToJson(table) {
-            var obj = {},
-                itemsLength = $(table.find('tbody tr')[0]).find('th').length;
-            for (i = 0; i < itemsLength; i++) {
-                key = $(table.find('tbody tr')[0]).find('th').eq(i).text();
-                value = $(table.find('tbody tr')[1]).find('td').eq(i).text();
-                obj[key] = value;
-            }
-            return JSON.stringify(obj)
-        }
+        //function htmlToJson(table) {
+        //    var obj = {},
+        //        itemsLength = $(table.find('tbody tr')[0]).find('th').length;
+        //    for (i = 0; i < itemsLength; i++) {
+        //        key = $(table.find('tbody tr')[0]).find('th').eq(i).text();
+        //        value = $(table.find('tbody tr')[1]).find('td').eq(i).text();
+        //        obj[key] = value;
+        //    }
+        //    return JSON.stringify(obj)
+        //}
 
-        function htmlTableToJson(table, edit = 0, del = 0) {
-            // If exists the cols: "edit" and "del" to remove from JSON just pass values = 1 to edit and del params
-            var minus = edit + del;
-            var data = [];
-            var colsLength = $(table.find('thead tr')[0]).find('th').length - minus;
-            var rowsLength = $(table.find('tbody tr')).length;
+        //function htmlTableToJson(table, edit = 0, del = 0) {
+        //    // If exists the cols: "edit" and "del" to remove from JSON just pass values = 1 to edit and del params
+        //    var minus = edit + del;
+        //    var data = [];
+        //    var colsLength = $(table.find('thead tr')[0]).find('th').length - minus;
+        //    var rowsLength = $(table.find('tbody tr')).length;
 
-            // first row needs to be headers
-            var headers = [];
-            for (var i = 0; i < colsLength; i++) {
-                headers[i] = $(table.find('thead tr')[0]).find('th').eq(i).text();
-            }
+        //    // first row needs to be headers
+        //    var headers = [];
+        //    for (var i = 0; i < colsLength; i++) {
+        //        headers[i] = $(table.find('thead tr')[0]).find('th').eq(i).text();
+        //    }
 
-            // go through cells
-            for (var i = 0; i < rowsLength; i++) {
-                var tableRow = $(table.find('tbody tr')[i]);
-                var rowData = {};
-                for (var j = 0; j < colsLength; j++) {
-                    rowData[headers[j]] = tableRow.find('td').eq(j).text();
-                }
-                data.push(rowData);
-            }
-            return data;
-        }
+        //    // go through cells
+        //    for (var i = 0; i < rowsLength; i++) {
+        //        var tableRow = $(table.find('tbody tr')[i]);
+        //        var rowData = {};
+        //        for (var j = 0; j < colsLength; j++) {
+        //            rowData[headers[j]] = tableRow.find('td').eq(j).text();
+        //        }
+        //        data.push(rowData);
+        //    }
+        //    return data;
+        //}
 
 
         function downloadObjectAsJson(exportObj, exportName) {
@@ -297,7 +297,7 @@
             downloadAnchorNode.remove();
         }
 
-        document.getElementById('btn_dl_json').onclick = function () {
+        document.getElementById('btn_dl_json_annotations').onclick = function () {
             var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableTags")));
             //var myjson = htmlToJson(document.getElementById("DataTable"));
             //var myjson = htmlTableToJson(document.getElementById("DataTable"));

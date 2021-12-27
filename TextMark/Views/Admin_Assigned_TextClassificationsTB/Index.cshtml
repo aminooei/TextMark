@@ -15,7 +15,7 @@
             <label>Select a Username: </label>
             @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username"), "Select a User", new { @class = "form-control" })
 
-            
+
         </div>
         <div class="flex-row">
             <input type="submit" value="Show Text Classifications" class="btn btn-primary" />
@@ -44,9 +44,7 @@
     </div>
 </form>
 
-<a id="btn_dl_json_classifications" class="btn btn-info btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
-    <span class="glyphicon glyphicon-export "></span> Export
-</a>
+
 
 @if (Model.allClassifications.Count() > 0)
 {
@@ -75,7 +73,9 @@
                     @Html.DisplayNameFor(model => model.allClassifications[0].Not_Sure)
                 </th>
 
-                <th></th>
+                <th>
+
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -139,16 +139,17 @@
 
 <br />
 <br />
-<h2> All Classifications Details</h2>
+
 
 @if (Model.ClassifiedTexts_Tags.Count() > 0)
 {
+    <h2> All Classifications Details</h2>
     <table class="table" id="DataTableClassificationsTags">
         <thead>
             <tr>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ID)
-                </th>
+                </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassification_ID)
                 </th>
@@ -156,30 +157,34 @@
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ClassificationLabel_ID)
                 </th>
                 @*<th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Annotated_Substring)
-                </th>
+                        @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Annotated_Substring)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Annotation_ID_InText)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Label_Start_Index)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
+                    </th>
+                    <th style="display:none;">
+                        @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
+                    </th>*@
                 <th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Annotation_ID_InText)
+                    <a id="btn_dl_json_classifications" class="btn btn-warning btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
+                        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
+                    </a>
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Label_Start_Index)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
-                </th>
-                <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
-                </th>*@
-                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.ClassifiedTexts_Tags)
             {
                 <tr>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(modelItem => item.ID)
-                    </td>
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.Assigned_TextClassification_ID)
                     </td>
@@ -187,20 +192,20 @@
                         @Html.DisplayFor(modelItem => item.ClassificationLabel_ID)
                     </td>
                     @*<td>
-                        @Html.DisplayFor(modelItem => item.Annotated_Substring)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Annotation_ID_InText)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Label_Start_Index)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Label_End_Index)
-                    </td>
-                    <td style="display:none;">
-                        @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.Annotated_Substring)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Annotation_ID_InText)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label_Start_Index)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Label_End_Index)
+                        </td>
+                        <td style="display:none;">
+                            @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
+                        </td>*@
 
                 </tr>
             }
@@ -211,45 +216,45 @@
 
 
 
-    @section Scripts
+@section Scripts
 {
-        <script type="text/javascript">
-            function tableToJson(table) {
-                var data = [];
-                var headers = [];
-                for (var i = 0; i < table.rows[0].cells.length; i++) {
-                    /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
-                    headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
+    <script type="text/javascript">
+        function tableToJson(table) {
+            var data = [];
+            var headers = [];
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
+                headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
+            }
+            for (var i = 1; i < table.rows.length; i++) {
+                var tableRow = table.rows[i];
+                var rowData = {};
+                for (var j = 0; j < tableRow.cells.length; j++) {
+                    /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
+                    rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
                 }
-                for (var i = 1; i < table.rows.length; i++) {
-                    var tableRow = table.rows[i];
-                    var rowData = {};
-                    for (var j = 0; j < tableRow.cells.length; j++) {
-                        /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
-                        rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
-                    }
-                    data.push(rowData);
-                }
-                return data;
+                data.push(rowData);
             }
+            return data;
+        }
 
 
-            function downloadObjectAsJson(exportObj, exportName) {
-                var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
-                var downloadAnchorNode = document.createElement('a');
-                downloadAnchorNode.setAttribute("href", dataStr);
-                downloadAnchorNode.setAttribute("download", exportName + ".json");
-                document.body.appendChild(downloadAnchorNode);
-                downloadAnchorNode.click();
-                downloadAnchorNode.remove();
-            }
+        function downloadObjectAsJson(exportObj, exportName) {
+            var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", exportName + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
 
-            document.getElementById('btn_dl_json_classifications').onclick = function () {
-                var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableClassificationsTags")));
-                //var myjson = htmlToJson(document.getElementById("DataTable"));
-                //var myjson = htmlTableToJson(document.getElementById("DataTable"));
-                console.log(myjson.replace(/\\n/g, ''));
-                downloadObjectAsJson(myjson, 'the-json-file');
-            }
-        </script>
-    }
+        document.getElementById('btn_dl_json_classifications').onclick = function () {
+            var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableClassificationsTags")));
+            //var myjson = htmlToJson(document.getElementById("DataTable"));
+            //var myjson = htmlTableToJson(document.getElementById("DataTable"));
+            console.log(myjson.replace(/\\n/g, ''));
+            downloadObjectAsJson(myjson, 'the-json-file');
+        }
+    </script>
+}

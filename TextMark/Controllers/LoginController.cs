@@ -143,7 +143,7 @@ namespace TextMark.Controllers
             UT1.Password = "12345";
             UT1.ConfirmPassword = "12345";
             UT1.Role_ID = 1;          
-            _context.Add(UT1);
+            _context.Add(UT1);            
 
             _context.SaveChanges();
         }

@@ -174,7 +174,7 @@
 
                //  jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm rounded-circle\" onclick='this.parentNode.parentNode.removeChild(this.parentNode); Delete_Tag(" + Classification_ID + "); return false;'> <span class=\"glyphicon glyphicon-remove\"></span> </a>"
                 //jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm\" onclick=\"this.parentNode.removeChild(this); App.handlers.deleteAnnotation('annotation_" + txtbx_value + "'); return false;\"> <span class=\"glyphicon glyphicon-remove\"></span> </a>");
-                jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm\" onclick=\"this.parentNode.removeChild(this); App.handlers.deleteAnnotation('"+ txtbx_value + "');  return false;\"> <span class=\"glyphicon glyphicon-remove\"></span> </a>");
+                jQuery($activeAnnotation).append("<a href=\"#\" class=\"btn btn-default btn-sm\" onclick=\"this.parentNode.removeChild(this); App.handlers.deleteAnnotation('"+ txtbx_value + "');  return false;\"><span class=\"glyphicon glyphicon-remove\"></span></a>");
                 //#############################
 
                 cache.annotations[cache.activeAnnotation.id].attributes =

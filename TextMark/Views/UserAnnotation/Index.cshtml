@@ -225,7 +225,7 @@
                         <div class="content ">
                             @*<input id="btn_Save" onclick="Run_Save_Functions()" value="Save" class="btn btn-primary" type="submit" asp-action="Save" />*@
 
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>                           
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" id="Assigned_TextAnnotation_ID" asp-for="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.Project_ID" />
                             <input type="hidden" asp-for="@Model.Selected_Assigned_Annotation.User_ID" />
@@ -280,6 +280,15 @@
             </div>*@
 
                                 <!--</div>-->
+
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-info" aria-label="Previous" onclick="ViewRecord_GoPrev_Functions()">
+                                        <span aria-hidden="true">&laquo; Previous</span>
+                                    </button>
+                                    <button type="button" class="btn btn-success" aria-label="Next" onclick="ViewRecord_GoNext_Functions()">
+                                        <span aria-hidden="true">Next &raquo;</span>
+                                    </button>
+                                </div>
                                 <br />
                                 <br />
 
@@ -292,14 +301,7 @@
                             }
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-info" aria-label="Previous" onclick="ViewRecord_GoPrev_Functions()">
-                            <span aria-hidden="true">&laquo; Previous</span>
-                        </button>
-                        <button type="button" class="btn btn-success" aria-label="Next" onclick="ViewRecord_GoNext_Functions()">
-                            <span aria-hidden="true">Next &raquo;</span>
-                        </button>
-                    </div>
+                   
                     <br />
                     <br />
                 </form>
@@ -556,7 +558,7 @@
                 var text = document.getSelection().anchorNode.data;               
                 var textOffset = $("#Annotated_Text_tobesaved").text().indexOf(document.getSelection().anchorNode.data);      
                 var start = textOffset + offset;         
-                var end = textOffset + document.getSelection().focusOffset;
+                var end = textOffset + document.getSelection().focusOffset -1;
 
                 Annotation_ID_Calculate();
                 var Annotation_ID_InText = $("#Txtbx_Annotation_ID_InText").val();
@@ -578,7 +580,7 @@
                         //setTimeout(function () {// wait for 5 secs(2)
                         //    location.reload(); // then reload the page.(3)
                         //}, 10);
-                        alert("Congratulations, Successfully added");
+                     //   alert("Congratulations, Successfully added");
                     }
                 });
               

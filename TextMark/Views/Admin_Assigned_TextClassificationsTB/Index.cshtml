@@ -148,29 +148,30 @@
         <thead>
             <tr>
                 @*<th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ID)
-                </th>*@
+            @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ID)
+        </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassification_ID)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ClassificationLabel_ID)
                 </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Annotated_Substring)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Annotation_ID_InText)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Label_Start_Index)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
-                    </th>
-                    <th style="display:none;">
-                        @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
-                    </th>*@
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
+                </th>
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Users_TB.Username)
+                </th>
+                @*
+        <th>
+            @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Label_Start_Index)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
+        </th>
+        <th style="display:none;">
+            @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
+        </th>*@
                 <th>
                     <a id="btn_dl_json_classifications" class="btn btn-warning btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
                         <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
@@ -181,33 +182,34 @@
         <tbody>
             @foreach (var item in Model.ClassifiedTexts_Tags)
             {
-                <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ID)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Assigned_TextClassification_ID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassificationLabel_ID)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Annotated_Substring)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Annotation_ID_InText)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Label_Start_Index)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Label_End_Index)
-                        </td>
-                        <td style="display:none;">
-                            @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
-                        </td>*@
+            <tr>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assigned_TextClassification_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassificationLabel_ID)
+                </td>
+                <td style="display:none;">
+                    @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
+                </td>
+                <td style="display:none;">
+                    @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Users_TB.Username)
+                </td>
+                @*
+        <td>
+            @Html.DisplayFor(modelItem => item.Label_Start_Index)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Label_End_Index)
+        </td>
+        <td style="display:none;">
+            @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
+        </td>*@
 
-                </tr>
+            </tr>
             }
         </tbody>
     </table>

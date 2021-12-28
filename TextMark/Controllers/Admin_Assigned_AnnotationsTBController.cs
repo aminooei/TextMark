@@ -68,6 +68,12 @@ namespace TextMark.Controllers
                 DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
+            else if(User_ID == -2)
+            {
+                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.Annotated_Tags = Select_All_Annotated_Tags_ForAllUsers(Active_ProjectID);
+                return View(DT);
+            }
            
             DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == 0 && m.Project_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
             DT.Annotated_Tags = Select_All_Annotated_Tags(0, 0);
@@ -231,6 +237,11 @@ namespace TextMark.Controllers
             return Annotated_tags;
         }
 
+        public List<AnnotatedTexts_Tags> Select_All_Annotated_Tags_ForAllUsers(int Project_ID)
+        {
+            var Annotated_tags = _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).ToList();
+            return Annotated_tags;
+        }
         public List<AnnotatedTexts_Tags> Select_All_Annotated_Tags_For_a_Record(int id)
         {
             var Annotated_tags_For_A_Record = _context.AnnotatedTexts_Tags.Where(m => m.Assigned_TextAnnotation_ID == id).ToList();
@@ -401,7 +412,9 @@ namespace TextMark.Controllers
         public List<Users_TB> Select_All_Users()
         {
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();            
+            var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
+            users.Add(new Users_TB { User_ID = -2 , Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
+            ViewBag.Users = users;
             return ViewBag.Users;
         }
         public List<Annotations_TB> Select_All_Annotations()

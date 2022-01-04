@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: TextMark/Dockerfile    
     ports:
-      - "81:80"
+      - "8080:80"
 
 
 

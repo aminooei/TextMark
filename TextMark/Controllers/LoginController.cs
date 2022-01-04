@@ -57,7 +57,9 @@ namespace TextMark.Controllers
                 //Create_Labels_BG_Colour_ShortKey();
                 Create_Labels();
                 Create_Annotation_Texts();
-                Create_Assigned_Anno();
+                Create_Assigned_TextAnnotations();
+                Create_Assigned_TextClassifications();
+                Create_ClassificationLabels();
             }
         }
         public  IActionResult DetailsAsync(string username, string password)
@@ -90,7 +92,7 @@ namespace TextMark.Controllers
                     HttpContext.Session.SetString("Username", username);
                     TempData["UserID"] = login_user.User_ID.ToString();
                     TempData["Username"] = username;
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "UserAnnotation");
                 }
             }
             return RedirectToAction("Index", "Login");
@@ -193,12 +195,40 @@ namespace TextMark.Controllers
             _context.SaveChanges();
         }
 
+        public void Create_ClassificationLabels()
+        {
+            ClassificationLabels_TB LB1 = new ClassificationLabels_TB();
+            // LB1.Label_BGColour_ID = 1;
+            LB1.ClassificationLabel_Background_Color = "#f2711c";
+            LB1.ClassificationLabel_ShortCut_Key = "R";
+            LB1.ClassificationLabel_Text = "Location";
+            LB1.Project_ID = 1;
+            _context.Add(LB1);
+
+            ClassificationLabels_TB LB2 = new ClassificationLabels_TB();
+            //LB2.Label_BGColour_ID = 2;
+            LB2.ClassificationLabel_Background_Color = "#009c95";
+            LB2.ClassificationLabel_ShortCut_Key = "B";
+            LB2.ClassificationLabel_Text = "City";
+            LB2.Project_ID = 1;
+            _context.Add(LB2);
+
+            ClassificationLabels_TB LB3 = new ClassificationLabels_TB();
+            //LB3.Label_BGColour_ID = 3;
+            LB3.ClassificationLabel_Background_Color = "#2185d0";
+            LB3.ClassificationLabel_ShortCut_Key = "G";
+            LB3.ClassificationLabel_Text = "Country";
+            LB3.Project_ID = 1;
+            _context.Add(LB3);
+            _context.SaveChanges();
+        }
+
         public void Create_Annotation_Texts()
         {
             Annotations_TB Anno1 = new Annotations_TB();
             Anno1.Project_ID = 1;
             Anno1.Annotation_ID_InFile = "abcd1";
-            Anno1.Annotation_Title = "Anno Title 1 dfgadsgagasdgasdgasdgadgasdgasd";
+            Anno1.Annotation_Title = "Anno Title 1";
             Anno1.Annotation_Text = "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             Anno1.Annotation_Date = "01/01/2020";
             Anno1.Annotation_Source = "Yahoo";
@@ -208,7 +238,7 @@ namespace TextMark.Controllers
             Annotations_TB Anno2 = new Annotations_TB();
             Anno2.Project_ID = 1;
             Anno2.Annotation_ID_InFile = "abcd2";
-            Anno2.Annotation_Title = "Anno Title 2 asdgasdgahgah dfg dgjdfgj hsfghshsdfhsdfhs";
+            Anno2.Annotation_Title = "Anno Title 2";
             Anno2.Annotation_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             Anno2.Annotation_Date = "05/11/2021";
             Anno2.Annotation_Source = "Google";
@@ -227,7 +257,9 @@ namespace TextMark.Controllers
             _context.SaveChanges();
         }
 
-        public void Create_Assigned_Anno()
+       
+
+        public void Create_Assigned_TextAnnotations()
         {
             Assigned_Annotations_ToUsers_TB Assigned_Anno1 = new Assigned_Annotations_ToUsers_TB();
             Assigned_Anno1.Project_ID = 1;
@@ -255,6 +287,37 @@ namespace TextMark.Controllers
             Assigned_Anno3.Comments = null;
             Assigned_Anno3.Annotated_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
             _context.Add(Assigned_Anno3);
+            _context.SaveChanges();
+        }
+
+        public void Create_Assigned_TextClassifications()
+        {
+            Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification1 = new Assigned_TextClassifications_ToUsers_TB();
+            Assigned_TextClassification1.Project_ID = 1;
+            Assigned_TextClassification1.User_ID = 2;
+            Assigned_TextClassification1.TextClassification_ID = 1;
+            Assigned_TextClassification1.Not_Sure = false;
+            Assigned_TextClassification1.Comments = null;
+            Assigned_TextClassification1.TextClassification_Text = "Marketing may be quite effective when done correctly; marketing can increase brand recognition, position your organization as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            _context.Add(Assigned_TextClassification1);
+
+            Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification2 = new Assigned_TextClassifications_ToUsers_TB();
+            Assigned_TextClassification2.Project_ID = 1;
+            Assigned_TextClassification2.User_ID = 2;
+            Assigned_TextClassification2.TextClassification_ID = 2;
+            Assigned_TextClassification2.Not_Sure = false;
+            Assigned_TextClassification2.Comments = "Some comments ......";
+            Assigned_TextClassification2.TextClassification_Text = "Increase brand recognition, position your organization Marketing may be quite effective when done correctly; marketing can as the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            _context.Add(Assigned_TextClassification2);
+
+            Assigned_TextClassifications_ToUsers_TB Assigned_TextClassification3 = new Assigned_TextClassifications_ToUsers_TB();
+            Assigned_TextClassification3.Project_ID = 1;
+            Assigned_TextClassification3.User_ID = 2;
+            Assigned_TextClassification3.TextClassification_ID = 3;
+            Assigned_TextClassification3.Not_Sure = true;
+            Assigned_TextClassification3.Comments = null;
+            Assigned_TextClassification3.TextClassification_Text = "Effective when done correctly; marketing can as increase brand recognition, position your organization Marketing may be quite the ideal answer for potential clients, and eventually generate leads and sales, (CLICK, 2020). A business plan outlines and directs your company's operating activities";
+            _context.Add(Assigned_TextClassification3);
             _context.SaveChanges();
         }
     }

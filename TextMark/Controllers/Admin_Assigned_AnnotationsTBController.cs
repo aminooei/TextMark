@@ -56,7 +56,7 @@ namespace TextMark.Controllers
             return Labels;
         }
         [HttpPost]
-        public async Task<IActionResult> Index(int User_ID /*, int Project_ID*/)
+        public async Task<IActionResult> Index(int User_ID)
         {
             var Active_ProjectID = Convert.ToInt32( HttpContext.Session.GetString("Active_ProjectID"));
             if (!IsValidUser())
@@ -194,7 +194,7 @@ namespace TextMark.Controllers
 
         public ActionResult Details(int id, int projectID)
         {
-            CL_Users_Home_Page HP = new CL_Users_Home_Page();           
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();           
             HP.allLabels = Select_Annotation_Labels(projectID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(id);
             
@@ -328,8 +328,10 @@ namespace TextMark.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> DeleteFilter(int User_ID, int Project_ID)
+        public async Task<IActionResult> DeleteFilter(int User_ID)
         {
+            int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
@@ -338,26 +340,27 @@ namespace TextMark.Controllers
 
             //  var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.FindAsync(id);
             // _context.Assigned_Annotations_ToUsers_TB.Remove(Assigned_Anno);
-            if (User_ID > 0 && Project_ID > 0)
+            if (User_ID > 0 && Active_ProjectID > 0)
             {
-                _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == User_ID && x.Project_ID == Project_ID));
+                _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == User_ID && x.Project_ID == Active_ProjectID));
             }
-            else if(User_ID == 0)
+            else if (User_ID == 0)
             {
-                _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.Project_ID == Project_ID));
+                _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.Project_ID == Active_ProjectID));
             }
-            else if (Project_ID == 0)
-            {
-                _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == User_ID));
-            }
+            //else if (Active_ProjectID == 0)
+            //{
+            //    _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == User_ID));
+            //}
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
 
         public List<Users_TB> Select_All_Users()
-        {           
-            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToList();            
+        {
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();            
             return ViewBag.Users;
         }
         public List<Annotations_TB> Select_All_Annotations()

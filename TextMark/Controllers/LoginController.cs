@@ -57,8 +57,8 @@ namespace TextMark.Controllers
                 //Create_Labels_BG_Colour_ShortKey();
                 Create_Labels();
                 Create_Annotation_Texts();
-                Create_Assigned_TextAnnotations();
-                Create_Assigned_TextClassifications();
+             //   Create_Assigned_TextAnnotations();
+             //   Create_Assigned_TextClassifications();
                 Create_ClassificationLabels();
             }
         }

@@ -168,36 +168,28 @@
     <h2> All Annotations Details</h2>
     <table class="table" id="DataTableTags">
         <thead>
-            <tr>
-                @*<th>
-            @Html.DisplayNameFor(model => model.Annotated_Tags[0].ID)
-        </th>*@
+            <tr>              
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_TextAnnotation_ID)
                 </th>
-                <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.Projects_TB.Project_Name)
-                </th>
-                <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.Users_TB.Username)
-                </th>
+
                 <th>
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].AnnotationLabel_ID)
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Labels_TB.Label_Text)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Annotated_Substring)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Annotation_ID_InText)
-                </th>
+                </th>               
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_Start_Index)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.Users_TB.Username)
+                </th>
                 <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
+                    @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.Projects_TB.Project_Name)
                 </th>
                 <th>
                     <a id="btn_dl_json_annotations" class="btn btn-warning btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
@@ -210,37 +202,28 @@
             @foreach (var item in Model.Annotated_Tags)
             {
             <tr>
-                @*<td>
-            @Html.DisplayFor(modelItem => item.ID)
-        </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Assigned_TextAnnotation_ID)
                 </td>
-                <td style="display:none;">
-                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Projects_TB.Project_Name)
-                </td>
-                <td style="display:none;">
-                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Users_TB.Username)
-                </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.AnnotationLabel_ID)
+                    @Html.DisplayFor(modelItem => item.Labels_TB.Label_Text)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Annotated_Substring)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Annotation_ID_InText)
-                </td>
+                </td>               
                 <td>
                     @Html.DisplayFor(modelItem => item.Label_Start_Index)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Label_End_Index)
                 </td>
-                <td style="display:none;">
-                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Users_TB.Username)
                 </td>
-
+                <td style="display:none;">
+                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Projects_TB.Project_Name)
+                </td>
             </tr>
             }
         </tbody>

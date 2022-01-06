@@ -57,7 +57,7 @@
             $.Annotator.api.tagActiveAnnotation(tagName);
         },
         applyOnclickAnnotation: function (type) {
-            
+
             var txtbx_value = parseInt(document.getElementById("Txtbx_Count_Annotations").value);
             document.getElementById("Txtbx_Count_Annotations").value = txtbx_value + 1;
 

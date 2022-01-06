@@ -236,8 +236,11 @@
                             @if (Model.Selected_Assigned_Annotation.Annotated_Text != null)
                             {
                                 <div>
-                                    <p class="text-justify" ondblclick="clearSelection()" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Annotation.Annotated_Text </p>
+                                    <p class="text-justify" ondblclick="dblclickSelection()" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Annotation.Annotated_Text </p>
                                 </div>
+                                @*<div>
+                                    <p class="text-justify" id="Annotated_Text_tobesaved" spellcheck="false"> @Model.Selected_Assigned_Annotation.Annotated_Text </p>
+                                </div>*@
                             }
                             @if (ViewBag.Error != null)
                             {
@@ -422,6 +425,8 @@
     <script type="text/javascript" src="~/js/app.js"></script>
     <script type="text/javascript" src="~/js/Amin.js"></script>
     <script>
+        var dblclicked = false;
+        let isdblclickdone = false;
 
         function Annotation_ID_Calculate() {
             var cache = jQuery.Annotator.cache;
@@ -553,12 +558,18 @@
         
 
         function Annotate(LabelText, LabelID) {
-            if (window.getSelection) {               
+            if (window.getSelection) {
+              
                 var offset = document.getSelection().anchorOffset;
                 var text = document.getSelection().anchorNode.data;               
                 var textOffset = $("#Annotated_Text_tobesaved").text().indexOf(document.getSelection().anchorNode.data);      
-                var start = textOffset + offset;         
-                var end = textOffset + document.getSelection().focusOffset -1;
+                var start = textOffset + offset;
+                if (dblclicked) {
+                    var end = textOffset + document.getSelection().focusOffset - 2;
+                }
+                else {
+                    var end = textOffset + document.getSelection().focusOffset - 1;
+                }
 
                 Annotation_ID_Calculate();
                 var Annotation_ID_InText = $("#Txtbx_Annotation_ID_InText").val();
@@ -583,12 +594,19 @@
                      //   alert("Congratulations, Successfully added");
                     }
                 });
-              
-
+                isdblclickdone = dblclicked;
+                dblclicked = false;
             }
            
             LabelID = LabelID;
+            //if (isdblclickdone == true) {
+            //    alert("LabelText= #"+$.trim(LabelText.toString())+"#");
+            //    App.handlers.applyOnclickAnnotation($.trim(LabelText.toString()));
+            //}
+            //else {
             App.handlers.applyOnclickAnnotation(LabelText);
+            //}
+           
         }
 
         document.getElementById("Annotated_Text_tobesaved").addEventListener('click', e => {
@@ -609,20 +627,24 @@
         //    save();
         //}
         $(document).ready(function () {
+           
             var LabelID_JS = 0;
             Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
             $("#Annotated_Text_tobesaved").html(Loaded_Text);
                        
         });
 
-
-        function clearSelection() {
-            if (document.selection && document.selection.empty) {
-                document.selection.empty();
-            } else if (window.getSelection) {
-                var sel = window.getSelection();
-                sel.removeAllRanges();
-            }
+        // ondbclick
+        function dblclickSelection() {
+            dblclicked = true;
+          //  alert(dblclicked);
+         //   $.trim(document.selection().toString());
+            //if (document.selection && document.selection.empty) {
+            //    document.selection.empty();
+            //} else if (window.getSelection) {
+            //    var sel = window.getSelection();
+            //    sel.removeAllRanges();
+            //}
         }
     </script>
 

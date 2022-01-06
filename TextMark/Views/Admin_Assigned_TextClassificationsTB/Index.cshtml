@@ -154,7 +154,7 @@
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassification_ID)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ClassificationLabel_ID)
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ClassificationLabels_TB.ClassificationLabel_Text)
                 </th>
                 <th style="display:none;">
                     @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
@@ -190,7 +190,7 @@
                     @Html.DisplayFor(modelItem => item.Assigned_TextClassification_ID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ClassificationLabel_ID)
+                    @Html.DisplayFor(modelItem => item.ClassificationLabels_TB.ClassificationLabel_Text)
                 </td>
                 <td style="display:none;">
                     @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)

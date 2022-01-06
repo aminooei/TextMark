@@ -233,13 +233,13 @@ namespace TextMark.Controllers
 
         public  List<AnnotatedTexts_Tags> Select_All_Annotated_Tags(int User_ID, int Project_ID)
         {
-            var Annotated_tags =  _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.User_ID == User_ID && m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).ToList();
+            var Annotated_tags =  _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.User_ID == User_ID && m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).Include("Labels_TB").Include("Assigned_Annotations_ToUsers_TB.Users_TB").ToList();
             return Annotated_tags;
         }
 
         public List<AnnotatedTexts_Tags> Select_All_Annotated_Tags_ForAllUsers(int Project_ID)
         {
-            var Annotated_tags = _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).ToList();
+            var Annotated_tags = _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).Include("Labels_TB").Include("Assigned_Annotations_ToUsers_TB.Users_TB").ToList();
             return Annotated_tags;
         }
         public List<AnnotatedTexts_Tags> Select_All_Annotated_Tags_For_a_Record(int id)

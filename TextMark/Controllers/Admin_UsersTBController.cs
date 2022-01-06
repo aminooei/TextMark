@@ -78,7 +78,7 @@ namespace TextMark.Controllers
             }
 
             Select_All_Roles();
-           // Select_All_FileNames();
+            Select_All_FileNames();
             return View();
         }
 
@@ -87,7 +87,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB users_tb/*, string Source_File_Name*/)
+        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB users_tb, string Source_File_Name)
         {
             if (!IsValidUser())
             {
@@ -105,10 +105,13 @@ namespace TextMark.Controllers
 
                 if (ModelState.IsValid)
                 {
+
                     _context.Add(users_tb);
                     await _context.SaveChangesAsync();
 
-                
+                    await Assign_Source_File_Name(users_tb.User_ID, Source_File_Name);
+
+
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -311,7 +314,9 @@ namespace TextMark.Controllers
                     {
                         _context.Update(Users_tb);
                         await _context.SaveChangesAsync();
-                    }
+
+                        await Assign_Source_File_Name(Users_tb.User_ID, Source_File_Name);
+                }
                     catch (DbUpdateConcurrencyException)
                     {
                         if (!UserExists(Users_tb.User_ID))

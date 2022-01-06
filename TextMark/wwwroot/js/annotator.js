@@ -54,17 +54,24 @@
 
         jQuery.Annotator.api = {      
             clickAction1: function (type, Count_Annotations) {
-               // alert("selection 2 ");
-                    if (selection.rangeCount) {
-
-                        range = selection.getRangeAt(0);
-
-                        if (range.toString().length > settings.minimumCharacters) {
-                            var $annotation = document.createElement(settings.surroundWith);
-
-                            jQuery($annotation).html(
-                                $("<div>").append(range.cloneContents()).html()
+                if (selection.rangeCount) {
+                     range = selection.getRangeAt(0);
+                   
+                    if (range.toString().length > settings.minimumCharacters) {
+                        var $annotation = document.createElement(settings.surroundWith);
+                        len = document.getSelection().toString().length;
+                        console.log("########  isdblclickdone1 = " + isdblclickdone);
+                        if (isdblclickdone == true) {
+                            jQuery($annotation).html(                               
+                                $("<div>").append(range.cloneContents()).html().toString().substring(0, len - 1)
                             );
+                        }
+                        else {
+                            jQuery($annotation).html(
+                                 $("<div>").append(range.cloneContents()).html()   
+                                /*$("<div>").append(range.cloneContents()).html().toString().substring(0, len - 1)*/
+                            );
+                        }
 
                          //   jQuery(this).attr("contenteditable", true);
 
@@ -93,7 +100,11 @@
                           //  $(".example").attr("contenteditable", false); 
 
                             showPopover($annotation);  //#1
-                        } else if (range.toString().length !== 0 && range.toString().length < settings.minimumCharacters) {
+                    }
+
+
+
+                    else if (range.toString().length !== 0 && range.toString().length < settings.minimumCharacters) {
                             if (settings.onerror) {
                                 settings.onerror.apply("INSUFFICIENT_CHARS");
                             }
@@ -282,8 +293,9 @@
             
             if (window.getSelection) {
 
+               /* selection = window().getSelection().toString().trim();*/
+               
                 selection = window.getSelection();
-
 
                 //####################### Added by Amin
                 //var start = selection.anchorOffset;

@@ -12,32 +12,30 @@ using Microsoft.AspNetCore.Http;
 
 namespace TextMark.Controllers
 {
-    //[Authorize]
-    public class Admin_UsersTBController : Controller
+    public class Admin_UsersAccessLevelController : Controller
     {
         private readonly TextMarkContext _context;
-      
-        public Admin_UsersTBController(TextMarkContext context)
-        {           
-            _context = context; 
-        }
 
-        public async Task<IActionResult> Index()
-        {               
-            if (!IsValidUser())
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            return View(await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB").Where(m => m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToListAsync());
-           // return View(await _context.Users_TB.Include("Roles_TB").Select(x => new { Username = x.Username, Password = x.Password, Role = x.Roles_TB.Role_Text + "(" + x.Roles_TB.Projects_TB.Project_Name + ")" }).ToListAsync());
-            
-            
-        }
-
-        private async Task<bool> IsUserDuplicated(string Username, int? RoleID)
+        public Admin_UsersAccessLevelController(TextMarkContext context)
         {
-            var User = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.Username == Username && m.Role_ID == RoleID);
+            _context = context;
+        }
+
+     
+        public async Task<IActionResult> Index(int id)
+        {           
+            var Selected_User_ID_Access_Level = id;
+            HttpContext.Session.SetString("Active_UserID", id.ToString());
+            string Active_Username = _context.Users_TB.FirstOrDefault(m => m.User_ID == id).Username;
+            HttpContext.Session.SetString("Active_Username", Active_Username);
+            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            return View(await _context.Users_Access_Level_TB.Include("Users_TB").Include("Projects_TB").Where(m => (m.Users_TB.Roles_TB.Project_ID.ToString() == Active_ProjectID && m.User_ID == Selected_User_ID_Access_Level)).ToListAsync());
+            // return View(await _context.Users_TB.Include("Roles_TB").Select(x => new { Username = x.Username, Password = x.Password, Role = x.Roles_TB.Role_Text + "(" + x.Roles_TB.Projects_TB.Project_Name + ")" }).ToListAsync());
+
+        }
+        private async Task<bool> IsUserDuplicated(int UserID, string Source_File_Name)
+        {
+            var User = await _context.Users_Access_Level_TB.Include("Users_TB").Include("Projects_TB").FirstOrDefaultAsync(m => m.User_ID == UserID && m.Source_File_Name == Source_File_Name);
             if (User == null)
             {
                 return false;
@@ -72,12 +70,13 @@ namespace TextMark.Controllers
         // GET: Logins/Create
         public IActionResult Create()
         {
+           
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            Select_All_Roles();
+           
             Select_All_FileNames();
             return View();
         }
@@ -87,36 +86,38 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB users_tb, string Source_File_Name)
+        public async Task<IActionResult> Create([Bind("User_ID,Text_Annotation_Allowed,Text_Classification_Allowed,Source_File_Name,Project_ID")] Users_Access_Level_TB Users_Access_Level_tb)
         {
+            var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            if (await IsUserDuplicated(users_tb.Username, users_tb.Role_ID))
+            if (await IsUserDuplicated(Users_Access_Level_tb.User_ID, Users_Access_Level_tb.Source_File_Name))
             {
-                ViewBag.Error = "This User is already registered for this role";
+                ViewBag.Error = "This Source File Name is already registered for this User";
 
             }
             else
             {
-                
+
 
                 if (ModelState.IsValid)
                 {
-
-                    _context.Add(users_tb);
+                  //  Users_Access_Level_tb.Project_ID = Active_ProjectID;
+                    _context.Add(Users_Access_Level_tb);
                     await _context.SaveChangesAsync();
 
-                    await Assign_Source_File_Name(users_tb.User_ID, Source_File_Name);
+                    await Assign_Or_Delete_Source_File_Name(Users_Access_Level_tb.User_ID, Users_Access_Level_tb.Source_File_Name, Users_Access_Level_tb.Text_Annotation_Allowed, Users_Access_Level_tb.Text_Classification_Allowed, Active_ProjectID);
 
 
-                    return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Index), new { id = Users_Access_Level_tb.User_ID });
+                   // return RedirectToAction("Index", new { id = Users_Access_Level_tb.User_ID } );
                 }
             }
             //Select_All_Roles();
-            return View(users_tb);
+            return RedirectToAction("Index", new { id = Users_Access_Level_tb.User_ID });
         }
         public async Task<IActionResult> Assign_TextClassifications_To_User(int Project_ID, int User_ID, string Source_File_Name)
         {
@@ -135,6 +136,32 @@ namespace TextMark.Controllers
                 {
                     Assigned_TextClassifications_ToUsers_TB Assigned_Classififcation = new Assigned_TextClassifications_ToUsers_TB { TextClassification_ID = item.Annotation_ID, TextClassification_HtmlTags = item.Annotation_Text, User_ID = User_ID, Project_ID = Project_ID, Count_Classifications = 0 };
                     _context.Add(Assigned_Classififcation);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+             public async Task<IActionResult> Delete_TextClassifications_of_User(int Project_ID, int User_ID, string Source_File_Name)
+        {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            var a = _context.Annotations_TB.Where(m => (m.Project_ID == Project_ID && m.Source_File_Name == Source_File_Name)).ToList();
+
+            foreach (var item in a)
+            {
+                var b = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => (m.TextClassification_ID == item.Annotation_ID && m.User_ID == User_ID && m.Project_ID == Project_ID)).ToList();
+                if (b.Count == 1)
+                {
+                    var Assigned_Classififcation = await _context.Assigned_TextClassifications_ToUsers_TB.FindAsync(b[0].Assigned_TextClassification_ID);
+                    _context.Assigned_TextClassifications_ToUsers_TB.Remove(Assigned_Classififcation);
                     await _context.SaveChangesAsync();
                 }
             }
@@ -165,7 +192,33 @@ namespace TextMark.Controllers
             }
 
 
-           
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete_TextAnnotations_of_User(int Project_ID, int User_ID, string Source_File_Name)
+        {
+            if (!IsValidUser())
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+
+            var a = _context.Annotations_TB.Where(m => (m.Project_ID == Project_ID && m.Source_File_Name == Source_File_Name)).ToList();
+
+            foreach (var item in a)
+            {
+                var b = _context.Assigned_Annotations_ToUsers_TB.Where(m => (m.Annotation_ID == item.Annotation_ID && m.User_ID == User_ID && m.Project_ID == Project_ID)).ToList();
+                if (b.Count == 1)
+                {
+                    var Assigned_Anno = await _context.Assigned_Annotations_ToUsers_TB.FindAsync(b[0].Assigned_Anno_ID);
+                    _context.Assigned_Annotations_ToUsers_TB.Remove(Assigned_Anno);
+                    await _context.SaveChangesAsync();                  
+                }
+            }
+
+
+
             return RedirectToAction(nameof(Index));
         }
         //public async Task<IActionResult> Details()
@@ -186,14 +239,14 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Users_tb = await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB")
-                .FirstOrDefaultAsync(m => m.User_ID == id);
-            if (Users_tb == null)
+            var User_Access_Level = await _context.Users_Access_Level_TB.Include("Users_TB").Include("Projects_TB")
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (User_Access_Level == null)
             {
                 return NotFound();
             }
 
-            return View(Users_tb);
+            return View(User_Access_Level);
         }
         // GET: Logins/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -204,19 +257,19 @@ namespace TextMark.Controllers
             }
 
             Select_All_FileNames();
-            Select_All_Roles();
+           /// Select_All_Roles();
             if (id == null)
             {
                 return NotFound();
             }
 
-             //   var login = await _context.Users_TB.FindAsync(id);
-            var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
-            if (login == null)
+            //   var login = await _context.Users_TB.FindAsync(id);
+            var UserAccessLevel = await _context.Users_Access_Level_TB.Include("Users_TB").FirstOrDefaultAsync(m => m.ID == id);
+            if (UserAccessLevel == null)
             {
                 return NotFound();
             }
-            return View(login);
+            return View(UserAccessLevel);
         }
 
         public async Task<IActionResult> Assign_Source_File_Name(int? id)
@@ -233,7 +286,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-           // var login = await _context.Users_TB.FindAsync(id);
+            // var login = await _context.Users_TB.FindAsync(id);
             var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
             if (login == null)
             {
@@ -246,7 +299,7 @@ namespace TextMark.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Assign_Source_File_Name(int id, string Source_File_Name)
+        public async Task<IActionResult> Assign_Or_Delete_Source_File_Name(int UserID, string Source_File_Name, bool Text_Annotation_Allowed, bool Text_Classification_Allowed, int Project_ID)
         {
             if (!IsValidUser())
             {
@@ -255,27 +308,35 @@ namespace TextMark.Controllers
 
             Select_All_FileNames();
             Select_All_Roles();
-            if (id == 0)
+            if (UserID == 0)
             {
                 return NotFound();
             }
 
 
-            var users_tb = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
-           
+            var users_tb = await _context.Users_Access_Level_TB.Include("Users_TB").FirstOrDefaultAsync(m => m.User_ID == UserID);
 
 
-            var a = await _context.Roles_TB.Include("Projects_TB")
-           .FirstOrDefaultAsync(m => m.Role_ID == users_tb.Role_ID);
 
-            //if (users_tb.Text_Annotation_Allowed)
-            //{
-            //    await Assign_TextAnnotations_To_User(a.Project_ID, id, Source_File_Name);
-            //}
-            //if (users_tb.Text_Classification_Allowed)
-            //{
-            //    await Assign_TextClassifications_To_User(a.Project_ID, id, Source_File_Name);
-            //}
+            // var a = await _context.Roles_TB.Include("Projects_TB")
+            //.FirstOrDefaultAsync(m => m.Role_ID == users_tb.Role_ID);
+
+            if (Text_Annotation_Allowed)
+            {
+                await Assign_TextAnnotations_To_User(Project_ID, UserID, Source_File_Name);
+            }
+            if(!Text_Annotation_Allowed)
+            {
+                await Delete_TextAnnotations_of_User(Project_ID, UserID, Source_File_Name);
+            }
+            if (Text_Classification_Allowed)
+            {
+                await Assign_TextClassifications_To_User(Project_ID, UserID, Source_File_Name);
+            }
+            if (!Text_Classification_Allowed)
+            {
+                await Delete_TextClassifications_of_User(Project_ID, UserID, Source_File_Name);
+            }
             return RedirectToAction(nameof(Index));
 
         }
@@ -287,16 +348,16 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("User_ID,Username,Password,ConfirmPassword,Text_Annotation_Allowed,Text_Classification_Allowed,Role_ID")] Users_TB Users_tb, string Source_File_Name, int RoleID)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,User_ID,Text_Annotation_Allowed,Text_Classification_Allowed,Source_File_Name,Project_ID")] Users_Access_Level_TB Users_Access_Level_tb)
         {
             Select_All_FileNames();
-            Select_All_Roles();
+           // Select_All_Roles();
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            if (id != Users_tb.User_ID)
+            if (id != Users_Access_Level_tb.ID)
             {
                 return NotFound();
             }
@@ -308,34 +369,35 @@ namespace TextMark.Controllers
             //}
             //else
             //{
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                try
                 {
-                    try
-                    {
-                        _context.Update(Users_tb);
-                        await _context.SaveChangesAsync();
+                    _context.Update(Users_Access_Level_tb);
+                    await _context.SaveChangesAsync();
+                    var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+                    await Assign_Or_Delete_Source_File_Name(Users_Access_Level_tb.User_ID, Users_Access_Level_tb.Source_File_Name, Users_Access_Level_tb.Text_Annotation_Allowed, Users_Access_Level_tb.Text_Classification_Allowed, Active_ProjectID);
 
-                        await Assign_Source_File_Name(Users_tb.User_ID, Source_File_Name);
                 }
-                    catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(Users_Access_Level_tb.ID))
                     {
-                        if (!UserExists(Users_tb.User_ID))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        return NotFound();
                     }
-                    return RedirectToAction(nameof(Index));
+                    else
+                    {
+                        throw;
+                    }
                 }
-           // }
-            return View(Users_tb);
+                return RedirectToAction("Index", new { id = Users_Access_Level_tb.User_ID });
+            }
+            // }
+            return View(Users_Access_Level_tb);
         }
 
         private bool UserExists(int id)
-        {            
+        {
             return _context.Users_TB.Any(e => e.User_ID == id);
         }
 
@@ -352,14 +414,15 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var login = await _context.Users_TB.Include("Roles_TB").FirstOrDefaultAsync(m => m.User_ID == id);
-              
-            if (login == null)
+            var User_Access_Level = await _context.Users_Access_Level_TB.Include("Users_TB").Include("Projects_TB").FirstOrDefaultAsync(m => m.ID == id);
+
+            if (User_Access_Level == null)
             {
                 return NotFound();
             }
 
-            return View(login);
+            return View(User_Access_Level);
+            
         }
 
         // POST: Logins/Delete/5
@@ -372,10 +435,15 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
-            var login = await _context.Users_TB.FindAsync(id);
-            _context.Users_TB.Remove(login);
+            var User_Access_Level = await _context.Users_Access_Level_TB.FindAsync(id);
+            _context.Users_Access_Level_TB.Remove(User_Access_Level);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            await Assign_Or_Delete_Source_File_Name(User_Access_Level.User_ID, User_Access_Level.Source_File_Name, false, false, Active_ProjectID);
+
+            return RedirectToAction(nameof(Index), new { id = User_Access_Level.User_ID });
+            
         }
 
         public void Select_All_Roles()
@@ -394,5 +462,6 @@ namespace TextMark.Controllers
 
             // return ViewBag.Roles;
         }
-    }
+    
+}
 }

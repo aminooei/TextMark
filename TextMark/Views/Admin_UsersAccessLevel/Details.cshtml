@@ -1,0 +1,51 @@
+﻿@model TextMark.Models.Users_Access_Level_TB
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "User Access Level Details";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Login</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Users_TB.Username)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Users_TB.Username)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Text_Annotation_Allowed)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Text_Annotation_Allowed)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Text_Classification_Allowed)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Text_Classification_Allowed)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Source_File_Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Source_File_Name)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Projects_TB.Project_Name)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.User_ID">Edit</a> |
+    <a asp-action="Index" asp-route-id=@Context.Session.GetString("Active_UserID")>Back to List</a>
+</div>

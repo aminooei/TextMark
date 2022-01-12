@@ -29,6 +29,7 @@ namespace TextMark.Data
         public DbSet<Projects_TB> Projects_TB { get; set; }
         public DbSet<ClassifiedTexts_Tags> ClassifiedTexts_Tags { get; set; }
         public DbSet<AnnotatedTexts_Tags> AnnotatedTexts_Tags { get; set; }
+        public DbSet<Users_Access_Level_TB> Users_Access_Level_TB { get; set; }
 
 
 

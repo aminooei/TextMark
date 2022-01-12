@@ -27,12 +27,12 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Roles_TB.Projects_TB.Project_Name)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Text_Annotation_Allowed)
+                    @*<th>
+                        @Html.DisplayNameFor(model => model.Users_Access_Level.Text_Annotation_Allowed)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Text_Classification_Allowed)
-                    </th>
+                        @Html.DisplayNameFor(model => model.Users_Access_Level.Text_Classification_Allowed)
+                    </th>*@
                     <th></th>
                 </tr>
             </thead>
@@ -53,16 +53,16 @@
                         @Html.DisplayFor(modelItem => item.Roles_TB.Projects_TB.Project_Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Text_Annotation_Allowed)
+                        @*@Html.DisplayFor(modelItem => item.Users_Access_Level.Text_Annotation_Allowed)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Text_Classification_Allowed)
-                    </td>
+                        @Html.DisplayFor(modelItem => item.Users_Access_Level.Text_Classification_Allowed)
+                    </td>*@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a> |
-                        <a asp-action="Assign_Source_File_Name" asp-route-RoleID="@item.Role_ID" asp-route-id="@item.User_ID">Assign a Source File</a>
+                        <a asp-action="Index" asp-controller="Admin_UsersAccessLevel" asp-route-id="@item.User_ID">View Access Levels to Files</a>
                     </td>
                 </tr>
                 }

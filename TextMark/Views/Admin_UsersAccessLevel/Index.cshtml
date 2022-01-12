@@ -1,0 +1,72 @@
+﻿@model IEnumerable<TextMark.Models.Users_Access_Level_TB>
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = @Context.Session.GetString("Active_Username") + " Access Levels - Admin Page";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>List of Access Levels</h1>
+<h2>Username : @Context.Session.GetString("Active_Username") </h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Access Level</a>
+</p>
+@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container" id="Users_Container">*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users_TB.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text_Annotation_Allowed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Text_Classification_Allowed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Source_File_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+            </th>
+            @*
+                <th>
+                    @Html.DisplayNameFor(model => model.Users_Access_Level.Text_Classification_Allowed)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td align="center">
+                    @Html.DisplayFor(modelItem => item.Users_TB.Username)
+                </td>
+                <td align="center">
+                    @Html.DisplayFor(modelItem => item.Text_Annotation_Allowed)
+                </td>
+                <td align="center">
+                    @Html.DisplayFor(modelItem => item.Text_Classification_Allowed)
+                </td>
+                <td align="center">
+                    @Html.DisplayFor(modelItem => item.Source_File_Name)
+                </td>
+                <td align="center">
+                    @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>   
+    <a asp-action="Index" asp-controller="Admin_UsersTB" >Back to List</a>
+</div>

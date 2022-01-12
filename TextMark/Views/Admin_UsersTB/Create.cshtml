@@ -28,7 +28,7 @@
                 <input asp-for="ConfirmPassword" class="form-control" onfocus="this.value=''" autocomplete="off" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="d-flex flex-row align-self-center">
+            @*<div class="d-flex flex-row align-self-center">
                 <label asp-for="Text_Annotation_Allowed" class="col-10 p-2 control-label"></label>
                 <input asp-for="Text_Annotation_Allowed" class="form-control" style="box-shadow: none;" type="checkbox" />
                 <span asp-validation-for="Text_Annotation_Allowed" class="p-2 text-danger"></span>
@@ -37,7 +37,7 @@
                 <label asp-for="Text_Classification_Allowed" class="col-10 p-2 control-label"></label>
                 <input asp-for="Text_Classification_Allowed" style="box-shadow: none;" class="form-control" type="checkbox" />
                 <span asp-validation-for="Text_Classification_Allowed" class="p-2 text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Role_ID" class="control-label"></label>
                 @*<input asp-for="Role_ID" class="form-control" />*@
@@ -53,21 +53,15 @@
 
                 }
             </div>
-            <div class="form-group">
-                <label class="control-label">File Name: </label>
+            <!--<div class="form-group">
+                <label class="control-label">File Name: </label>-->
                 @*<input asp-for="Role_ID" class="form-control" />*@
 
-                @Html.DropDownList("Source_File_Name", new SelectList(ViewBag.Source_File_Names, "Source_File_Name", "Source_File_Name"), "Select a File",
+                <!--@Html.DropDownList("Source_File_Name", new SelectList(ViewBag.Source_File_Names, "Source_File_Name", "Source_File_Name"), "Select a File",
                        new { @class = "form-control" })
                
-            </div>
-            <div>
-                @if (ViewBag.Error != null)
-                {
-                    <p class="text-danger">@ViewBag.Error</p>
-
-                }
-            </div>
+            </div>-->
+            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

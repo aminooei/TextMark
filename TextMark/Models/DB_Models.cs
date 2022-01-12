@@ -71,7 +71,23 @@ namespace TextMark.Models
         public int Role_ID { get; set; }
 
         [ForeignKey("Role_ID")]
-        public Roles_TB Roles_TB { get; set; }
+        public Roles_TB Roles_TB { get; set; }    
+
+
+    }
+    
+    public class Users_Access_Level_TB
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [Display(Name = "User ID")]
+        [Required(ErrorMessage = "UserID is required")]
+        public int User_ID { get; set; }
+
+        [ForeignKey("User_ID")]
+        public Users_TB Users_TB { get; set; }
 
         [DefaultValue(true)]
         [Display(Name = "Text Annotation Allowed?")]
@@ -81,8 +97,17 @@ namespace TextMark.Models
         [Display(Name = "Text Classification Allowed?")]
         public bool Text_Classification_Allowed { get; set; }
 
+        [Display(Name = "Source File Name")]
+        [Required(ErrorMessage = "Source File Name is required")]
+        [StringLength(1000, ErrorMessage = "Must be between 3 and 1000 characters", MinimumLength = 1)]
+        public string Source_File_Name { get; set; }
+
+        [Display(Name = "Project ID")]
+        public int? Project_ID { get; set; }
+        [ForeignKey("Project_ID")]
+        public Projects_TB Projects_TB { get; set; }
+
     }
-    
     public class Labels_TB
     {
         [Key]

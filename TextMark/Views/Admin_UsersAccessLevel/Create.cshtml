@@ -1,0 +1,66 @@
+﻿@model TextMark.Models.Users_Access_Level_TB
+@using Microsoft.AspNetCore.Http;
+
+
+@{
+    ViewData["Title"] = "Create a User Access Level";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Create a New Access Level</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">User Name: </label>
+                <input asp-for="User_ID" class="form-control" value=@Context.Session.GetString("Active_UserID") type="hidden" />
+                <label class="form-control"> @Context.Session.GetString("Active_Username") </label>
+                @*<span asp-validation-for="Users_TB.Username" class="text-danger"></span>*@
+            </div>
+
+            <div class="d-flex flex-row align-self-center">
+                <label asp-for="Text_Annotation_Allowed" class="col-10 p-2 control-label"></label>
+                <input asp-for="Text_Annotation_Allowed" class="form-control" style="box-shadow: none;" type="checkbox" />
+                <span asp-validation-for="Text_Annotation_Allowed" class="p-2 text-danger"></span>
+            </div>
+            <div class="d-flex flex-row align-self-center">
+                <label asp-for="Text_Classification_Allowed" class="col-10 p-2 control-label"></label>
+                <input asp-for="Text_Classification_Allowed" style="box-shadow: none;" class="form-control" type="checkbox" />
+                <span asp-validation-for="Text_Classification_Allowed" class="p-2 text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">File Name: </label>
+                @Html.DropDownList("Source_File_Name", new SelectList(ViewBag.Source_File_Names, "Source_File_Name", "Source_File_Name"), "Select a File",
+                   new { @class = "form-control" })
+                <span asp-validation-for="Source_File_Name" class="p-2 text-danger"></span>
+            </div>
+            <div class="d-flex flex-row align-self-center">
+                <input asp-for="Project_ID" style="box-shadow: none;" class="form-control" value=@Context.Session.GetString("Active_ProjectID") type="hidden" />
+            </div>
+            <div>
+                @if (ViewBag.Error != null)
+                {
+                    <p class="text-danger">@ViewBag.Error</p>
+
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-id=@Context.Session.GetString("Active_UserID")>Back to List</a>
+</div>
+<br />
+<br />
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -21,8 +21,15 @@ namespace TextMark.Models
         [StringLength(20, ErrorMessage = "Must be between 2 and 20 characters", MinimumLength = 2)]
         public string Project_Name { get; set; }
 
+        [Display(Name = "Project Description")]
+        [Required(ErrorMessage = "Project Description is required")]
+        [StringLength(200, ErrorMessage = "Must be between 5 and 200 characters", MinimumLength = 5)]        
+        public string Project_Description { get; set; }
+
         [Display(Name = "Is Activated?")]
         public bool Is_Active { get; set; }
+
+
     }
 
     public class Roles_TB
@@ -99,7 +106,7 @@ namespace TextMark.Models
 
         [Display(Name = "Source File Name")]
         [Required(ErrorMessage = "Source File Name is required")]
-        [StringLength(1000, ErrorMessage = "Must be between 3 and 1000 characters", MinimumLength = 1)]
+        [StringLength(1000, ErrorMessage = "Must be between 1 and 1000 characters", MinimumLength = 1)]
         public string Source_File_Name { get; set; }
 
         [Display(Name = "Project ID")]

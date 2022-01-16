@@ -119,11 +119,13 @@ namespace TextMark.Controllers
         {  
             Projects_TB PT1 = new Projects_TB();
             PT1.Project_Name = "Project 1";
+            PT1.Project_Description = "This is a sample project (1)";
             PT1.Is_Active = true;
             _context.Add(PT1);
 
             Projects_TB PT2 = new Projects_TB();
             PT2.Project_Name = "Project 2";
+            PT2.Project_Description = "This is a sample project (2)";
             PT2.Is_Active = false;
             _context.Add(PT2);
             _context.SaveChanges();

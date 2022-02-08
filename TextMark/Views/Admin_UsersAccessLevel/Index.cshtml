@@ -6,9 +6,9 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>List of Access Levels</h1>
-<h2>Username : @Context.Session.GetString("Active_Username") </h2>
-
+<h1>Access Level Management</h1>
+<div class="text-white bg-dark h2">User : @Context.Session.GetString("Active_Username") </div>
+<br />
 <p>
     <a asp-action="Create" class="btn btn-success">Create New Access Level</a>
 </p>

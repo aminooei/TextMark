@@ -70,7 +70,7 @@
 
     <!-- Custom styles for this template -->
     <link href="~/css/dashboard.css" rel="stylesheet">
-    @*<link href="~/css/feather.css" rel="stylesheet" type="text/css">*@
+    <link href="~/css/feather.css" rel="stylesheet" type="text/css">
 </head>
 <body class="overflow-auto">
 
@@ -85,20 +85,23 @@
 
             <span class="align-content-center text-white"> Active Project :  @Context.Session.GetString("Active_Project_Name")</span>
         }
-        @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
 
-        @*<ul class="navbar-nav">*@
+    <a class="btn btn-success" href="@Url.Action("Manage_Projects_Help", "Admin_Help")">
+        User Manual
+        <i class="bi bi-info-square"></i>
+    </a>
+       
 
         @if (Context.Session.GetString("Username") != "")
         //if (TempData["Username"] != null)
         //(SignInManager.IsSignedIn(User))
         {
-           
-   
-        <span class="align-content-end text-white">     @Context.Session.GetString("Username")   <a id="login" asp-controller="Login" asp-action="Index">Logout</a>    </span>
-       
 
-   
+
+            <span class="align-content-end text-white">     @Context.Session.GetString("Username")   <a id="login" asp-controller="Login" asp-action="Index">Logout</a>    </span>
+
+
+
             @*<div class="nav-item">
                 <form id="logoutForm" class="form-inline"  >
                     <button id="logout" type="submit" class="nav-link btn btn-link "  asp-route-returnUrl="@Url.Action("Index", "Login")">Logout</button>
@@ -131,13 +134,11 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_ProjectsTB")">
-                                    <span data-feather="command"></span>
                                     Projects
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
-                                    <span data-feather="key"></span>
                                     Roles
                                 </a>
                             </li>
@@ -150,46 +151,41 @@
         </li>*@
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
-                                    <span data-feather="tag"></span>
                                     Annotation Labels
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_ClassificationLabelsTB")">
-                                    <span data-feather="tag"></span>
                                     Classification Labels
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_AnnoTextsTB")">
-                                    <span data-feather="file-text"></span>
-                                    Upload Files
+                                    Files
                                 </a>
                             </li>
                             <li class="nav-item has-submenu">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
-                                    <span data-feather="users"></span>
-                                    Users Management
+                                    Users
                                 </a>
                             </li>
                             @*<li class="nav-item has-submenu">
-                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
-                                    <span data-feather="users"></span>
-                                    Users Access Level
-                                </a>
-                            </li>*@
+            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersTB")">
+                <span data-feather="users"></span>
+                Users Access Level
+            </a>
+        </li>*@
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_UsersAccessLevel")">
-                                    <span data-feather="list"></span>
+                                <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Assigned_AnnotationsTB")">
                                     Assigned Text Annotations
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Assigned_TextClassificationsTB")">
-                                    <span data-feather="list"></span>
                                     Assigned Text Classifications
                                 </a>
                             </li>
+                           
                         </ul>
                     </div>
                 </nav>

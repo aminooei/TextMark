@@ -12,6 +12,7 @@
 		<PackageReference Include="Ductus.FluentDocker" Version="2.8.2" />
 		<PackageReference Include="EntityFramework" Version="6.4.4" />
 		<PackageReference Include="ExcelDataReader" Version="3.6.0" />
+		<PackageReference Include="Microsoft.AspNet.WebApi.HelpPage" Version="5.2.7" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
 			<PrivateAssets>all</PrivateAssets>

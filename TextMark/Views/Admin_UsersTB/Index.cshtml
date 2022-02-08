@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
-<h1>List of Users</h1>
+<h1>Users Management</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-success">Create New User</a>
@@ -62,7 +62,7 @@
                         <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.User_ID">Delete</a> |
-                        <a asp-action="Index" asp-controller="Admin_UsersAccessLevel" asp-route-id="@item.User_ID">View Access Levels to Files</a>
+                        <a class="btn btn-info" asp-action="Index" asp-controller="Admin_UsersAccessLevel" asp-route-id="@item.User_ID">Access Levels</a>
                     </td>
                 </tr>
                 }

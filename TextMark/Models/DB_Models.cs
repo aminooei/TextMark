@@ -78,7 +78,7 @@ namespace TextMark.Models
         public int Role_ID { get; set; }
 
         [ForeignKey("Role_ID")]
-        public Roles_TB Roles_TB { get; set; }    
+        public Roles_TB Roles_TB { get; set; }
 
 
     }
@@ -222,6 +222,7 @@ namespace TextMark.Models
     public class Assigned_Annotations_ToUsers_TB
     {
         [Key]
+        [Display(Name = "Assigned Annotation ID")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Assigned_Anno_ID { get; set; }
 
@@ -267,7 +268,7 @@ namespace TextMark.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [Display(Name = "Annotation ID")]
+        [Display(Name = "Assigned Annotation ID")]
         public int Assigned_TextAnnotation_ID { get; set; }
 
         [ForeignKey("Assigned_TextAnnotation_ID")]

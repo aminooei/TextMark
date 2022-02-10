@@ -28,7 +28,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            return View(await _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToListAsync());
+            return View(await _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID && m.Role_Text.ToUpper() != "ADMIN").ToListAsync());
             
         }
         private async Task<bool> IsRoleDuplicated(string RoleText, int? ProjectID)
@@ -94,14 +94,18 @@ namespace TextMark.Controllers
                 ViewBag.Error = "This Role is already registered for this project!"; 
                 
             }
+            if (roles_tb.Role_Text.ToUpper() == "ADMIN")
+            {
+                ViewBag.Error = "The ADMIN Role is a reserved role and cannot be assigned!";
+            }
             else
             {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && roles_tb.Role_Text.ToUpper() != "ADMIN")
                 {
                     _context.Add(roles_tb);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                }      
+                }
             }
             Select_All_Projects();
             return View(roles_tb);
@@ -175,12 +179,16 @@ namespace TextMark.Controllers
 
             if (await IsRoleDuplicated(Roles_tb.Role_Text, Roles_tb.Project_ID))
             {
-                ViewBag.Error = "This User is already registered for this role";
+                ViewBag.Error = "This role is already registered for this project";
 
+            }
+            if (Roles_tb.Role_Text.ToUpper() == "ADMIN")
+            {
+                ViewBag.Error = "The ADMIN Role is a reserved role and cannot be assigned!";
             }
             else
             {
-                if (ModelState.IsValid)
+                if (ModelState.IsValid && Roles_tb.Role_Text.ToUpper() != "ADMIN")
                 {
                     try
                     {

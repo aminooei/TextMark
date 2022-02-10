@@ -167,7 +167,7 @@ namespace TextMark.Controllers
                         catch
                         {
                             //ViewBag.Error = ex.Message;
-                           break;
+                          // break;
                         }
                     }
                 }

@@ -76,10 +76,10 @@
 
 
     <header class="bg-dark  d-flex justify-content-between sticky-top p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-3 me-0 px-3" href="#">AI-Land ADMIN </a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        @*<a class="navbar-brand col-md-3 col-lg-3 me-0 px-3" href="#">AI-Land ADMIN </a>*@
+        @*<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button>*@
         @if (Context.Session.GetString("Active_ProjectID") != null)
         {
 
@@ -141,22 +141,15 @@
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_RolesTB")">
                                     Roles
                                 </a>
-                            </li>
-
-                            @*<li class="nav-item">
-            <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_Labels_BG_ColoursTB")">
-                <span data-feather="key"></span>
-                Labels Background Colours and Shortkeys
-            </a>
-        </li>*@
+                            </li>                            
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_LabelsTB")">
-                                    Annotation Labels
+                                    Text Annotation Labels
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="@Url.Action("Index", "Admin_ClassificationLabelsTB")">
-                                    Classification Labels
+                                    Text Classification Labels
                                 </a>
                             </li>
                             <li class="nav-item">

@@ -9,13 +9,13 @@
 
 <form asp-action="Activate_Project" asp-controller="Admin_ProjectsTB" method="post">
     <div class=".container-fluid">
-        <div class="d-flex flex-row align-content-start">
+        <div class="d-flex flex-row align-content-start h5">
 
             <div>
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project to Activate", new { @class = "form-control" })
             </div>
             <div class="col-sm">
-                <input type="submit" value="Activate" class="form-group btn btn-primary"/>
+                <input type="submit" value="Activate" class="form-group btn btn-primary" />
             </div>
 
 
@@ -77,8 +77,17 @@
                 </td>
             </tr>
         }
+
     </tbody>
+
 </table>
+@if (TempData["Error"] != null)
+{
+<div class="alert alert-danger" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error Message! </strong> @TempData["Error"]
+</div> 
+}
 
 
 

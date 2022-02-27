@@ -35,9 +35,9 @@ namespace TextMark.Controllers
             // return View();
         }
 
-        private async Task<bool> IsProjectDuplicated(string ProjectText)
+        private async Task<bool> IsProjectDuplicated(string ProjectText, int? ProjectID)
         {
-            var Project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_Name == ProjectText);
+            var Project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_Name == ProjectText && m.Project_ID !=ProjectID);
             if (Project == null)
             {
                 return false;
@@ -86,14 +86,14 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Project_ID,Project_Name")] Projects_TB Projects_TB)
+        public async Task<IActionResult> Create([Bind("Project_ID,Project_Name,Project_Description")] Projects_TB Projects_TB)
         {
             if (!IsValidUser())
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            if (await IsProjectDuplicated(Projects_TB.Project_Name))
+            if (await IsProjectDuplicated(Projects_TB.Project_Name, Projects_TB.Project_ID))
             {
                 ViewBag.Error = "This Project Name is already registered.";
 
@@ -164,7 +164,7 @@ namespace TextMark.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Project_ID,Project_Name")] Projects_TB Projects_TB)
+        public async Task<IActionResult> Edit(int id, [Bind("Project_ID,Project_Name,Project_Description")] Projects_TB Projects_TB)
         {
             if (!IsValidUser())
             {
@@ -176,7 +176,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            if (await IsProjectDuplicated(Projects_TB.Project_Name))
+            if (await IsProjectDuplicated(Projects_TB.Project_Name, Projects_TB.Project_ID))
             {
                 ViewBag.Error = "This Project Name is already registered.";
 
@@ -280,11 +280,12 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_ID == id);
+            var project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_ID == id && m.Is_Active == false);
 
             if (project == null)
             {
-                return NotFound();
+                TempData["Error"] = "The ACTIVATED Project CANNOT be deleted !!";
+                return RedirectToAction("Index","Admin_ProjectsTB");
             }
 
             return View(project);

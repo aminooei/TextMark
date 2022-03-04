@@ -220,27 +220,37 @@ namespace TextMark.Controllers
 
         public async Task<IActionResult> Activate_Project(int Project_ID, [Bind("Project_ID,Is_Active")] Projects_TB Projects_TB)
         {
-            var All_projects = await _context.Projects_TB.ToListAsync();
-            foreach (var item in All_projects)
+            if (Project_ID != 0)
             {
-                item.Is_Active = false;
-                _context.Update(item);
+                var All_projects = await _context.Projects_TB.ToListAsync();
+
+                foreach (var item in All_projects)
+                {
+                    item.Is_Active = false;
+                    _context.Update(item);
+                    await _context.SaveChangesAsync();
+                }
+                // Reset_All_Projects_IsActiveStatus();
+
+                var project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_ID == Project_ID);
+
+                project.Is_Active = true;
+                _context.Update(project);
                 await _context.SaveChangesAsync();
+
+                HttpContext.Session.SetString("Active_ProjectID", Project_ID.ToString());
+                HttpContext.Session.SetString("Active_Project_Name", project.Project_Name.ToString());
+
+
+                return RedirectToAction("Index");
             }
-            // Reset_All_Projects_IsActiveStatus();
+            else
+            {
+                TempData["Error_Project_Select"] = "Please select a project.";
+                return RedirectToAction("Index");
+            }
+          
 
-            var project = await _context.Projects_TB.FirstOrDefaultAsync(m => m.Project_ID == Project_ID);
-
-            project.Is_Active = true;           
-            _context.Update(project);
-            await _context.SaveChangesAsync();
-
-            HttpContext.Session.SetString("Active_ProjectID", Project_ID.ToString());
-            HttpContext.Session.SetString("Active_Project_Name", project.Project_Name.ToString());
-
-
-            return RedirectToAction("Index");
-           
         }
 
         public void Select_Active_Project()

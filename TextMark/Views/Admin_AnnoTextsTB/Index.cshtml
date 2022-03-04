@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TextMark.Models.Annotations_TB>
+﻿@*@model IEnumerable<TextMark.Models.Annotations_TB>*@
+@model List_Annotation_Records
 
 @{
     ViewData["Title"] = "Annotations Texts Admin Page";
@@ -46,92 +47,113 @@
 </form>
 <table class="table">
     <thead>
-        <tr>
-            @*<th>
-            @Html.DisplayNameFor(model => model.Annotation_ID)
-        </th>*@
+        <tr>            
             <th>
-                @Html.DisplayNameFor(model => model.Annotation_ID_InFile)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Annotation_Title)
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Annotation_ID_InFile)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Annotation_Text)
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Annotation_Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Annotation_Date)
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Annotation_Text)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Annotation_Source)
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Annotation_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Annotation_Source)
             </th>
             <th style="border-left: 1px solid #cdd0d4;">
-                @Html.DisplayNameFor(model => model.Source_File_Name)
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Source_File_Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+                @Html.DisplayNameFor(model => model.List_Annotation_Record[0].Projects_TB.Project_Name)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.List_Annotation_Record)
         {
-        <tr>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.Annotation_ID)
-        </td>*@
-            @*<td style="border-left: 1px solid #cdd0d4;">*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
-            </td>
-
-            @try
-            {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Annotation_ID)
+                    </td>*@
+                @*<td style="border-left: 1px solid #cdd0d4;">*@
                 <td>
-                    @item.Annotation_Title.ToString().Substring(0, 15)...
+                    @Html.DisplayFor(modelItem => item.Annotation_ID_InFile)
                 </td>
-            }
-            catch
-            {
-                @item.Annotation_Title
-            }
 
-            @try
-            {
+                @try
+                {
+                    <td>
+                        @item.Annotation_Title.ToString().Substring(0, 15)...
+                    </td>
+                }
+                catch
+                {
+                    @item.Annotation_Title
+                }
+
+                @try
+                {
+                    <td>
+                        @item.Annotation_Text.ToString().Substring(0, 25)...
+                    </td>
+                }
+                catch
+                {
+                    @item.Annotation_Text
+                }
+
+                @*<td>
+                        @item.Annotation_Text.ToString().Substring(0, 25) ...
+                    </td>*@
                 <td>
-                    @item.Annotation_Text.ToString().Substring(0, 25)...
+                    @Html.DisplayFor(modelItem => item.Annotation_Date)
                 </td>
-            }
-            catch
-            {
-                @item.Annotation_Text
-            }
-
-            @*<td>
-                @item.Annotation_Text.ToString().Substring(0, 25) ...
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Annotation_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Annotation_Source)
-            </td>
-            <td style="border-left: 1px solid #cdd0d4;">
-                @Html.DisplayFor(modelItem => item.Source_File_Name)
-            </td>
-            @*<td style="border-right: 1px solid #cdd0d4;">*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Annotation_ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Annotation_ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Annotation_ID">Delete</a>
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Annotation_Source)
+                </td>
+                <td style="border-left: 1px solid #cdd0d4;">
+                    @Html.DisplayFor(modelItem => item.Source_File_Name)
+                </td>
+                @*<td style="border-right: 1px solid #cdd0d4;">*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Annotation_ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Annotation_ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Annotation_ID">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
-@*</div>
-    </main>*@
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @if (Model.PageNum == 1)
+        {
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        }
+        else
+        {
+            int PrevPageNum = Model.PageNum - 1;
+            <li class="page-item"><a class="page-link" asp-action="index" asp-controller="Admin_AnnoTextsTB" asp-route-PageNum="@PrevPageNum">Previous</a></li>
+        }
+        <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
+      
+        @if (Model.PageNum < Model.TotalNumPages)
+        {
+            int NextPageNum = Model.PageNum + 1;
+            <li class="page-item"><a class="page-link" asp-action="index" asp-controller="Admin_AnnoTextsTB" asp-route-PageNum="@NextPageNum">Next</a></li>
+
+
+        }
+        else
+        {
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        }
+    </ul>
+</nav>

@@ -68,7 +68,7 @@ namespace TextMark.Controllers
                 DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
-            else if(User_ID == -2)
+            else if(User_ID == 0)
             {
                 DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
                 DT.Annotated_Tags = Select_All_Annotated_Tags_ForAllUsers(Active_ProjectID);
@@ -396,7 +396,7 @@ namespace TextMark.Controllers
             {
                 _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.User_ID == User_ID && x.Project_ID == Active_ProjectID));
             }
-            else if (User_ID == 0)
+            else if (User_ID == -2)
             {
                 _context.Assigned_Annotations_ToUsers_TB.RemoveRange(_context.Assigned_Annotations_ToUsers_TB.Where(x => x.Project_ID == Active_ProjectID));
             }
@@ -411,11 +411,23 @@ namespace TextMark.Controllers
 
         public List<Users_TB> Select_All_Users()
         {
-            var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
-            users.Add(new Users_TB { User_ID = -2 , Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
-            ViewBag.Users = users;
-            return ViewBag.Users;
+            try
+            {
+                var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+                var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
+                users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
+                ViewBag.Users = users;
+                return ViewBag.Users;
+            }
+            catch
+            {
+                var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+                var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
+                //users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
+                ViewBag.Users = users;
+                return ViewBag.Users;
+            }
+            
         }
         public List<Annotations_TB> Select_All_Annotations()
         {

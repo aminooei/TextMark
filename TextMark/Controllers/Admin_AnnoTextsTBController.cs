@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using ServiceStack;
 using System.IO;
 using ExcelDataReader;
+using PagedList;
 
 namespace TextMark.Controllers
 {
@@ -24,16 +25,39 @@ namespace TextMark.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public ViewResult Index(int PageNum)
         {
             Select_All_File_Names();
-            if (!IsValidUser())
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
+            if(PageNum ==0)
             {
-                return RedirectToAction("Index", "Login");
+                PageNum = 1;
             }
+
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToListAsync());
-          
+
+            List_Annotation_Records LAR = new List_Annotation_Records();
+            LAR.PageNum = PageNum;
+            LAR.TotalNumPages = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToList().Count() / 10;
+
+            if ((_context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToList().Count() % 10) > 1)
+            {
+                LAR.TotalNumPages += 1;
+            }
+            
+            LAR.List_Annotation_Record = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToPagedList(PageNum, 10); 
+           
+
+            return View(LAR);
+
+            //  return View(_context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToPagedList(PageNum,10));
+            // return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Annotation_ID = x.Annotation_ID, Annotation_ID_InFile = x.Annotation_ID_InFile, Annotation_Title = x.Annotation_Title, Annotation_Text = x.Annotation_Text, Annotation_Date = x.Annotation_Date, Annotation_Source = x.Annotation_Source, Source_File_Name = x.Source_File_Name, RowNumber = EF.Functions.RowNumber(x.Annotation_ID) }).Where(i => (i.RowNumber >= 1 && i.RowNumber <10)).ToListAsync());
+            //  return View(students.ToPagedList(pageNumber, pageSize));
+
+            //_context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToPagedList(PageNum, 10);
         }
 
         [HttpPost]

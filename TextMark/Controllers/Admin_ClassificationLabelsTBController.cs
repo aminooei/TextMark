@@ -233,7 +233,7 @@ namespace TextMark.Controllers
                 {
                     try
                     {
-                        var entry = _context.Labels_TB.First(e => e.Label_ID == id);
+                        var entry = _context.ClassificationLabels_TB.First(e => e.ClassificationLabel_ID == id);
                         ClassificationLabels_tb.ClassificationLabel_ShortCut_Key = ClassificationLabels_tb.ClassificationLabel_ShortCut_Key.ToUpper();
                         _context.Entry(entry).CurrentValues.SetValues(ClassificationLabels_tb);
                         await _context.SaveChangesAsync();

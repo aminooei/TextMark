@@ -8,13 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="wwwroot\lib\Annotator\**" />
-	  <Content Remove="wwwroot\lib\Annotator\**" />
-	  <EmbeddedResource Remove="wwwroot\lib\Annotator\**" />
-	  <None Remove="wwwroot\lib\Annotator\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Catalyst" Version="0.0.16396" />
 		<PackageReference Include="Ductus.FluentDocker" Version="2.8.2" />
 		<PackageReference Include="EntityFramework" Version="6.4.4" />
@@ -32,6 +25,7 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+		<PackageReference Include="PagedList.Mvc" Version="4.5.0" />
 		<PackageReference Include="ServiceStack" Version="5.12.0" />
 	</ItemGroup>
 

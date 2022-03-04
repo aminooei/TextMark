@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Html;
 using System.ComponentModel;
+using PagedList;
 
 namespace TextMark.Models
 {
@@ -373,12 +374,12 @@ namespace TextMark.Models
         public List<AnnotatedTexts_Tags> Annotated_Tags { get; set; }
         public List<Labels_TB> allLabels { get; set; }
 
-        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
-     
-       
-      
-        
-
-        
+        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }   
+    }
+     public class List_Annotation_Records
+    {
+        public IPagedList<Annotations_TB> List_Annotation_Record { get; set; }
+        public int PageNum { get; set; }
+        public int TotalNumPages { get; set; }
     }
 }

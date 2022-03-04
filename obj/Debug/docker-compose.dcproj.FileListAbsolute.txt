@@ -1,0 +1,2 @@
+C:\Users\Amin\source\repos\TextMark\bin\Debug\TextMark.dll
+C:\Users\Amin\source\repos\TextMark\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache

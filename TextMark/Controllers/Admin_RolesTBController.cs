@@ -73,7 +73,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
             
-            Select_All_Projects();
+          //  Select_All_Projects();
             return View();
         }
 
@@ -128,7 +128,7 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            var Roles_tb = await _context.Roles_TB
+            var Roles_tb = await _context.Roles_TB.Include("Projects_TB")
                 .FirstOrDefaultAsync(m => m.Role_ID == id);
             if (Roles_tb == null)
             {

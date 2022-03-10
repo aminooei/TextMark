@@ -532,13 +532,6 @@ D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\s
 D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 D:\backups\TextMark_18092021_User_Homepage_OK\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\TextMark.exe
@@ -736,7 +729,13 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\un
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.CoreCompileInputs.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.RazorAssemblyInfo.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\staticwebassets\TextMark.StaticWebAssets.Manifest.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\staticwebassets\TextMark.StaticWebAssets.xml
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\scopedcss\bundle\TextMark.styles.css
@@ -818,3 +817,4 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache

@@ -30,9 +30,9 @@
     <div class="form-group m-2">
         <input type="submit" onclick="spinner()" value="Upload" class="btn btn-primary" />
     </div>
-    <div class="spinner-border text-primary" id="loader" role="status">
+    @*<div class="spinner-border text-primary" id="loader" role="status">
         <span class="sr-only">Loading...</span>
-    </div>
+    </div>*@
 </form>
 @*</div>
     </div>*@
@@ -41,10 +41,4 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    function spinner() {
-    document.getElementsByClassName("loader").style.display = "block";
-    }
-}

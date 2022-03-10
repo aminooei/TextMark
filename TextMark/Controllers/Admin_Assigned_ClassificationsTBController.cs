@@ -9,6 +9,7 @@ using TextMark.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using PagedList;
 
 namespace TextMark.Controllers
 {
@@ -22,14 +23,19 @@ namespace TextMark.Controllers
             _context = context;           
         }
 
-        public ActionResult Index()
+        public ViewResult Index(int PageNum)
         {
-            Details_Assigned_TextClassifications_ToUsers DT = new Details_Assigned_TextClassifications_ToUsers();
-          
-            if (!IsValidUser())
+            if (PageNum == 0)
             {
-                return RedirectToAction("Index", "Login");
+                PageNum = 1;
             }
+
+            Details_Assigned_TextClassifications_ToUsers DT = new Details_Assigned_TextClassifications_ToUsers();
+            DT.PageNum = PageNum;
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
 
             int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
             int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
@@ -37,16 +43,26 @@ namespace TextMark.Controllers
 
             if (Selected_User_ID == 0)
             {
+                DT.TotalNumPages = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
                 //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
             
             else
             {
+                DT.TotalNumPages = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
                 //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
@@ -54,31 +70,48 @@ namespace TextMark.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(int User_ID)
+        public ViewResult Index(int User_ID, int PageNum)
         {
+            if (PageNum == 0)
+            {
+                PageNum = 1;
+            }
+
             var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
 
             Details_Assigned_TextClassifications_ToUsers DT = new Details_Assigned_TextClassifications_ToUsers();
-
+            DT.PageNum = PageNum;
 
             HttpContext.Session.SetString("Selected_User_ID", User_ID.ToString());
 
-            if (!IsValidUser())
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
             Select_All_Users();
             Select_All_Projects();
             if (User_ID > 0 && Active_ProjectID > 0)
             {
+                DT.TotalNumPages = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
                 //return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
-            else if (User_ID == -2)
+            else if (User_ID == 0)
             {
-                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.TotalNumPages = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+                DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.ClassifiedTexts_Tags = Select_All_Classified_Tags_ForAllUsers(Active_ProjectID);
                 return View(DT);
             }
@@ -91,7 +124,7 @@ namespace TextMark.Controllers
             //    return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             //}
             //  return View( _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-            DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+            DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
             DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(0, 0);
             return View(DT);
         }
@@ -405,8 +438,9 @@ namespace TextMark.Controllers
         public List<Users_TB> Select_All_Users()
         {
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
-            users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
+            var users = _context.Users_TB.Where(m => m.Username.ToUpper() == "ALL USERS" || (m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID)).ToList();
+           
+            //users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", Role_ID = users[0].Role_ID });
             ViewBag.Users = users;
             return ViewBag.Users;
         }

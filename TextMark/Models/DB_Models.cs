@@ -67,12 +67,12 @@ namespace TextMark.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Confirm Password is required")]
-        [StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
-        [Compare("Password")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm Password")]
-        public string ConfirmPassword { get; set; }
+        //[Required(ErrorMessage = "Confirm Password is required")]
+        //[StringLength(100, ErrorMessage = "Must be between 5 and 100 characters", MinimumLength = 5)]
+        //[Compare("Password")]
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirm Password")]
+        //public string ConfirmPassword { get; set; }
 
         [Display(Name = "Role")]
         [Required(ErrorMessage = "Role is required")]
@@ -365,8 +365,12 @@ namespace TextMark.Models
         public Assigned_TextClassifications_ToUsers_TB Assigned_TextClassifications_ToUsers_TB { get; set; }
         public List<ClassifiedTexts_Tags> ClassifiedTexts_Tags { get; set; }
         public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
-        public List<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
-    }
+        public IPagedList<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
+        public int PageNum { get; set; }
+
+        public int TotalNumPages { get; set; }
+    
+}
 
     public class Details_Assigned_TextAnnotations_ToUsers
     {
@@ -374,7 +378,10 @@ namespace TextMark.Models
         public List<AnnotatedTexts_Tags> Annotated_Tags { get; set; }
         public List<Labels_TB> allLabels { get; set; }
 
-        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }   
+        public IPagedList<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }   
+        public int PageNum { get; set; }
+
+        public int TotalNumPages { get; set; }
     }
      public class List_Annotation_Records
     {

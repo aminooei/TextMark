@@ -26,13 +26,7 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Roles_TB.Projects_TB.Project_Name)
-                    </th>
-                    @*<th>
-                        @Html.DisplayNameFor(model => model.Users_Access_Level.Text_Annotation_Allowed)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Users_Access_Level.Text_Classification_Allowed)
-                    </th>*@
+                    </th>                    
                     <th></th>
                 </tr>
             </thead>
@@ -51,13 +45,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Roles_TB.Projects_TB.Project_Name)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Users_Access_Level.Text_Annotation_Allowed)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Users_Access_Level.Text_Classification_Allowed)
-                    </td>*@
+                    </td>                    
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.User_ID">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.User_ID">Details</a> |

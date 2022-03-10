@@ -133,27 +133,31 @@
 </table>
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        @if (Model.PageNum == 1)
+        @if (Model.TotalNumPages > 0)
         {
-            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-        }
-        else
-        {
-            int PrevPageNum = Model.PageNum - 1;
-            <li class="page-item"><a class="page-link" asp-action="index" asp-controller="Admin_AnnoTextsTB" asp-route-PageNum="@PrevPageNum">Previous</a></li>
-        }
-        <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
-      
-        @if (Model.PageNum < Model.TotalNumPages)
-        {
-            int NextPageNum = Model.PageNum + 1;
-            <li class="page-item"><a class="page-link" asp-action="index" asp-controller="Admin_AnnoTextsTB" asp-route-PageNum="@NextPageNum">Next</a></li>
+            @if (Model.PageNum == 1)
+            {
+                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            }
+            else
+            {
+                int PrevPageNum = Model.PageNum - 1;
+                <li class="page-item"><a class="page-link" asp-action="index" asp-controller="Admin_AnnoTextsTB" asp-route-PageNum="@PrevPageNum">Previous</a></li>
+            }
+
+            <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
+
+            @if (Model.PageNum < Model.TotalNumPages)
+            {
+                int NextPageNum = Model.PageNum + 1;
+                <li class="page-item"><a class="page-link" asp-action="index" asp-controller="Admin_AnnoTextsTB" asp-route-PageNum="@NextPageNum">Next</a></li>
 
 
-        }
-        else
-        {
-            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+            }
         }
     </ul>
 </nav>

@@ -29,7 +29,7 @@ namespace TextMark.Controllers
                 return RedirectToAction("Index", "Login");
             }
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-            return View(await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB").Where(m => m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToListAsync());
+            return View(await _context.Users_TB.Include("Roles_TB").Include("Roles_TB.Projects_TB").Where(m => m.Roles_TB.Project_ID.ToString() == Active_ProjectID && m.Roles_TB.Role_Text.ToUpper() != "ADMIN" && m.Username.ToUpper() != "ALL USERS").ToListAsync());
            // return View(await _context.Users_TB.Include("Roles_TB").Select(x => new { Username = x.Username, Password = x.Password, Role = x.Roles_TB.Role_Text + "(" + x.Roles_TB.Projects_TB.Project_Name + ")" }).ToListAsync());
             
             
@@ -93,11 +93,13 @@ namespace TextMark.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
-            if (await IsUserDuplicated(users_tb.Username, users_tb.Role_ID))
+            if (users_tb.Username.ToUpper() == "ADMIN")
+            {
+                ViewBag.Error = "This Username is RESERVED and cannot be used";
+            }
+            else if (await IsUserDuplicated(users_tb.Username, users_tb.Role_ID))
             {
                 ViewBag.Error = "This User is already registered for this role";
-
             }
             else
             {
@@ -115,7 +117,7 @@ namespace TextMark.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            //Select_All_Roles();
+            Select_All_Roles();
             return View(users_tb);
         }
         public async Task<IActionResult> Assign_TextClassifications_To_User(int Project_ID, int User_ID, string Source_File_Name)
@@ -301,14 +303,11 @@ namespace TextMark.Controllers
                 return NotFound();
             }
 
-            //if (await IsUserDuplicated(Users_tb.Username, Users_tb.Role_ID))
-            //{
-            //    ViewBag.Error = "This Username is already registered for this role";
-
-            //}
-            //else
-            //{
-                if (ModelState.IsValid)
+            if (Users_tb.Username.ToUpper() == "ADMIN")
+            {
+                ViewBag.Error = "This Username is RESERVED and cannot be used";
+            }
+            else if (ModelState.IsValid)
                 {
                     try
                     {
@@ -382,7 +381,7 @@ namespace TextMark.Controllers
         {
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
             // ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text + "("+x.Projects_TB.Project_Name+")"  }).ToList();
-            ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text }).ToList();
+            ViewBag.Roles = _context.Roles_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID && m.Role_Text.ToUpper() != "ADMIN").Select(x => new { Role_ID = x.Role_ID, Role_Project_Name = x.Role_Text }).ToList();
 
             // return ViewBag.Roles;
         }

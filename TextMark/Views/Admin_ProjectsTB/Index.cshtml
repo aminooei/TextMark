@@ -11,11 +11,11 @@
     <div class=".container-fluid">
         <div class="d-flex flex-row justify-content-start ">
 
-            <div class="mr-3 mb-3">
+            <div class="m-3">
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project to Activate", new { @class = "form-control" })
             </div>
-            <div class="col-sm">
-                <input type="submit" value="Activate" class="form-group btn btn-primary btn-lg" />
+            <div class="m-3 col-sm">
+                <input type="submit" value="Activate" class="form-group btn btn-primary" />
             </div>
         </div>
 
@@ -33,7 +33,7 @@
 
 @*<h1>List of Projects</h1>*@
 
-<p>
+<p class="m-3 col-sm">
     <a asp-action="Create" class="btn btn-success">Create New Project</a>
 </p>
 @*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

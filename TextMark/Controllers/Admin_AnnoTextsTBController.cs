@@ -43,7 +43,7 @@ namespace TextMark.Controllers
             LAR.PageNum = PageNum;
             LAR.TotalNumPages = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToList().Count() / 10;
 
-            if ((_context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID).ToList().Count() % 10) > 1)
+            if ((LAR.TotalNumPages % 10) > 1)
             {
                 LAR.TotalNumPages += 1;
             }
@@ -61,30 +61,63 @@ namespace TextMark.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string Source_File_Name)
+        public ViewResult Index(string Source_File_Name, int PageNum)
         {
             Select_All_File_Names();
-            var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            
             //if (!IsValidUser())
             //{
             //    return RedirectToAction("Index", "Login");
             //}
-           
+
             // Select_All_Projects();
+            if (PageNum == 0)
+            {
+                PageNum = 1;
+            }
+
+            // var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
+            var Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            List_Annotation_Records LAR = new List_Annotation_Records();
+            LAR.PageNum = PageNum;
+           
+
             if (Source_File_Name != "" && Active_ProjectID > 0)
             {
-                return View(await _context.Annotations_TB.Where(m => m.Project_ID == Active_ProjectID && m.Source_File_Name == Source_File_Name).ToListAsync());
+              //  return View(await _context.Annotations_TB.Where(m => m.Project_ID == Active_ProjectID && m.Source_File_Name == Source_File_Name).ToListAsync());
+
+                
+                LAR.TotalNumPages = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID == Active_ProjectID && m.Source_File_Name == Source_File_Name).ToList().Count() / 10;
+
+                if ((LAR.TotalNumPages % 10) > 1)
+                {
+                    LAR.TotalNumPages += 1;
+                }
+
+                LAR.List_Annotation_Record = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID == Active_ProjectID && m.Source_File_Name == Source_File_Name).ToPagedList(PageNum, 10);
+                return View(LAR);
             }
             else if (Source_File_Name == "")
             {
-                return View(await _context.Annotations_TB.Where(m => m.Project_ID == Active_ProjectID).ToListAsync());
-            }
-            else if (Active_ProjectID == 0)
-            {
-                return View(await _context.Annotations_TB.Where(m => m.Source_File_Name == Source_File_Name).ToListAsync());
-            }
+             //   return View(await _context.Annotations_TB.Where(m => m.Project_ID == Active_ProjectID).ToListAsync());
 
-            return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID.ToString()).ToListAsync());
+                LAR.TotalNumPages = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID == Active_ProjectID).ToList().Count() / 10;
+
+                if ((_context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID == Active_ProjectID).ToList().Count() % 10) > 1)
+                {
+                    LAR.TotalNumPages += 1;
+                }
+
+                LAR.List_Annotation_Record = _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID == Active_ProjectID).ToPagedList(PageNum, 10);
+                return View(LAR);
+            }
+            //else if (Active_ProjectID == 0)
+            //{
+            //    return View(await _context.Annotations_TB.Where(m => m.Source_File_Name == Source_File_Name).ToListAsync());
+            //}
+
+            //  return View(await _context.Annotations_TB.Include("Projects_TB").Where(m => m.Project_ID.ToString() == Active_ProjectID.ToString()).ToListAsync());
+            return View(LAR);
         }
 
         public async Task<IActionResult> DeleteFilter(string Source_File_Name)
@@ -116,9 +149,9 @@ namespace TextMark.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> IsAnnoDuplicated(string Anno_Text, int? ProjectID)
+        private async Task<bool> IsAnnoDuplicated(string Anno_Text, int? ProjectID, int Anno_ID)
         {
-            var Annotation = await _context.Annotations_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Annotation_Text == Anno_Text && m.Project_ID == ProjectID);
+            var Annotation = await _context.Annotations_TB.Include("Projects_TB").FirstOrDefaultAsync(m => m.Annotation_Text == Anno_Text && m.Project_ID == ProjectID &&  m.Annotation_ID != Anno_ID);
             if (Annotation == null)
             {
                 return false;
@@ -284,7 +317,7 @@ namespace TextMark.Controllers
             {
                 return NotFound();
             }
-            if (await IsAnnoDuplicated(Anno_tb.Annotation_Text, Anno_tb.Project_ID))
+            if (await IsAnnoDuplicated(Anno_tb.Annotation_Text, Anno_tb.Project_ID, Anno_tb.Annotation_ID))
             {
                 ViewBag.Error = "This Annotation Text is already registered for this Project";
 

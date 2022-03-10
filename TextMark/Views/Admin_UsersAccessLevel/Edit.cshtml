@@ -14,7 +14,7 @@
     <div class="col-md-4">*@
 @*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container" id="Users_Container">*@
-<form asp-action="Edit" autocomplete="off">
+<form asp-action="Edit" autocomplete="off" class="col-6">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="ID" />
     <div class="form-group">
@@ -25,12 +25,12 @@
     </div>
     <div class="d-flex flex-row align-self-center">
         <label asp-for="Text_Annotation_Allowed" class="col-10 p-2 control-label"></label>
-        <input asp-for="Text_Annotation_Allowed" class="form-control" style="box-shadow: none;" type="checkbox" />
+        <input asp-for="Text_Annotation_Allowed" class="form-check-input p-2" type="checkbox">
         <span asp-validation-for="Text_Annotation_Allowed" class="p-2 text-danger"></span>
     </div>
     <div class="d-flex flex-row align-self-center">
         <label asp-for="Text_Classification_Allowed" class="col-10 p-2 control-label"></label>
-        <input asp-for="Text_Classification_Allowed" style="box-shadow: none;" class="form-control" type="checkbox" />
+        <input asp-for="Text_Classification_Allowed" class="form-check-input p-2" type="checkbox">
         <span asp-validation-for="Text_Classification_Allowed" class="p-2 text-danger"></span>
     </div>
     <div class="form-group">

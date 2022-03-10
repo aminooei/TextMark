@@ -8,6 +8,7 @@ using TextMark.Data;
 using TextMark.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace TextMark.Controllers
 {
@@ -22,60 +23,103 @@ namespace TextMark.Controllers
             _context = context;           
         }
 
-        public  ActionResult Index()
+        public ViewResult Index(int PageNum)
         {
-            Details_Assigned_TextAnnotations_ToUsers DT = new Details_Assigned_TextAnnotations_ToUsers();
-            if (!IsValidUser())
+            if (PageNum == 0)
             {
-                return RedirectToAction("Index", "Login");
+                PageNum = 1;
             }
+
+            Details_Assigned_TextAnnotations_ToUsers DT = new Details_Assigned_TextAnnotations_ToUsers();
+            ////if (!IsValidUser())
+            ////{
+            ////    return RedirectToAction("Index", "Login");
+            ////}
             Select_All_Users();
             int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
             int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
+            DT.PageNum = PageNum;
+
             if (Selected_User_ID == 0)
-            {
-                DT.allAnnotations =  _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+            {                
+                DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+                DT.allAnnotations =  _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.Annotated_Tags =  Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
             else
-            {
-                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+            {                
+                DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
         }
 
         [HttpPost]
-        public  IActionResult Index(int User_ID)
+        public ViewResult Index(int User_ID, int PageNum)
         {
+            if (PageNum == 0)
+            {
+                PageNum = 1;
+            }
+           
+
             int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
            
 
             Details_Assigned_TextAnnotations_ToUsers DT = new Details_Assigned_TextAnnotations_ToUsers();
-
+            DT.PageNum = PageNum;
             HttpContext.Session.SetString("Selected_User_ID", User_ID.ToString());
-            if (!IsValidUser())
-            {
-                return RedirectToAction("Index", "Login");
-            }
+            //if (!IsValidUser())
+            //{
+            //    return RedirectToAction("Index", "Login");
+            //}
             Select_All_Users();
             Select_All_Projects();
             if (User_ID > 0 && Active_ProjectID > 0)
             {
-               // return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
-                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+                // return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
+                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
             else if(User_ID == 0)
             {
-                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+                DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+
+                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
                 DT.Annotated_Tags = Select_All_Annotated_Tags_ForAllUsers(Active_ProjectID);
                 return View(DT);
             }
-           
-            DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == 0 && m.Project_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList();
+
+            DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == 0 && m.Project_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+            if ((DT.TotalNumPages % 10) > 1)
+            {
+                DT.TotalNumPages += 1;
+            }
+            DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == 0 && m.Project_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
             DT.Annotated_Tags = Select_All_Annotated_Tags(0, 0);
             return View(DT);
         }
@@ -414,15 +458,17 @@ namespace TextMark.Controllers
             try
             {
                 var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-                var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
-                users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
+                var users = _context.Users_TB.Include("Roles_TB").Where(m => m.Username.ToUpper() == "ALL USERS" || (m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID)).ToList();
+                //users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
+
+               // users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", Role_ID = users[0].Role_ID });
                 ViewBag.Users = users;
                 return ViewBag.Users;
             }
             catch
             {
                 var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
-                var users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
+                var users = _context.Users_TB.Include("Roles_TB").Where(m => m.Roles_TB.Role_Text.ToLower() != "admin" && m.Roles_TB.Project_ID.ToString() == Active_ProjectID).ToList();
                 //users.Add(new Users_TB { User_ID = -2, Username = "All Users", Password = "12345", ConfirmPassword = "12345", Role_ID = users[0].Role_ID });
                 ViewBag.Users = users;
                 return ViewBag.Users;

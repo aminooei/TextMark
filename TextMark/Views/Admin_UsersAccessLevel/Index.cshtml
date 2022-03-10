@@ -12,8 +12,7 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Create New Access Level</a>
 </p>
-@*<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="container" id="Users_Container">*@
+
 <table class="table">
     <thead>
         <tr>
@@ -31,12 +30,10 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Projects_TB.Project_Name)
+            </th>           
+            <th>
+
             </th>
-            @*
-                <th>
-                    @Html.DisplayNameFor(model => model.Users_Access_Level.Text_Classification_Allowed)
-                </th>*@
-            <th></th>
         </tr>
     </thead>
     <tbody>

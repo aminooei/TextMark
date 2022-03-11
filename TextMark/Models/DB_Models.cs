@@ -366,6 +366,7 @@ namespace TextMark.Models
         public List<ClassifiedTexts_Tags> ClassifiedTexts_Tags { get; set; }
         public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
         public IPagedList<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
+        public int Selected_UserID { get; set; }
         public int PageNum { get; set; }
 
         public int TotalNumPages { get; set; }
@@ -377,6 +378,7 @@ namespace TextMark.Models
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
         public List<AnnotatedTexts_Tags> Annotated_Tags { get; set; }
         public List<Labels_TB> allLabels { get; set; }
+        public int Selected_UserID { get; set; }
 
         public IPagedList<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }   
         public int PageNum { get; set; }

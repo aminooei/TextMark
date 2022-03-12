@@ -343,21 +343,36 @@ namespace TextMark.Models
 
     public class CL_UsersAnnotations_Home_Page
     {
-        public List<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
+        public IPagedList<Assigned_Annotations_ToUsers_TB> allAnnotations { get; set; }
         public List<Labels_TB> allLabels { get; set; }
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
 
         public HtmlString ShortcutKeys_Press_Script { get; set; }
+
+        public int Selected_UserID { get; set; }
+        public int PageNum { get; set; }
+        public int NumRecordsInEachPage { get; set; }
+        public int SelectedProjectID { get; set; }
+        public int LoggedinUserID { get; set; }
+
+        public int TotalNumPages { get; set; }
     }
 
     public class CL_UsersClassifications_Home_Page
     {
-        public List<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
+        public IPagedList<Assigned_TextClassifications_ToUsers_TB> allClassifications { get; set; }
         public List<ClassificationLabels_TB> allClassificationLabels { get; set; }
         public Assigned_TextClassifications_ToUsers_TB Selected_Assigned_Classification { get; set; }
         public List<ClassifiedTexts_Tags> all_ClassifiedText_Tags { get; set; }
 
         public HtmlString ClassificationShortcutKeys_Press_Script { get; set; }
+        public int Selected_UserID { get; set; }
+        public int PageNum { get; set; }
+        public int NumRecordsInEachPage { get; set; }
+        public int SelectedProjectID { get; set; }
+        public int LoggedinUserID { get; set; }
+
+        public int TotalNumPages { get; set; }
     }
 
     public class Details_Assigned_TextClassifications_ToUsers

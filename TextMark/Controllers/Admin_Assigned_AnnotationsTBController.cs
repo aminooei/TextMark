@@ -65,7 +65,7 @@ namespace TextMark.Controllers
             }
             else
             {
-                DT.Selected_UserID = Selected_User_ID;
+                DT.Selected_UserID = Selected_User_ID;               
                 DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
                 if ((DT.TotalNumPages % 10) > 1)
                 {

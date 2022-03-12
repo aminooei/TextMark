@@ -35,7 +35,7 @@
 </div>
 <!--Page Header-->
 <!--Body-->
-<form asp-action="ViewProject" asp-controller="UserClassification" method="post" class="my-4 ">
+<form asp-action="ViewProject" asp-controller="UserClassification" asp-route-PageNum="1" method="post" class="my-4 ">
     <div class=".container-fluid">
         @*<div class="d-flex flex-row align-content-start">*@
         <div class="ui grid container">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="ui grid container">
-            <div class="col-4">
+            <div class="col-3">
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.UserProjects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })
             </div>
             <div class="col-1">
@@ -76,8 +76,8 @@
                         <thead>
                             <tr>
                                 @*<th>
-                                        @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
-                                    </th>*@
+                                    @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
+                                </th>*@
                                 <th></th>
                             </tr>
                         </thead>
@@ -105,7 +105,7 @@
 
 
                                         <td>
-                                            <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Select</a>
+                                            <a asp-action="ViewProject" asp-route-PageNum="@Model.PageNum" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Select</a>
                                         </td>
                                         <td>
 
@@ -152,7 +152,7 @@
 
 
                                         <td>
-                                            <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Selected</a>
+                                            <a asp-action="ViewProject" asp-route-PageNum="@Model.PageNum" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Cls_ID="@item.Assigned_TextClassification_ID" asp-route-UserID="@item.User_ID">Selected</a>
                                         </td>
                                         <td>
 
@@ -194,6 +194,48 @@
 
             </div>
         </div>
+        <br />
+        <form asp-action="ViewProject" asp-controller="UserClassification" method="post">
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (Model.TotalNumPages > 0)
+                    {
+
+
+
+                        @if (Model.PageNum == 1)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        }
+                        else
+                        {
+                            int PrevPageNum = Model.PageNum - 1;
+
+                            @*<input type="submit" value="Previous" class="btn btn-info" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                            <li class="page-item"><a class="page-link" type="submit" asp-route-Project_ID="@Model.SelectedProjectID" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID">Previous</a></li>
+                        }
+
+                        <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
+                        @*<input  value="Page @Model.PageNum of @Model.TotalNumPages" class="btn btn-light disabled"/>*@
+
+                        @if (Model.PageNum < Model.TotalNumPages)
+                        {
+                            int NextPageNum = Model.PageNum + 1;
+                            @*<input type="submit" value="Next" class="btn btn-success" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                            <li class="page-item"><a class="page-link" type="submit" asp-route-Project_ID="@Model.SelectedProjectID" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID">Next</a></li>
+
+
+                        }
+                        else
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </form>
+
     </div>
 
 
@@ -439,21 +481,21 @@
 
         function ViewRecord_GoNext_Functions() {
             //Exchange_Tags();
-            window.location.href = "/UserClassification/ViewRecord_Next";
+            window.location.href = "/UserClassification/ViewRecord_Next?PageNum=" + @Model.PageNum;
         }
 
         function ViewRecord_GoPrev_Functions() {
             Exchange_Tags();
-            window.location.href = "/UserClassification/ViewRecord_Prev";
+            window.location.href = "/UserClassification/ViewRecord_Prev?PageNum=" + @Model.PageNum;
         }
 
-        function createInput(text, backgroundcolour, Classification_ID) {           
+        function createInput(text, backgroundcolour, Classification_ID) {
             if ($("#" + text).length === 0) {
                 $('#pressed_tags_Place').append("<span id=\"" + text + "\" class=\"btn m-1\" style=\"background:" + backgroundcolour + ";\">" + text + " <a href=\"#\" class=\"btn btn-default btn-sm rounded-circle\" onclick='this.parentNode.parentNode.removeChild(this.parentNode); Delete_Tag(" + Classification_ID +"); return false;'> <span class=\"glyphicon glyphicon-remove\"></span> </a>  </span>");
                 Save_Tag(Classification_ID);
-            }        
+            }
            }
-       
+
         $(document).ready(function () {
             Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
             $("#Annotated_Text_tobesaved").html(Loaded_Text);
@@ -462,17 +504,17 @@
 
         });
 
-       
+
         function Save_Tag(ClassLabel_ID) {
-           
+
             Exchange_Tags(ClassLabel_ID);
-           
-            var data = $("#submit_form").serialize();               
-           
+
+            var data = $("#submit_form").serialize();
+
             $.ajax({
-                type: "POST",                
+                type: "POST",
                 url: "/UserClassification/Save_TextsTags",
-                data: data,               
+                data: data,
                 success: function (response) {
                     //setTimeout(function () {// wait for 5 secs(2)
                     //    location.reload(); // then reload the page.(3)
@@ -483,7 +525,7 @@
         }
 
         function Save_Comment() {
-          
+
             var data = $("#submit_form").serialize();
 
             $.ajax({
@@ -500,7 +542,7 @@
         }
 
         function Save_NotSure() {
-            
+
             var data = $("#submit_form").serialize();
 
             $.ajax({
@@ -516,9 +558,9 @@
         }
 
         function Delete_Tag(Classification_ID) {
-           
+
             Exchange_Tags(Classification_ID);
-           
+
             var data = $("#submit_form").serialize();
 
             $.ajax({
@@ -533,10 +575,10 @@
                 }
             });
 
-           
+
         }
 
-       
+
 
     </script>
 

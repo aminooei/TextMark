@@ -35,15 +35,16 @@
 </div>
 <!--Page Header-->
 <!--Body-->
-<form asp-action="ViewProject" asp-controller="UserAnnotation" method="post" class="my-4 ">
+<form asp-action="ViewProject" asp-controller="UserAnnotation" asp-route-PageNum="1" method="post" class="my-4 ">
     <div class=".container-fluid">
+       
         <div class="ui grid container">
             <div class="col-4">
                 <h1>Text Annotation</h1>
             </div>
         </div>
         <div class="ui grid container">
-            <div class="col-4">
+            <div class="col-3">
                 @Html.DropDownList("Project_ID", new SelectList(ViewBag.UserProjects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })
             </div>
             <div class="col-1">
@@ -60,7 +61,8 @@
         @*<div class="two column row">*@
         <!--Saved Annotations-->
         <div class="six wide">
-            <div class="fluid card">    @*ui*@
+            <div class="fluid card">
+                @*ui*@
                 <div class="content">
                     <!--Header-->
                     @*<h5 class="ui header">*@
@@ -73,8 +75,8 @@
                         <thead>
                             <tr>
                                 @*<th>
-                                        @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
-                                    </th>*@
+                                    @Html.DisplayNameFor(model => model.allAnnotations[0].Annotations_TB.Annotation_Title)
+                                </th>*@
                                 <th></th>
                             </tr>
                         </thead>
@@ -85,102 +87,105 @@
 
                                 if (item.Assigned_Anno_ID != Model.Selected_Assigned_Annotation.Assigned_Anno_ID)
                                 {
-                            <tr>
+                                    <tr>
 
-                                @try
-                                {
-                                    <td>
-                                        @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
-                                    </td>
-                                }
-                                catch
-                                {
+                                        @try
+                                        {
+                                            <td>
+                                                @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                            </td>
+                                        }
+                                        catch
+                                        {
 
-                                        @item.Annotations_TB.Annotation_Title
+                                            @item.Annotations_TB.Annotation_Title
 
-                                }
+                                        }
 
-                                    
-                              <td>
-                                  <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
-                              </td>
-                              <td>
-                                 
-                                      @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
-                                      {
-                                          <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
-                                      }
-                                      else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
-                                      {
-                                          <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
-                                      }
-                                      else if (item.Count_Annotations != 0 && item.Not_Sure == false)
-                                      {
-                                          <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
-                                      }
-                                      else if (item.Count_Annotations != 0 && item.Not_Sure == true)
-                                      {
-                                          <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                      }
-                                      else if (item.Count_Annotations == 0 && item.Not_Sure == true)
-                                      {
-                                          <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                      }
-                                                      
-                                  </td>
-                            </tr>
+
+                                        <td>
+                                            <a asp-action="ViewProject" asp-route-PageNum="@Model.PageNum" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Select</a>
+                                        </td>
+                                        <td>
+
+                                            @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                            }
+                                            else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                            }
+                                            else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
+                                            }
+                                            else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
+                                            else if (item.Count_Annotations == 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
+
+                                        </td>
+                                    </tr>
                                 }
                                 else
                                 {
-                            <tr class="text-light bg-dark">
+                                    <tr class="text-light bg-dark">
 
-                            @try
-                            {
-                                <td>
-                                    @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
-                                </td>
-                            }
-                            catch
-                            {
+                                        @try
+                                        {
+                                            <td>
+                                                @item.Annotations_TB.Annotation_Title.ToString().Substring(0, 35) ....
+                                            </td>
+                                        }
+                                        catch
+                                        {
 
-                                @item.Annotations_TB.Annotation_Title
+                                            @item.Annotations_TB.Annotation_Title
 
-                            }
+                                        }
 
 
-                            <td>
-                                <a asp-action="ViewProject" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Selected</a>
-                            </td>
-                            <td>
+                                        <td>
+                                            <a asp-action="ViewProject" asp-route-PageNum="@Model.PageNum" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Selected</a>
+                                        </td>
+                                        <td>
 
-                                @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
-                                {
-                                    <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
-                                }
-                                else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
-                                {
-                                    <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
-                                }
-                                else if (item.Count_Annotations != 0 && item.Not_Sure == false)
-                                {
-                                    <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
-                                }
-                                else if (item.Count_Annotations != 0 && item.Not_Sure == true)
-                                {
-                                    <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                }
-                                else if (item.Count_Annotations == 0 && item.Not_Sure == true)
-                                {
-                                    <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                }
+                                            @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
+                                            }
+                                            else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                            }
+                                            else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                            {
+                                                <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
+                                            }
+                                            else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
+                                            else if (item.Count_Annotations == 0 && item.Not_Sure == true)
+                                            {
+                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
+                                            }
 
-                            </td>
-                        </tr>
+                                        </td>
+                                    </tr>
                                 }
                             }
 
                         </tbody>
                     </table>
+
+
+
                     @*</div>*@
                     @*</div>*@
                     @*</h5>*@
@@ -190,7 +195,50 @@
 
 
             </div>
+
         </div>
+        <br/>
+        <form asp-action="ViewProject" asp-controller="UserAnnotation" method="post">
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (Model.TotalNumPages > 0)
+                    {
+
+
+
+                        @if (Model.PageNum == 1)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        }
+                        else
+                        {
+                            int PrevPageNum = Model.PageNum - 1;
+
+                            @*<input type="submit" value="Previous" class="btn btn-info" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                            <li class="page-item"><a class="page-link" type="submit" asp-route-Project_ID="@Model.SelectedProjectID" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID">Previous</a></li>
+                        }
+
+                        <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
+                        @*<input  value="Page @Model.PageNum of @Model.TotalNumPages" class="btn btn-light disabled"/>*@
+
+                        @if (Model.PageNum < Model.TotalNumPages)
+                        {
+                            int NextPageNum = Model.PageNum + 1;
+                            @*<input type="submit" value="Next" class="btn btn-success" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                            <li class="page-item"><a class="page-link" type="submit" asp-route-Project_ID="@Model.SelectedProjectID" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID">Next</a></li>
+
+
+                        }
+                        else
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </form>
+
     </div>
 
 
@@ -285,10 +333,10 @@
                                 <!--</div>-->
 
                                 <div class="d-flex justify-content-between">
-                                    <button type="button" class="btn btn-info" aria-label="Previous" onclick="ViewRecord_GoPrev_Functions()">
+                                    <button type="button" class="btn btn-info" aria-label="Previous" onclick="ViewRecord_GoPrevAnnotation_Functions()">
                                         <span aria-hidden="true">&laquo; Previous</span>
                                     </button>
-                                    <button type="button" class="btn btn-success" aria-label="Next" onclick="ViewRecord_GoNext_Functions()">
+                                    <button type="button" class="btn btn-success" aria-label="Next" onclick="ViewRecord_GoNextAnnotation_Functions()">
                                         <span aria-hidden="true">Next &raquo;</span>
                                     </button>
                                 </div>
@@ -446,14 +494,14 @@
         //}
 
 
-        function ViewRecord_GoNext_Functions() {
+        function ViewRecord_GoNextAnnotation_Functions() {
             //Exchange_Tags();
-            window.location.href = "/UserAnnotation/ViewRecord_Next";
+            window.location.href = "/UserAnnotation/ViewRecord_Next?PageNum=" + @Model.PageNum;
         }
 
-        function ViewRecord_GoPrev_Functions() {
+        function ViewRecord_GoPrevAnnotation_Functions() {
            // Exchange_Tags();
-            window.location.href = "/UserAnnotation/ViewRecord_Prev";
+            window.location.href = "/UserAnnotation/ViewRecord_Prev?PageNum=" + @Model.PageNum;
         }
 
         function Delete_Annotation_Tag(AnnotationID_InText) {
@@ -542,7 +590,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/UserAnnotation/Save",               
+                url: "/UserAnnotation/Save",
                 data: data,
                 success: function (response) {
                     //setTimeout(function () {// wait for 5 secs(2)
@@ -555,14 +603,14 @@
             console.log("Congratulations, Successfully saved");
         }
 
-        
+
 
         function Annotate(LabelText, LabelID) {
             if (window.getSelection) {
-              
+
                 var offset = document.getSelection().anchorOffset;
-                var text = document.getSelection().anchorNode.data;               
-                var textOffset = $("#Annotated_Text_tobesaved").text().indexOf(document.getSelection().anchorNode.data);      
+                var text = document.getSelection().anchorNode.data;
+                var textOffset = $("#Annotated_Text_tobesaved").text().indexOf(document.getSelection().anchorNode.data);
                 var start = textOffset + offset;
                 if (dblclicked) {
                     var end = textOffset + document.getSelection().focusOffset - 2;
@@ -573,7 +621,7 @@
 
                 Annotation_ID_Calculate();
                 var Annotation_ID_InText = $("#Txtbx_Annotation_ID_InText").val();
-                
+
                // alert("start = " + start + "     AND    end = "+ end);
 
                 var Annotated_Substring = document.getSelection().toString();
@@ -597,7 +645,7 @@
                 isdblclickdone = dblclicked;
                 dblclicked = false;
             }
-           
+
             LabelID = LabelID;
             //if (isdblclickdone == true) {
             //    alert("LabelText= #"+$.trim(LabelText.toString())+"#");
@@ -606,7 +654,7 @@
             //else {
             App.handlers.applyOnclickAnnotation(LabelText);
             //}
-           
+
         }
 
         document.getElementById("Annotated_Text_tobesaved").addEventListener('click', e => {
@@ -627,11 +675,11 @@
         //    save();
         //}
         $(document).ready(function () {
-           
+
             var LabelID_JS = 0;
             Loaded_Text = document.getElementById("Annotated_Text_tobesaved").innerText;
             $("#Annotated_Text_tobesaved").html(Loaded_Text);
-                       
+
         });
 
         // ondbclick

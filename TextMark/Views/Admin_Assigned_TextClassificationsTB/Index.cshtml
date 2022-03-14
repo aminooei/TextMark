@@ -11,13 +11,19 @@
 
 <form asp-action="Index" asp-controller="Admin_Assigned_TextClassificationsTB">
     <div>
-        <div class="form-group flex-row">
+        <div class="form-group flex-row m-2">
             <label>Select a Username: </label>
-            @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username"), "Select a User", new { @class = "form-control" })
-
+            @if (Model.Selected_UserID > 0)
+            {
+                @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username", Model.Selected_UserID), "Select a User", new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownList("User_ID", new SelectList(ViewBag.Users, "User_ID", "Username"), "Select a User", new { @class = "form-control" })
+            }
 
         </div>
-        <div class="flex-row">
+        <div class="flex-row m-2">
             <input type="submit" value="Show Text Classifications" class="btn btn-primary" />
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">DELETE</button>
         </div>
@@ -214,7 +220,47 @@
         </tbody>
     </table>
 }
+<form asp-action="Index" asp-controller="Admin_Assigned_TextClassificationsTB" method="post">
 
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.TotalNumPages > 0)
+            {
+                TempData["PageNum"] = Model.PageNum;
+                TempData["User_ID"] = Model.Selected_UserID;     
+                
+                @if (Model.PageNum == 1)
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                }
+                else
+                {
+                    int PrevPageNum = Model.PageNum - 1;
+                
+                    @*<input type="submit" value="Previous" class="btn btn-info" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                    <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID">Previous</a></li>
+                }
+
+                <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
+                @*<input  value="Page @Model.PageNum of @Model.TotalNumPages" class="btn btn-light disabled"/>*@
+
+                @if (Model.PageNum < Model.TotalNumPages)
+                {
+                    int NextPageNum = Model.PageNum + 1;
+              
+                    @*<input type="submit" value="Next" class="btn btn-success" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                    <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID">Next</a></li>
+
+
+                }
+                else
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                }
+            }
+        </ul>
+    </nav>
+</form>
 
 
 

@@ -190,6 +190,10 @@
     </div>*@
 <div>
     @*<a asp-action="Edit" asp-route-id="@Model.Selected_Assigned_Annotation.Assigned_Anno_ID">Edit</a> |*@
+    @*<form>
+        <input type="submit" value="Back to List" class="btn btn-success" asp-action="Index" asp-controller="Admin_Assigned_AnnotationsTB" asp-route-PageNum=@TempData["PageNum"] asp-route-User_ID=@TempData["User_ID"] />
+    </form>*@
+  
     <a asp-action="Index">Back to List</a>
     <br />
     <br />

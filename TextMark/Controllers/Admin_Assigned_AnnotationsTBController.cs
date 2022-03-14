@@ -28,18 +28,16 @@ namespace TextMark.Controllers
             if (PageNum == 0)
             {
                 PageNum = 1;
-            }
+            }        
 
             Details_Assigned_TextAnnotations_ToUsers DT = new Details_Assigned_TextAnnotations_ToUsers();
-            ////if (!IsValidUser())
-            ////{
-            ////    return RedirectToAction("Index", "Login");
-            ////}
+           
             Select_All_Users();
             int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
             int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
-            DT.PageNum = PageNum;
 
+            DT.PageNum = PageNum;
+            
             if (Selected_User_ID == 0)
             {                
                 DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
@@ -52,8 +50,22 @@ namespace TextMark.Controllers
                 DT.Annotated_Tags =  Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
+            else if (Selected_User_ID == 2) //All Users
+            {
+                DT.Selected_UserID = Selected_User_ID;
+                DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
+                DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
+                return View(DT);
+            }
             else
-            {                
+            {
+                DT.Selected_UserID = Selected_User_ID;               
                 DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
                 if ((DT.TotalNumPages % 10) > 1)
                 {
@@ -80,15 +92,34 @@ namespace TextMark.Controllers
 
             Details_Assigned_TextAnnotations_ToUsers DT = new Details_Assigned_TextAnnotations_ToUsers();
             DT.PageNum = PageNum;
-            HttpContext.Session.SetString("Selected_User_ID", User_ID.ToString());
+
+            if (User_ID > 0)
+            {
+                HttpContext.Session.SetString("Selected_User_ID", User_ID.ToString());
+            }
+            int Active_UserID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
             //if (!IsValidUser())
             //{
             //    return RedirectToAction("Index", "Login");
             //}
             Select_All_Users();
             Select_All_Projects();
-            if (User_ID > 0 && Active_ProjectID > 0)
+            if (Active_UserID == 2) //All Users
             {
+                DT.Selected_UserID = Active_UserID;
+                DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
+                if ((DT.TotalNumPages % 10) > 1)
+                {
+                    DT.TotalNumPages += 1;
+                }
+
+                DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToPagedList(PageNum, 10);
+                DT.Annotated_Tags = Select_All_Annotated_Tags(Active_UserID, Active_ProjectID);
+                return View(DT);
+            }
+            else if (Active_UserID > 0 && Active_ProjectID > 0)
+            {
+                DT.Selected_UserID = Active_UserID;
                 DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
                 if ((DT.TotalNumPages % 10) > 1)
                 {
@@ -100,7 +131,7 @@ namespace TextMark.Controllers
                 DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
-            else if(User_ID == 0)
+            else if(Active_UserID == 0)
             {
                 DT.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToList().Count() / 10;
                 if ((DT.TotalNumPages % 10) > 1)

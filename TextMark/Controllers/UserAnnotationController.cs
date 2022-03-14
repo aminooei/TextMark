@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Html;
+using PagedList;
 
 namespace TextMark.Controllers
 {
@@ -20,46 +21,52 @@ namespace TextMark.Controllers
         int LoggedIn_User_ID = 0;
         int? Selected_Project_ID = 0;
         int Selected_Assigned_Anno_ID = 0;
-        
+      //  CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
 
         public UserAnnotationController(TextMarkContext context)
         {
-            _context = context;            
+            _context = context;
+           
         }
         
        
-        public async Task<IActionResult> Index(int Selected_Assigned_Anno_ID, int UserID)
+        public IActionResult Index(int Selected_Assigned_Anno_ID, int UserID)
         {
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
 
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers();
-            HP.allLabels = await Select_Annotation_Labels();
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
+            HP.LoggedinUserID = UserID;
+            HP.PageNum = 0;
+            HP.NumRecordsInEachPage = 6;
+            HP.TotalNumPages = 0;
+
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage);
+            HP.allLabels = Select_Annotation_Labels();
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
             //await Select_All_Users();
             //await Select_All_Annotations();
-            await Select_All_Projects();
+            Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32( HttpContext.Session.GetString("UserID"));
             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
 
             return View(HP);
         }
 
-        public async Task<IActionResult> ViewRecord_Next()
+        public IActionResult ViewRecord_Next(int PageNum)
         {
             //await Select_All_Users();
             //await Select_All_Classifications();
-            await Select_All_Projects();
+            Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, Selected_Project_ID);
+            HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
            // HP.all_ClassifiedText_Tags = await Select_All_ClassifiedText_Tags(Selected_Assigned_Classification_ID);
 
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
@@ -68,10 +75,10 @@ namespace TextMark.Controllers
 
 
 
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID + 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID, PageNum = PageNum });
         }
 
-        public async Task<IActionResult> Delete_TextsAnnotations(int Assigned_TextAnnotation_ID, string Annotation_ID_InText)
+        public IActionResult Delete_TextsAnnotations(int Assigned_TextAnnotation_ID, string Annotation_ID_InText)
         {
 
             try
@@ -82,11 +89,11 @@ namespace TextMark.Controllers
 
 
                 // Edit Here Amin
-                var Selected_tag = await _context.AnnotatedTexts_Tags.Where(m => (m.Assigned_TextAnnotation_ID == Assigned_TextAnnotation_ID && m.Annotation_ID_InText == Annotation_ID_InText)).FirstOrDefaultAsync();
+                var Selected_tag = _context.AnnotatedTexts_Tags.Where(m => (m.Assigned_TextAnnotation_ID == Assigned_TextAnnotation_ID && m.Annotation_ID_InText == Annotation_ID_InText)).FirstOrDefault();
 
-                var tag = await _context.AnnotatedTexts_Tags.FindAsync(Selected_tag.ID);
+                var tag = _context.AnnotatedTexts_Tags.Find(Selected_tag.ID);
                 _context.AnnotatedTexts_Tags.Remove(tag);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
 
                 //var Count_Annotated_Tags = await _context.AnnotatedTexts_Tags.Where(m => m.Assigned_TextAnnotation_ID == Assigned_Anno.Selected_Assigned_Annotation.Assigned_Anno_ID).CountAsync();
                 //Assigned_Anno.Selected_Assigned_Annotation.Count_Annotations = Count_Annotated_Tags;
@@ -107,19 +114,19 @@ namespace TextMark.Controllers
 
 
         }
-        public async Task<IActionResult> ViewRecord_Prev()
+        public IActionResult ViewRecord_Prev(int PageNum)
         {
             //await Select_All_Users();
             //await Select_All_Classifications();
-            await Select_All_Projects();
+            Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, Selected_Project_ID);
+            HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
           //  HP.all_ClassifiedText_Tags = await Select_All_ClassifiedText_Tags(Selected_Assigned_Classification_ID);
 
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
@@ -128,46 +135,61 @@ namespace TextMark.Controllers
 
 
 
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID - 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID - 1), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID, PageNum = PageNum });
         }
 
-        public async Task<IActionResult> ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID)
-        {
-
+        public IActionResult ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID, int PageNum)
+        {           
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID, Project_ID);
+            HP.LoggedinUserID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
+            HP.SelectedProjectID = Project_ID;
+          
+            HP.PageNum = PageNum;
+            HP.NumRecordsInEachPage = 6;
+            HP.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID == HP.LoggedinUserID && m.Project_ID == HP.SelectedProjectID).ToList().Count() / HP.NumRecordsInEachPage;
+
+            if ((HP.TotalNumPages % HP.NumRecordsInEachPage) > 1)
+            {
+                HP.TotalNumPages += 1;
+            }
+
+
+
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, HP.SelectedProjectID);
+            
+            HP.allLabels = Select_Annotation_Labels(HP.SelectedProjectID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, HP.LoggedinUserID, HP.SelectedProjectID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
             HttpContext.Session.SetString("Selected_Assigned_Anno_ID", Selected_Assigned_Anno_ID.ToString());
-            HttpContext.Session.SetString("Selected_Project_ID", Project_ID.ToString());
+            HttpContext.Session.SetString("Selected_Project_ID", HP.SelectedProjectID.ToString());
 
-           
+
 
 
             //await Select_All_Users();
             //await Select_All_Annotations();
-            await Select_All_Projects();
+            // Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-             Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
-
+            
+            Select_All_Projects_of_LoggedInUser(LoggedIn_User_ID);
+           
             return  View("Index", HP);
         }
 
-        public async Task<IActionResult> ViewRecord_AfterSave()
+        public IActionResult ViewRecord_AfterSave()
         {
-            await Select_All_Users();
-            await Select_All_Annotations();
-            await Select_All_Projects();
+            Select_All_Users();
+            Select_All_Annotations();
+            Select_All_Projects();
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, Selected_Project_ID);
+            HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
 
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
@@ -184,19 +206,22 @@ namespace TextMark.Controllers
             _context.Add(TagData);
             _context.SaveChanges();            
         }
-        public async Task<IActionResult> SaveRecord()
+        public IActionResult SaveRecord()
         {
             //await Select_All_Users();
             //await Select_All_Annotations();
-            await Select_All_Projects();
+            //Select_All_Projects();
+           
+
+
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
             CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = await All_Assigned_Anno_ToUsers(Selected_Project_ID);
-            HP.allLabels = await Select_Annotation_Labels(Selected_Project_ID);
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum,HP.NumRecordsInEachPage, Selected_Project_ID);
+            HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
-            HP.Selected_Assigned_Annotation = await Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
+            HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
 
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
 
@@ -204,7 +229,7 @@ namespace TextMark.Controllers
 
 
             // return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID) , UserID = LoggedIn_User_ID,  Project_ID = Selected_Project_ID });
-            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID });
+            return RedirectToAction("ViewProject", new { Selected_Assigned_Anno_ID = (Selected_Assigned_Anno_ID), UserID = LoggedIn_User_ID, Project_ID = Selected_Project_ID, PageNum = HP.PageNum });
         }
         public HtmlString Create_ShortcutKeys_Press_Script(List<Labels_TB> List_Labels)
         {
@@ -229,14 +254,14 @@ namespace TextMark.Controllers
             Code_STR += "  </script> ";
             return new HtmlString(Code_STR);
         }
-        public async Task<Assigned_Annotations_ToUsers_TB> Selected_Assigned_Annotation(int id, int UserID, int? Project_ID = 0 )
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int id, int UserID, int? Project_ID = 0 )
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
+                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefault(m => m.Assigned_Anno_ID == id && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
                     return new Assigned_Annotations_ToUsers_TB();
@@ -247,14 +272,14 @@ namespace TextMark.Controllers
             return new Assigned_Annotations_ToUsers_TB();
         }
 
-        public async Task<Assigned_Annotations_ToUsers_TB> Selected_Assigned_Annotation_AfterSave(int id, int UserID, int? Project_ID = 0)
+        public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation_AfterSave(int id, int UserID, int? Project_ID = 0)
         {
             string ActiveUserID = HttpContext.Session.GetString("UserID");
 
             if (ActiveUserID == UserID.ToString())
             {
-                var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
-               .FirstOrDefaultAsync(m => m.Assigned_Anno_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
+                var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB")
+               .FirstOrDefault(m => m.Assigned_Anno_ID == (id+1) && m.User_ID == UserID && m.Project_ID == Project_ID);
                 if (Selected_Annotation == null)
                 {
                     return new Assigned_Annotations_ToUsers_TB();
@@ -264,8 +289,10 @@ namespace TextMark.Controllers
 
             return new Assigned_Annotations_ToUsers_TB();
         }
-        private async Task<List<Assigned_Annotations_ToUsers_TB>> All_Assigned_Anno_ToUsers(int? Project_ID = 0)
+        private IPagedList<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers(int PageNum, int PageSize, int? Project_ID = 0 )
         {
+            //CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            
             var UserID = "";
 
             if (!IsValidUser())
@@ -276,8 +303,16 @@ namespace TextMark.Controllers
             {
                 UserID = HttpContext.Session.GetString("UserID").ToUpper();
             }
-            return await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToListAsync();
 
+            if (PageNum > 0)
+            {
+                return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToPagedList(PageNum, PageSize);
+            }
+            else
+            {
+                return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToPagedList(1, 1); 
+            }
+             
         }
         private bool IsValidUser()
         {
@@ -304,13 +339,13 @@ namespace TextMark.Controllers
             }
 
         }
-        public async Task<List<Labels_TB>> Select_Annotation_Labels(int? Project_ID = 0)
+        public List<Labels_TB> Select_Annotation_Labels(int? Project_ID = 0)
         {
-            var Labels = await  _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToListAsync();
+            var Labels =  _context.Labels_TB.Include("Projects_TB").Where(m => m.Project_ID == Project_ID).ToList();
             //var Labels = _context.Labels_TB.Include("Projects_TB").Include("Labels_BG_Colours_TB").Where(m => m.Project_ID.ToString() == HttpContext.Session.GetString("ProjectID")).ToList();
             return Labels;
             }
-        public async Task<IActionResult> Details(int? AnnotaionID)
+        public IActionResult Details(int? AnnotaionID)
         {           
             if (!IsValidUser())
             {
@@ -318,7 +353,7 @@ namespace TextMark.Controllers
             }
             
            
-            var Selected_Annotation = await _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.Assigned_Anno_ID == AnnotaionID).FirstOrDefaultAsync();
+            var Selected_Annotation = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.Assigned_Anno_ID == AnnotaionID).FirstOrDefault();
          
             if (Selected_Annotation == null)
             {
@@ -459,24 +494,24 @@ namespace TextMark.Controllers
          //   return RedirectToAction("Index", "UserAnnotation");
 
         }
-        private async Task<bool> AnnoExists(int id)
+        private bool AnnoExists(int id)
         {
-            return await _context.Assigned_Annotations_ToUsers_TB.AnyAsync(e => e.Assigned_Anno_ID == id);
+            return _context.Assigned_Annotations_ToUsers_TB.Any(e => e.Assigned_Anno_ID == id);
         }
 
-        public async Task<List<Users_TB>> Select_All_Users()
+        public List<Users_TB> Select_All_Users()
         {           
-            ViewBag.Users = await _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToListAsync();
+            ViewBag.Users = _context.Users_TB.Where(m => m.Roles_TB.Role_Text.ToLower() != "admin").ToList();
             return ViewBag.Users;
         }
-        public async Task<List<Annotations_TB>> Select_All_Annotations()
+        public List<Annotations_TB> Select_All_Annotations()
         {            
-            ViewBag.Annotations = await _context.Annotations_TB.ToListAsync();
+            ViewBag.Annotations = _context.Annotations_TB.ToList();
             return ViewBag.Annotations;
         }
-        public async Task<List<Projects_TB>> Select_All_Projects()
+        public List<Projects_TB> Select_All_Projects()
         {
-            ViewBag.Projects = await _context.Projects_TB.ToListAsync();
+            ViewBag.Projects = _context.Projects_TB.ToList();
             return ViewBag.Projects;
         }
         //public List<Assigned_Annotations_ToUsers_TB> Select_All_Projects_of_LoggedInUser(int userID)

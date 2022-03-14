@@ -21,7 +21,7 @@ namespace TextMark.Controllers
         int LoggedIn_User_ID = 0;
         int? Selected_Project_ID = 0;
         int Selected_Assigned_Anno_ID = 0;
-        CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+      //  CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
 
         public UserAnnotationController(TextMarkContext context)
         {
@@ -34,8 +34,13 @@ namespace TextMark.Controllers
         {
             var Active_ProjectID = HttpContext.Session.GetString("Active_ProjectID");
 
- //           CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum);
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            HP.LoggedinUserID = UserID;
+            HP.PageNum = 0;
+            HP.NumRecordsInEachPage = 6;
+            HP.TotalNumPages = 0;
+
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage);
             HP.allLabels = Select_Annotation_Labels();
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, UserID);
             HP.ShortcutKeys_Press_Script = Create_ShortcutKeys_Press_Script(HP.allLabels);
@@ -57,8 +62,8 @@ namespace TextMark.Controllers
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
-//          CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, Selected_Project_ID);
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, Selected_Project_ID);
             HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
@@ -117,8 +122,8 @@ namespace TextMark.Controllers
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
-//            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, Selected_Project_ID);
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, Selected_Project_ID);
             HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
@@ -135,11 +140,22 @@ namespace TextMark.Controllers
 
         public IActionResult ViewProject(int Selected_Assigned_Anno_ID, int UserID, int Project_ID, int PageNum)
         {           
-//            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.LoggedinUserID = UserID;
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            HP.LoggedinUserID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             HP.SelectedProjectID = Project_ID;
+          
             HP.PageNum = PageNum;
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.SelectedProjectID);
+            HP.NumRecordsInEachPage = 6;
+            HP.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID == HP.LoggedinUserID && m.Project_ID == HP.SelectedProjectID).ToList().Count() / HP.NumRecordsInEachPage;
+
+            if ((HP.TotalNumPages % HP.NumRecordsInEachPage) > 1)
+            {
+                HP.TotalNumPages += 1;
+            }
+
+
+
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, HP.SelectedProjectID);
             
             HP.allLabels = Select_Annotation_Labels(HP.SelectedProjectID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, HP.LoggedinUserID, HP.SelectedProjectID);
@@ -169,8 +185,8 @@ namespace TextMark.Controllers
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
- //           CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, Selected_Project_ID);
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, HP.NumRecordsInEachPage, Selected_Project_ID);
             HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
            // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
@@ -201,8 +217,8 @@ namespace TextMark.Controllers
             LoggedIn_User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
             Selected_Assigned_Anno_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Assigned_Anno_ID"));
             Selected_Project_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_Project_ID"));
- //           CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
-            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum, Selected_Project_ID);
+            CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            HP.allAnnotations = All_Assigned_Anno_ToUsers(HP.PageNum,HP.NumRecordsInEachPage, Selected_Project_ID);
             HP.allLabels = Select_Annotation_Labels(Selected_Project_ID);
             // HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation_AfterSave(Selected_Assigned_Anno_ID, LoggedIn_User_ID, Selected_Project_ID);
@@ -273,13 +289,10 @@ namespace TextMark.Controllers
 
             return new Assigned_Annotations_ToUsers_TB();
         }
-        private IPagedList<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers(int PageNum, int? Project_ID = 0)
+        private IPagedList<Assigned_Annotations_ToUsers_TB> All_Assigned_Anno_ToUsers(int PageNum, int PageSize, int? Project_ID = 0 )
         {
-            if (PageNum == 0)
-            {
-                HP.PageNum = 1;
-            }
-
+            //CL_UsersAnnotations_Home_Page HP = new CL_UsersAnnotations_Home_Page();
+            
             var UserID = "";
 
             if (!IsValidUser())
@@ -291,15 +304,15 @@ namespace TextMark.Controllers
                 UserID = HttpContext.Session.GetString("UserID").ToUpper();
             }
 
-            HP.Selected_UserID = Convert.ToInt32(UserID);
-            HP.NumRecordsInEachPage = 6;
-            HP.TotalNumPages = _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToList().Count() / HP.NumRecordsInEachPage;
-            if ((HP.TotalNumPages % HP.NumRecordsInEachPage) > 1)
+            if (PageNum > 0)
             {
-                HP.TotalNumPages += 1;
+                return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToPagedList(PageNum, PageSize);
             }
-            return  _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToPagedList(HP.PageNum, HP.NumRecordsInEachPage);
-
+            else
+            {
+                return _context.Assigned_Annotations_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Where(m => m.User_ID.ToString() == UserID && m.Project_ID == Project_ID).ToPagedList(1, 1); 
+            }
+             
         }
         private bool IsValidUser()
         {

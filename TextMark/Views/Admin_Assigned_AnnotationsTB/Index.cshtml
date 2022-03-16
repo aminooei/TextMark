@@ -29,7 +29,7 @@
             }
 
             @*<label>Select a Project: </label>
-        @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })*@
+                @Html.DropDownList("Project_ID", new SelectList(ViewBag.Projects, "Project_ID", "Project_Name"), "Select a Project", new { @class = "form-control" })*@
         </div>
         <div class="flex-row m-2">
             <input type="submit" value="Show Text Annotations" class="btn btn-primary" />
@@ -66,9 +66,9 @@
     <table class="table" id="DataTable">
         <thead>
             <tr>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.allAnnotations[0].Assigned_Anno_ID)
-                </th>*@
+                <th>
+                        @Html.DisplayNameFor(model => model.allAnnotations[0].Assigned_Anno_ID)
+                    </th>
                 <th>
                     @Html.DisplayNameFor(model => model.allAnnotations[0].Projects_TB.Project_Name)
                 </th>
@@ -102,9 +102,9 @@
             @foreach (var item in Model.allAnnotations)
             {
                 <tr>
-                    @*<td>
-                        @Html.DisplayFor(modelItam => item.Assigned_Anno_ID)
-                    </td>*@
+                    <td>
+                            @Html.DisplayFor(modelItam => item.Assigned_Anno_ID)
+                        </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Projects_TB.Project_Name)
                     </td>
@@ -155,7 +155,7 @@
                     <td>
                         @*<a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |*@
                         <a class="btn btn-info" asp-action="Details" asp-route-projectID="@item.Project_ID" asp-route-id="@item.Assigned_Anno_ID">Details</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>
+                        @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Assigned_Anno_ID">Delete</a>*@
                     </td>
                 </tr>
             }
@@ -166,6 +166,47 @@
         </a>*@
 }
 
+<form asp-action="Index" asp-controller="Admin_Assigned_AnnotationsTB" method="post">
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.TotalNumPages > 0)
+            {
+
+
+
+                @if (Model.PageNum == 1)
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                }
+                else
+                {
+                    int PrevPageNum = Model.PageNum - 1;
+
+                    @*<input type="submit" value="Previous" class="btn btn-info" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                    <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID">Previous</a></li>
+                }
+
+                <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
+                @*<input  value="Page @Model.PageNum of @Model.TotalNumPages" class="btn btn-light disabled"/>*@
+
+                @if (Model.PageNum < Model.TotalNumPages)
+                {
+                    int NextPageNum = Model.PageNum + 1;
+                    @*<input type="submit" value="Next" class="btn btn-success" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
+                    <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID">Next</a></li>
+
+
+                }
+                else
+                {
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                }
+            }
+        </ul>
+    </nav>
+</form>
+
 <br />
 <br />
 
@@ -175,7 +216,7 @@
     <h2> All Annotations Details</h2>
     <table class="table" id="DataTableTags">
         <thead>
-            <tr>              
+            <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_TextAnnotation_ID)
                 </th>
@@ -185,7 +226,7 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Annotated_Substring)
-                </th>               
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_Start_Index)
                 </th>
@@ -208,30 +249,30 @@
         <tbody>
             @foreach (var item in Model.Annotated_Tags)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Assigned_TextAnnotation_ID)
-                </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Assigned_TextAnnotation_ID)
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Labels_TB.Label_Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Annotated_Substring)
-                </td>               
-                <td>
-                    @Html.DisplayFor(modelItem => item.Label_Start_Index)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Label_End_Index)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Users_TB.Username)
-                </td>
-                <td style="display:none;">
-                    @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Projects_TB.Project_Name)
-                </td>
-            </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Labels_TB.Label_Text)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Annotated_Substring)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Label_Start_Index)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Label_End_Index)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Users_TB.Username)
+                    </td>
+                    <td style="display:none;">
+                        @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.Projects_TB.Project_Name)
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -240,122 +281,82 @@
 
 
 }
-<form asp-action="Index" asp-controller="Admin_Assigned_AnnotationsTB" method="post">
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-    @if (Model.TotalNumPages > 0)
-    {
-       
-       
-
-        @if (Model.PageNum == 1)
-        {
-            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-        }
-        else
-        {
-            int PrevPageNum = Model.PageNum - 1;
-            
-            @*<input type="submit" value="Previous" class="btn btn-info" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
-            <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID">Previous</a></li>
-        }
-
-        <li class="page-item disabled "><a class="page-link" href="#">  Page @Model.PageNum of @Model.TotalNumPages</a></li>
-        @*<input  value="Page @Model.PageNum of @Model.TotalNumPages" class="btn btn-light disabled"/>*@
-
-        @if (Model.PageNum < Model.TotalNumPages)
-        {
-            int NextPageNum = Model.PageNum + 1;
-            @*<input type="submit" value="Next" class="btn btn-success" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
-            <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID">Next</a></li>
-
-
-        }
-        else
-        {
-            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-        }
-    }
-    </ul>
-        </nav>
-</form>
-    @section Scripts
+@section Scripts
 {
-        <script type="text/javascript">
-            function tableToJson(table) {
-                var data = [];
-                var headers = [];
-                for (var i = 0; i < table.rows[0].cells.length; i++) {
-                    /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
-                    headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
+    <script type="text/javascript">
+        function tableToJson(table) {
+            var data = [];
+            var headers = [];
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
+                headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
+            }
+            for (var i = 1; i < table.rows.length; i++) {
+                var tableRow = table.rows[i];
+                var rowData = {};
+                for (var j = 0; j < tableRow.cells.length; j++) {
+                    /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
+                    rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
                 }
-                for (var i = 1; i < table.rows.length; i++) {
-                    var tableRow = table.rows[i];
-                    var rowData = {};
-                    for (var j = 0; j < tableRow.cells.length; j++) {
-                        /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
-                        rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
-                    }
-                    data.push(rowData);
-                }
-                return data;
+                data.push(rowData);
             }
+            return data;
+        }
 
 
-            //function htmlToJson(table) {
-            //    var obj = {},
-            //        itemsLength = $(table.find('tbody tr')[0]).find('th').length;
-            //    for (i = 0; i < itemsLength; i++) {
-            //        key = $(table.find('tbody tr')[0]).find('th').eq(i).text();
-            //        value = $(table.find('tbody tr')[1]).find('td').eq(i).text();
-            //        obj[key] = value;
-            //    }
-            //    return JSON.stringify(obj)
-            //}
+        //function htmlToJson(table) {
+        //    var obj = {},
+        //        itemsLength = $(table.find('tbody tr')[0]).find('th').length;
+        //    for (i = 0; i < itemsLength; i++) {
+        //        key = $(table.find('tbody tr')[0]).find('th').eq(i).text();
+        //        value = $(table.find('tbody tr')[1]).find('td').eq(i).text();
+        //        obj[key] = value;
+        //    }
+        //    return JSON.stringify(obj)
+        //}
 
-            //function htmlTableToJson(table, edit = 0, del = 0) {
-            //    // If exists the cols: "edit" and "del" to remove from JSON just pass values = 1 to edit and del params
-            //    var minus = edit + del;
-            //    var data = [];
-            //    var colsLength = $(table.find('thead tr')[0]).find('th').length - minus;
-            //    var rowsLength = $(table.find('tbody tr')).length;
+        //function htmlTableToJson(table, edit = 0, del = 0) {
+        //    // If exists the cols: "edit" and "del" to remove from JSON just pass values = 1 to edit and del params
+        //    var minus = edit + del;
+        //    var data = [];
+        //    var colsLength = $(table.find('thead tr')[0]).find('th').length - minus;
+        //    var rowsLength = $(table.find('tbody tr')).length;
 
-            //    // first row needs to be headers
-            //    var headers = [];
-            //    for (var i = 0; i < colsLength; i++) {
-            //        headers[i] = $(table.find('thead tr')[0]).find('th').eq(i).text();
-            //    }
+        //    // first row needs to be headers
+        //    var headers = [];
+        //    for (var i = 0; i < colsLength; i++) {
+        //        headers[i] = $(table.find('thead tr')[0]).find('th').eq(i).text();
+        //    }
 
-            //    // go through cells
-            //    for (var i = 0; i < rowsLength; i++) {
-            //        var tableRow = $(table.find('tbody tr')[i]);
-            //        var rowData = {};
-            //        for (var j = 0; j < colsLength; j++) {
-            //            rowData[headers[j]] = tableRow.find('td').eq(j).text();
-            //        }
-            //        data.push(rowData);
-            //    }
-            //    return data;
-            //}
+        //    // go through cells
+        //    for (var i = 0; i < rowsLength; i++) {
+        //        var tableRow = $(table.find('tbody tr')[i]);
+        //        var rowData = {};
+        //        for (var j = 0; j < colsLength; j++) {
+        //            rowData[headers[j]] = tableRow.find('td').eq(j).text();
+        //        }
+        //        data.push(rowData);
+        //    }
+        //    return data;
+        //}
 
 
-            function downloadObjectAsJson(exportObj, exportName) {
-                var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
-                var downloadAnchorNode = document.createElement('a');
-                downloadAnchorNode.setAttribute("href", dataStr);
-                downloadAnchorNode.setAttribute("download", exportName + ".json");
-                document.body.appendChild(downloadAnchorNode);
-                downloadAnchorNode.click();
-                downloadAnchorNode.remove();
-            }
+        function downloadObjectAsJson(exportObj, exportName) {
+            var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", exportName + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
 
-            document.getElementById('btn_dl_json_annotations').onclick = function () {
-                var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableTags")));
-                //var myjson = htmlToJson(document.getElementById("DataTable"));
-                //var myjson = htmlTableToJson(document.getElementById("DataTable"));
-                console.log(myjson.replace(/\\n/g, ''));
-                downloadObjectAsJson(myjson, 'the-json-file');
-            }
-        </script>
-    }
+        document.getElementById('btn_dl_json_annotations').onclick = function () {
+            var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableTags")));
+            //var myjson = htmlToJson(document.getElementById("DataTable"));
+            //var myjson = htmlTableToJson(document.getElementById("DataTable"));
+            console.log(myjson.replace(/\\n/g, ''));
+            downloadObjectAsJson(myjson, 'the-json-file');
+        }
+    </script>
+}

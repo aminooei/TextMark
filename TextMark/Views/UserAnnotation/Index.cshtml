@@ -108,26 +108,23 @@
                                         </td>
                                         <td>
 
-                                            @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                            @if (item.Count_Annotations == 0)
                                             {
                                                 <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
                                             }
-                                            else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
-                                            {
-                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
-                                            }
-                                            else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                            else
                                             {
                                                 <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
                                             }
-                                            else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                            @if (item.Comments != null)
+                                            {
+                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                            }
+                                            @if (item.Not_Sure == true)
                                             {
                                                 <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
                                             }
-                                            else if (item.Count_Annotations == 0 && item.Not_Sure == true)
-                                            {
-                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                            }
+
 
                                         </td>
                                     </tr>
@@ -154,27 +151,24 @@
                                             <a asp-action="ViewProject" asp-route-PageNum="@Model.PageNum" asp-route-Project_ID="@item.Project_ID" asp-route-Selected_Assigned_Anno_ID="@item.Assigned_Anno_ID" asp-route-UserID="@item.User_ID">Selected</a>
                                         </td>
                                         <td>
-
-                                            @if (item.Count_Annotations == 0 && item.Comments == null && item.Not_Sure == false)
+                                            @if (item.Count_Annotations == 0)
                                             {
                                                 <i class="bi bi-box-arrow-right" style="font-size: 2rem; color: gray;" title="Not Annotated Yet"></i>
                                             }
-                                            else if (item.Count_Annotations == 0 && item.Comments != null && item.Not_Sure == false)
-                                            {
-                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
-                                            }
-                                            else if (item.Count_Annotations != 0 && item.Not_Sure == false)
+                                            else
                                             {
                                                 <i class="bi bi-check-all" style="font-size: 2rem; color: green;" title="Annotated"></i>
                                             }
-                                            else if (item.Count_Annotations != 0 && item.Not_Sure == true)
+                                            @if (item.Comments != null)
                                             {
+                                                <i class="bi bi-chat-dots" style="font-size: 2rem; color: crimson;" title="Has Comments"></i>
+                                            }
+                                            @if (item.Not_Sure == true)
+                                            {                                           
                                                 <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
                                             }
-                                            else if (item.Count_Annotations == 0 && item.Not_Sure == true)
-                                            {
-                                                <i class="bi bi-question" style="font-size: 2rem; color: red;" title="Not Sure"></i>
-                                            }
+                                           
+                                           
 
                                         </td>
                                     </tr>
@@ -320,8 +314,8 @@
                                 </div>
 
                                 <br />
-                                <br />
-                                <br />
+                                @*<br />
+                                <br />*@
                                 <!--<div class="d-flex flex-row">
         <div class="p-2 align-self-start">
             <input id="btn_Next" onclick="Run_Save_GoNext_Functions()" value="Next" class="btn-primary btn-block btn-lg " type="submit" />
@@ -340,8 +334,8 @@
                                         <span aria-hidden="true">Next &raquo;</span>
                                     </button>
                                 </div>
-                                <br />
-                                <br />
+                                @*<br />
+                                <br />*@
 
                             }
                             else if (Model.Selected_Assigned_Annotation.Annotated_Text == null)
@@ -353,8 +347,8 @@
                         </div>
                     </div>
                    
-                    <br />
-                    <br />
+                    @*<br />
+                    <br />*@
                 </form>
             </div>
         </div>

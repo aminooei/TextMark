@@ -135,7 +135,7 @@
                     <td>
                         @*<a asp-action="Edit" asp-route-id="@item.Assigned_Anno_ID">Edit</a> |*@
                         <a class="btn btn-info" asp-action="Details" asp-route-projectID="@item.Project_ID" asp-route-id="@item.Assigned_TextClassification_ID">Details</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Assigned_TextClassification_ID">Delete</a>
+                        @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Assigned_TextClassification_ID">Delete</a>*@
                     </td>
                 </tr>
             }

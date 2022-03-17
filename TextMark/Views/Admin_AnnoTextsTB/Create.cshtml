@@ -7,13 +7,15 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 
+
 <h1>Upload</h1>
 
 
 <hr />
 @*<div class="row">
     <div class="col-md-4">*@
-<form asp-action="Create" enctype="multipart/form-data" method="post">
+<form method="post" id="Submit_File">
+    @*asp-action="Create" enctype="multipart/form-data"*@
     <div class="form-group">
         @*<label asp-for="Projects_TB.Project_Name" class="control-label" type="hidden"></label>*@
         <input asp-for="Project_ID" class="form-control" autocomplete="off" value=@Context.Session.GetString("Active_ProjectID") type="hidden" />
@@ -25,20 +27,59 @@
 
     }
     <div class="form-group m-2">
-        <input type="file" value="Upload File" name="ExcelFile" accept=".xls ,.xlsx" />
+        <input class="border border-primary" type="file" value="Upload File" name="ExcelFile" id="Upload_File_TxtBx" accept=".xls ,.xlsx" />
     </div>
-    <div class="form-group m-2">
-        <input type="submit" onclick="spinner()" value="Upload" class="btn btn-primary" />
-    </div>
-    @*<div class="spinner-border text-primary" id="loader" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>*@
+    <button class="btn btn-primary button m-2" type="button">
+        <i class="loading-icon spinner-border spinner-border-sm hide" role="status" aria-hidden="true"></i>
+        <span class="btn-txt">Upload a File</span>
+    </button>
+    <p class="text-success m-2"></p>
+
+
 </form>
-@*</div>
-    </div>*@
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="m-2">Back to List</a>
 </div>
+
+@section Scripts
+{
+
+<script>
+    $(document).ready(function () {
+        $(".button").on("click", function () {
+            $(".loading-icon").removeClass("hide");
+            $('.button').attr('disabled', true);
+            $('.btn-txt').text("Uploading Data from File");
+            
+            var data = new FormData($("#Submit_File")[0]);
+            $.ajax({
+                method: "POST",
+                url: "/Admin_AnnoTextsTB/Create",
+                dataType: 'json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    
+                }
+
+            });
+
+            setTimeout(function () {
+                $(".loading-icon").addClass("hide");
+                $('.button').attr('disabled', false);
+                $('.btn-txt').text("Upload a File");
+                document.getElementById("Upload_File_TxtBx").value = "";
+                $(".text-success").text("Congratulations, The Chosen File is Uploaded Successfully.");
+            }, 5000)
+            
+           
+         
+        })
+    })
+</script>
+   
+}
 
 

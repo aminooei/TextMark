@@ -210,48 +210,32 @@ namespace TextMark.Controllers
             {
                 ExcelFile.CopyTo(stream);
                 stream.Position = 0;
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    while (reader.Read()) //Each row of the file
+                
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        
-                        try
-                        {                             
-                            Annotations_TB annoTB = new Annotations_TB { Annotation_ID_InFile = reader.GetValue(0).ToString(), Annotation_Title = reader.GetValue(1).ToString(), Annotation_Text = reader.GetValue(2).ToString(), Annotation_Date = (Convert.ToDateTime(reader.GetValue(3).ToString())).ToString("dd-MM-yyyy"), Annotation_Source = reader.GetValue(4).ToString(), Source_File_Name = ExcelFile.FileName, Project_ID = Project_ID };
-                            _context.Add(annoTB);
-                            await _context.SaveChangesAsync();                            
-                        }
-                        catch
+                        while (reader.Read() && reader.GetValue(0) != null) //Each row of the file
                         {
-                            //ViewBag.Error = ex.Message;
-                          // break;
+                        try
+                            {
+                                Annotations_TB annoTB = new Annotations_TB { Annotation_ID_InFile = reader.GetValue(0).ToString(), Annotation_Title = reader.GetValue(1).ToString(), Annotation_Text = reader.GetValue(2).ToString(), Annotation_Date = (Convert.ToDateTime(reader.GetValue(3).ToString())).ToString("dd-MM-yyyy"), Annotation_Source = reader.GetValue(4).ToString(), Source_File_Name = ExcelFile.FileName, Project_ID = Project_ID };
+                               _context.Add(annoTB);
+                               await _context.SaveChangesAsync();
+                            }
+                            catch
+                            {
+
+                            }
+                           
+                           
                         }
                     }
-                }
+
+
             }
             Select_All_Projects();
             return RedirectToAction(nameof(Index));
 
-            // return Ok(users);
-            //if (!IsValidUser())
-            //{
-            //    return RedirectToAction("Index", "Login");
-            //}
-
-            //if (await IsAnnoDuplicated(annotations_tb.Annotation_Text, annotations_tb.Project_ID))
-            //{
-            //    ViewBag.Error = "This Label is already registered for this Project";
-
-            //}
-            //else
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        _context.Add(annotations_tb);
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //}
+           
            
            
         }

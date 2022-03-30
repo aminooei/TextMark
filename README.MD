@@ -1,7 +1,3 @@
-﻿<div align="center">
-  <img src="https://raw.githubusercontent.com/doccano/doccano/master/docs/images/logo/doccano.png">
-</div>
-
 # TextMark
 
 TextMark is an open source text annotation tool for humans. It provides annotation features for text classification, and text annotation tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
@@ -10,13 +6,10 @@ TextMark is an open source text annotation tool for humans. It provides annotati
 
 You can download and try the annotation demo on Docker on your PC. To install it on your Pc, just run the "docker-Compose up" command and it will automatically download all the requirments and their dependencies. 
 
-![Demo image](https://raw.githubusercontent.com/doccano/doccano/master/docs/images/demo/demo.gif)
-
 ## Documentation
 
 To read the user manual, login to the Admin section by using the below information: 
-Username: Admin 
-Password: 12345
+[Username: Admin] ---- [Password: 12345]
 
 
 ### Docker Compose

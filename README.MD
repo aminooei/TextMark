@@ -4,7 +4,14 @@ TextMark is an open source text annotation tool for humans. It provides annotati
 
 ## Demo
 
-You can download and try the annotation demo on Docker on your PC. To install it on your Pc, just run the "docker-Compose up" command and it will automatically download all the requirments and their dependencies. 
+You can download and try the annotation demo on Docker on your PC. To install it on your PC, just run the "docker-Compose up" command and it will automatically download all the requirments and their dependencies. 
+
+You may also download and run this demo project locally on your PC in Microsoft Visual Studio 2019, OR just run it in IIS.
+
+```bash
+To run this project in Docker, you need to edit the appsettings.json file and uncomment the "Connection String for Docker".
+To run this project locally on your PC IIS, you need to edit the appsettings.json file and uncomment the "Connection String for PC".
+```
 
 ## Documentation
 

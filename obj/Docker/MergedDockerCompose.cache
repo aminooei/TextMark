@@ -1,3 +1,4 @@
+name: dockercompose214410592790654273
 services:
   ms-sql-server:
     environment:
@@ -10,7 +11,7 @@ services:
     ports:
     - mode: ingress
       target: 1433
-      published: 1433
+      published: "1433"
       protocol: tcp
   textmark:
     build:
@@ -22,7 +23,7 @@ services:
     ports:
     - mode: ingress
       target: 80
-      published: 8080
+      published: "8080"
       protocol: tcp
 networks:
   default:

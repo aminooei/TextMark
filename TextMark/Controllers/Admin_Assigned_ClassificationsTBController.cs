@@ -158,6 +158,14 @@ namespace TextMark.Controllers
             return View(DT);
         }
 
+        public IActionResult Export(Assigned_TextClassifications_ToUsers_TB Assigned_Classifications_ToUsers)
+        {
+            return RedirectToAction(nameof(Index));
+
+
+
+
+        }
         public List<ClassifiedTexts_Tags> Select_All_Classified_Tags(int User_ID, int Project_ID)
         {
             var ClassifiedTexts_Tags = _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassifications_ToUsers_TB.User_ID == User_ID && m.Assigned_TextClassifications_ToUsers_TB.Project_ID == Project_ID).Include("ClassificationLabels_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToList();

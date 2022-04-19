@@ -729,6 +729,7 @@ C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\un
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfoInputs.cache
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.AssemblyInfo.cs
@@ -817,4 +818,3 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
-C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.csproj.AssemblyReference.cache

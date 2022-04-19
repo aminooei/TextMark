@@ -156,24 +156,13 @@ namespace TextMark.Controllers
         }
 
         [HttpGet]
-        public void Export(Assigned_Annotations_ToUsers_TB Assigned_Annotations_ToUsers)
+        public IActionResult Export(Assigned_Annotations_ToUsers_TB Assigned_Annotations_ToUsers)
         {
-           
+            return RedirectToAction(nameof(Index));
 
 
 
-            //// var bookings = _cache.GetOrCreate(BookingsCacheKey, BookingListFactory);
-            //int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
-            //int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
 
-            //var User_Annotated_List = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync();
-            //string output_STR = JsonConvert.SerializeObject(User_Annotated_List);
-
-            //byte[] bytes = System.Text.Encoding.UTF8.GetBytes(output_STR);
-            //var output = new FileContentResult(bytes, "application/octet-stream");
-            //output.FileDownloadName = "download.txt";
-
-            //return output;
         }
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int Assigned_Anno_ID)
         {

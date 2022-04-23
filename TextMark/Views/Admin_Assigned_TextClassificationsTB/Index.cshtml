@@ -80,7 +80,7 @@
                 </th>
 
                 <th>
-
+                    <a class="btn btn-danger" asp-action="ExportDetails" asp-route-Selected_UserID="@Model.Selected_UserID">All Details</a>
                 </th>
             </tr>
         </thead>
@@ -142,84 +142,6 @@
         </tbody>
     </table>
 }
-
-<br />
-<br />
-
-
-@if (Model.ClassifiedTexts_Tags.Count() > 0)
-{
-    <h2> All Classifications Details</h2>
-    <table class="table" id="DataTableClassificationsTags">
-        <thead>
-            <tr>
-                @*<th>
-            @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ID)
-        </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassification_ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ClassificationLabels_TB.ClassificationLabel_Text)
-                </th>
-                <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
-                </th>
-                <th style="display:none;">
-                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Users_TB.Username)
-                </th>
-                @*
-        <th>
-            @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Label_Start_Index)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Annotated_Tags[0].Label_End_Index)
-        </th>
-        <th style="display:none;">
-            @Html.DisplayNameFor(model => model.Annotated_Tags[0].Assigned_Annotations_ToUsers_TB.User_ID)
-        </th>*@
-                <th>
-                    <a id="btn_dl_json_classifications" class="btn btn-warning btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_AnnotationsTB">
-                        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
-                    </a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ClassifiedTexts_Tags)
-            {
-            <tr>
-                @*<td>
-            @Html.DisplayFor(modelItem => item.ID)
-        </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Assigned_TextClassification_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClassificationLabels_TB.ClassificationLabel_Text)
-                </td>
-                <td style="display:none;">
-                    @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
-                </td>
-                <td style="display:none;">
-                    @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Users_TB.Username)
-                </td>
-                @*
-        <td>
-            @Html.DisplayFor(modelItem => item.Label_Start_Index)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Label_End_Index)
-        </td>
-        <td style="display:none;">
-            @Html.DisplayFor(modelItem => item.Assigned_Annotations_ToUsers_TB.User_ID)
-        </td>*@
-
-            </tr>
-            }
-        </tbody>
-    </table>
-}
 <form asp-action="Index" asp-controller="Admin_Assigned_TextClassificationsTB" method="post">
 
     <nav aria-label="Page navigation example">
@@ -227,8 +149,8 @@
             @if (Model.TotalNumPages > 0)
             {
                 TempData["PageNum"] = Model.PageNum;
-                TempData["User_ID"] = Model.Selected_UserID;     
-                
+                TempData["User_ID"] = Model.Selected_UserID;
+
                 @if (Model.PageNum == 1)
                 {
                     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
@@ -236,7 +158,7 @@
                 else
                 {
                     int PrevPageNum = Model.PageNum - 1;
-                
+
                     @*<input type="submit" value="Previous" class="btn btn-info" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
                     <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@PrevPageNum" asp-route-User_ID="@Model.Selected_UserID">Previous</a></li>
                 }
@@ -247,7 +169,7 @@
                 @if (Model.PageNum < Model.TotalNumPages)
                 {
                     int NextPageNum = Model.PageNum + 1;
-              
+
                     @*<input type="submit" value="Next" class="btn btn-success" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID" />*@
                     <li class="page-item"><a class="page-link" type="submit" asp-route-PageNum="@NextPageNum" asp-route-User_ID="@Model.Selected_UserID">Next</a></li>
 
@@ -262,47 +184,7 @@
     </nav>
 </form>
 
+<br />
+<br />
 
 
-@section Scripts
-{
-    <script type="text/javascript">
-        function tableToJson(table) {
-            var data = [];
-            var headers = [];
-            for (var i = 0; i < table.rows[0].cells.length; i++) {
-                /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
-                headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
-            }
-            for (var i = 1; i < table.rows.length; i++) {
-                var tableRow = table.rows[i];
-                var rowData = {};
-                for (var j = 0; j < tableRow.cells.length; j++) {
-                    /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
-                    rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
-                }
-                data.push(rowData);
-            }
-            return data;
-        }
-
-
-        function downloadObjectAsJson(exportObj, exportName) {
-            var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
-            var downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", exportName + ".json");
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        }
-
-        document.getElementById('btn_dl_json_classifications').onclick = function () {
-            var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableClassificationsTags")));
-            //var myjson = htmlToJson(document.getElementById("DataTable"));
-            //var myjson = htmlTableToJson(document.getElementById("DataTable"));
-            console.log(myjson.replace(/\\n/g, ''));
-            downloadObjectAsJson(myjson, 'the-json-file');
-        }
-    </script>
-}

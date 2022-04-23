@@ -71,10 +71,10 @@
             <span class="align-content-center text-white"> Active Project :  @Context.Session.GetString("Active_Project_Name")</span>
         }
 
-    <a class="btn btn-success" href="@Url.Action("Manage_Projects_Help", "Admin_Help")">
+    @*<a class="btn btn-success" href="@Url.Action("Manage_Projects_Help", "Admin_Help")">
         User Manual
         <i class="bi bi-info-square"></i>
-    </a>
+    </a>*@
        
 
         @if (Context.Session.GetString("Username") != "")

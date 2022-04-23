@@ -94,7 +94,7 @@
                     @Html.DisplayNameFor(model => model.allAnnotations[0].User_ID)
                 </th>
                 <th>
-
+                    <a class="btn btn-danger" asp-action="ExportDetails" asp-route-Selected_UserID="@Model.Selected_UserID" >All Details</a>
                 </th>
             </tr>
         </thead>
@@ -211,7 +211,7 @@
 <br />
 
 
-@if (Model.Annotated_Tags.Count() > 0)
+@*@if (Model.Annotated_Tags.Count() > 0)
 {
     <h2> All Annotations Details</h2>
     <table class="table" id="DataTableTags">
@@ -280,83 +280,4 @@
 
 
 
-}
-@section Scripts
-{
-    <script type="text/javascript">
-        function tableToJson(table) {
-            var data = [];
-            var headers = [];
-            for (var i = 0; i < table.rows[0].cells.length; i++) {
-                /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
-                headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
-            }
-            for (var i = 1; i < table.rows.length; i++) {
-                var tableRow = table.rows[i];
-                var rowData = {};
-                for (var j = 0; j < tableRow.cells.length; j++) {
-                    /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
-                    rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
-                }
-                data.push(rowData);
-            }
-            return data;
-        }
-
-
-        //function htmlToJson(table) {
-        //    var obj = {},
-        //        itemsLength = $(table.find('tbody tr')[0]).find('th').length;
-        //    for (i = 0; i < itemsLength; i++) {
-        //        key = $(table.find('tbody tr')[0]).find('th').eq(i).text();
-        //        value = $(table.find('tbody tr')[1]).find('td').eq(i).text();
-        //        obj[key] = value;
-        //    }
-        //    return JSON.stringify(obj)
-        //}
-
-        //function htmlTableToJson(table, edit = 0, del = 0) {
-        //    // If exists the cols: "edit" and "del" to remove from JSON just pass values = 1 to edit and del params
-        //    var minus = edit + del;
-        //    var data = [];
-        //    var colsLength = $(table.find('thead tr')[0]).find('th').length - minus;
-        //    var rowsLength = $(table.find('tbody tr')).length;
-
-        //    // first row needs to be headers
-        //    var headers = [];
-        //    for (var i = 0; i < colsLength; i++) {
-        //        headers[i] = $(table.find('thead tr')[0]).find('th').eq(i).text();
-        //    }
-
-        //    // go through cells
-        //    for (var i = 0; i < rowsLength; i++) {
-        //        var tableRow = $(table.find('tbody tr')[i]);
-        //        var rowData = {};
-        //        for (var j = 0; j < colsLength; j++) {
-        //            rowData[headers[j]] = tableRow.find('td').eq(j).text();
-        //        }
-        //        data.push(rowData);
-        //    }
-        //    return data;
-        //}
-
-
-        function downloadObjectAsJson(exportObj, exportName) {
-            var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
-            var downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", exportName + ".json");
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        }
-
-        document.getElementById('btn_dl_json_annotations').onclick = function () {
-            var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableTags")));
-            //var myjson = htmlToJson(document.getElementById("DataTable"));
-            //var myjson = htmlTableToJson(document.getElementById("DataTable"));
-            console.log(myjson.replace(/\\n/g, ''));
-            downloadObjectAsJson(myjson, 'the-json-file');
-        }
-    </script>
-}
+}*@

@@ -47,7 +47,7 @@ namespace TextMark.Controllers
                 }
 
                 DT.allAnnotations =  _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-                DT.Annotated_Tags =  Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
+ //               DT.Annotated_Tags =  Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
             else if (Selected_User_ID == 2) //All Users
@@ -60,7 +60,7 @@ namespace TextMark.Controllers
                 }
 
                 DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-                DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
+ //               DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
             else
@@ -73,10 +73,12 @@ namespace TextMark.Controllers
                 }
 
                 DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-                DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
+ //               DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
         }
+
+        
 
         [HttpPost]
         public ViewResult Index(int User_ID, int PageNum)
@@ -114,7 +116,7 @@ namespace TextMark.Controllers
                 }
 
                 DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-                DT.Annotated_Tags = Select_All_Annotated_Tags(Active_UserID, Active_ProjectID);
+ //               DT.Annotated_Tags = Select_All_Annotated_Tags(Active_UserID, Active_ProjectID);
                 return View(DT);
             }
             else if (Active_UserID > 0 && Active_ProjectID > 0)
@@ -128,7 +130,7 @@ namespace TextMark.Controllers
 
                 // return View(await _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
                 DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-                DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
+//                DT.Annotated_Tags = Select_All_Annotated_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
             else if(Active_UserID == 0)
@@ -141,7 +143,7 @@ namespace TextMark.Controllers
 
 
                 DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-                DT.Annotated_Tags = Select_All_Annotated_Tags_ForAllUsers(Active_ProjectID);
+//                DT.Annotated_Tags = Select_All_Annotated_Tags_ForAllUsers(Active_ProjectID);
                 return View(DT);
             }
 
@@ -151,29 +153,30 @@ namespace TextMark.Controllers
                 DT.TotalNumPages += 1;
             }
             DT.allAnnotations = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.User_ID == 0 && m.Project_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_Anno_ID).ToPagedList(PageNum, 10);
-            DT.Annotated_Tags = Select_All_Annotated_Tags(0, 0);
+ //           DT.Annotated_Tags = Select_All_Annotated_Tags(0, 0);
             return View(DT);
         }
 
-        [HttpGet]
-        public void Export(Assigned_Annotations_ToUsers_TB Assigned_Annotations_ToUsers)
+        public ViewResult ExportDetails(int Selected_UserID)
         {
-           
+            Details_AnnotatedTags DT = new Details_AnnotatedTags();
+            int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            DT.Annotated_Tags = Select_All_Annotated_Tags(Selected_UserID, Active_ProjectID);
+            TempData["Selected_UserID"] = Selected_UserID;
+
+            return View(DT);
+        }
 
 
 
-            //// var bookings = _cache.GetOrCreate(BookingsCacheKey, BookingListFactory);
-            //int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
-            //int Selected_User_ID = Convert.ToInt32(HttpContext.Session.GetString("Selected_User_ID"));
+        [HttpGet]
+        public IActionResult Export(Assigned_Annotations_ToUsers_TB Assigned_Annotations_ToUsers)
+        {
+            return RedirectToAction(nameof(ExportDetails), new { Selected_UserID = Convert.ToInt32(TempData["Selected_UserID"]) });
 
-            //var User_Annotated_List = _context.Assigned_Annotations_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync();
-            //string output_STR = JsonConvert.SerializeObject(User_Annotated_List);
 
-            //byte[] bytes = System.Text.Encoding.UTF8.GetBytes(output_STR);
-            //var output = new FileContentResult(bytes, "application/octet-stream");
-            //output.FileDownloadName = "download.txt";
 
-            //return output;
+
         }
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation(int Assigned_Anno_ID)
         {
@@ -308,7 +311,7 @@ namespace TextMark.Controllers
 
         public  List<AnnotatedTexts_Tags> Select_All_Annotated_Tags(int User_ID, int Project_ID)
         {
-            var Annotated_tags =  _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.User_ID == User_ID && m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).Include("Labels_TB").Include("Assigned_Annotations_ToUsers_TB.Users_TB").OrderBy(m => m.Assigned_TextAnnotation_ID).ToList();
+            var Annotated_tags =  _context.AnnotatedTexts_Tags.Where(m => m.Assigned_Annotations_ToUsers_TB.User_ID == User_ID && m.Assigned_Annotations_ToUsers_TB.Project_ID == Project_ID).Include("Labels_TB").Include("Assigned_Annotations_ToUsers_TB.Users_TB").Include("Assigned_Annotations_ToUsers_TB.Projects_TB").OrderBy(m => m.Assigned_TextAnnotation_ID).ToList();
             return Annotated_tags;
         }
 
@@ -328,7 +331,7 @@ namespace TextMark.Controllers
             Details_Assigned_TextAnnotations_ToUsers HP = new Details_Assigned_TextAnnotations_ToUsers();           
             HP.allLabels = Select_Annotation_Labels(projectID);
             HP.Selected_Assigned_Annotation = Selected_Assigned_Annotation(id);
-            HP.Annotated_Tags = Select_All_Annotated_Tags_For_a_Record(id);
+ //           HP.Annotated_Tags = Select_All_Annotated_Tags_For_a_Record(id);
             return View(HP);
         }
 

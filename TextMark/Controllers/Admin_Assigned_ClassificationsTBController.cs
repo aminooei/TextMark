@@ -50,7 +50,7 @@ namespace TextMark.Controllers
                 }
                 //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
                 DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
+//                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
             else if (Selected_User_ID == 2) //All Users
@@ -63,7 +63,7 @@ namespace TextMark.Controllers
                 }
                 //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
                 DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
+ //               DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
             else
@@ -76,7 +76,7 @@ namespace TextMark.Controllers
                 }
                 //return View(await _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
                 DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == Selected_User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
+ //               DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_User_ID, Active_ProjectID);
                 return View(DT);
             }
            
@@ -115,7 +115,7 @@ namespace TextMark.Controllers
 
                 //return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
                 DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(User_ID, Active_ProjectID);
+//                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
             else if (Active_UserID > 0 && Active_ProjectID > 0)
@@ -129,7 +129,7 @@ namespace TextMark.Controllers
 
                 //return View( _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
                 DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID && m.User_ID == User_ID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(User_ID, Active_ProjectID);
+ //               DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(User_ID, Active_ProjectID);
                 return View(DT);
             }
             else if (Active_UserID == 0)
@@ -141,7 +141,7 @@ namespace TextMark.Controllers
                 }
 
                 DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == Active_ProjectID).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-                DT.ClassifiedTexts_Tags = Select_All_Classified_Tags_ForAllUsers(Active_ProjectID);
+ //               DT.ClassifiedTexts_Tags = Select_All_Classified_Tags_ForAllUsers(Active_ProjectID);
                 return View(DT);
             }
             //else if (User_ID == 0)
@@ -154,13 +154,34 @@ namespace TextMark.Controllers
             //}
             //  return View( _context.Assigned_TextClassifications_ToUsers_TB.Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").ToListAsync());
             DT.allClassifications = _context.Assigned_TextClassifications_ToUsers_TB.Where(m => m.Project_ID == 0 && m.User_ID == 0).Include("Users_TB").Include("Annotations_TB").Include("Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToPagedList(PageNum, 10);
-            DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(0, 0);
+ //           DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(0, 0);
             return View(DT);
         }
 
+
+        public ViewResult ExportDetails(int Selected_UserID)
+        {
+            Details_ClassifiedTexts_Tags DT = new Details_ClassifiedTexts_Tags();
+            int Active_ProjectID = Convert.ToInt32(HttpContext.Session.GetString("Active_ProjectID"));
+            DT.ClassifiedTexts_Tags = Select_All_Classified_Tags(Selected_UserID, Active_ProjectID);
+           
+            TempData["Selected_UserID"] = Selected_UserID;
+
+            return View(DT);
+        }
+
+
+        public IActionResult Export(Assigned_TextClassifications_ToUsers_TB Assigned_Classifications_ToUsers)
+        {
+            return RedirectToAction(nameof(ExportDetails), new { Selected_UserID = Convert.ToInt32(TempData["Selected_UserID"]) });
+
+
+
+
+        }
         public List<ClassifiedTexts_Tags> Select_All_Classified_Tags(int User_ID, int Project_ID)
         {
-            var ClassifiedTexts_Tags = _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassifications_ToUsers_TB.User_ID == User_ID && m.Assigned_TextClassifications_ToUsers_TB.Project_ID == Project_ID).Include("ClassificationLabels_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToList();
+            var ClassifiedTexts_Tags = _context.ClassifiedTexts_Tags.Where(m => m.Assigned_TextClassifications_ToUsers_TB.User_ID == User_ID && m.Assigned_TextClassifications_ToUsers_TB.Project_ID == Project_ID).Include("ClassificationLabels_TB").Include("Assigned_TextClassifications_ToUsers_TB.Users_TB").Include("Assigned_TextClassifications_ToUsers_TB.Projects_TB").OrderBy(m => m.Assigned_TextClassification_ID).ToList();
             return ClassifiedTexts_Tags;
         }
         public List<ClassifiedTexts_Tags> Select_All_Classified_Tags_ForAllUsers(int Project_ID)

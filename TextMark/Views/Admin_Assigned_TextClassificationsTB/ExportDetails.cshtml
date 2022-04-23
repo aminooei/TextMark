@@ -1,0 +1,107 @@
+﻿@model TextMark.Models.Details_ClassifiedTexts_Tags
+
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "Export Details of Classifications";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@if (Model.ClassifiedTexts_Tags.Count() > 0)
+{
+    <h2> All Classifications Details</h2>
+    <table class="table" id="DataTableClassificationsTags">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassification_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].ClassificationLabels_TB.ClassificationLabel_Text)
+                </th>
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
+                </th>
+                <th style="display:none;">
+                    @Html.DisplayNameFor(model => model.ClassifiedTexts_Tags[0].Assigned_TextClassifications_ToUsers_TB.Users_TB.Username)
+                </th>
+
+                <th>
+                    <a id="btn_dl_json_classifications" class="btn btn-warning btn-lg float-right " asp-action="Export" asp-controller="Admin_Assigned_TextClassificationsTB">
+                        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Export
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ClassifiedTexts_Tags)
+            {
+                <tr>                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Assigned_TextClassification_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassificationLabels_TB.ClassificationLabel_Text)
+                    </td>
+                    <td style="display:none;">
+                        @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Projects_TB.Project_Name)
+                    </td>
+                    <td style="display:none;">
+                        @Html.DisplayFor(modelItem => item.Assigned_TextClassifications_ToUsers_TB.Users_TB.Username)
+                    </td>                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function tableToJson(table) {
+            var data = [];
+            var headers = [];
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
+                /*headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/\s\s+/g, " ");*/
+                headers[i] = table.rows[0].cells[i].innerHTML.replace(/\s\s+/g, " ");
+            }
+            for (var i = 1; i < table.rows.length; i++) {
+                var tableRow = table.rows[i];
+                var rowData = {};
+                for (var j = 0; j < tableRow.cells.length; j++) {
+                    /* rowData[headers[j]] = tableRow.cells[j].innerHTML;*/
+                    rowData[headers[j]] = tableRow.cells[j].innerHTML.replace(/\s\s+/g, " ");
+                }
+                data.push(rowData);
+            }
+            return data;
+        }
+
+
+        function downloadObjectAsJson(exportObj, exportName) {
+            var dataStr = "data:text/json;charset-utf-8," + encodeURIComponent(exportObj);
+            var downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", exportName + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        document.getElementById('btn_dl_json_classifications').onclick = function () {
+            var myjson = JSON.stringify(tableToJson(document.getElementById("DataTableClassificationsTags")));
+            //var myjson = htmlToJson(document.getElementById("DataTable"));
+            //var myjson = htmlTableToJson(document.getElementById("DataTable"));
+            console.log(myjson.replace(/\\n/g, ''));
+            downloadObjectAsJson(myjson, 'the-json-file');
+        }
+    </script>
+}
+
+
+

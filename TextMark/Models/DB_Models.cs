@@ -375,6 +375,10 @@ namespace TextMark.Models
         public int TotalNumPages { get; set; }
     }
 
+    public class Details_ClassifiedTexts_Tags
+    {        
+       public List<ClassifiedTexts_Tags> ClassifiedTexts_Tags { get; set; }
+    }
     public class Details_Assigned_TextClassifications_ToUsers
     {
         public Assigned_TextClassifications_ToUsers_TB Assigned_TextClassifications_ToUsers_TB { get; set; }
@@ -387,8 +391,12 @@ namespace TextMark.Models
         public int TotalNumPages { get; set; }
     
 }
+    public class Details_AnnotatedTags
+    {      
+        public List<AnnotatedTexts_Tags> Annotated_Tags { get; set; }
+    }
 
-    public class Details_Assigned_TextAnnotations_ToUsers
+        public class Details_Assigned_TextAnnotations_ToUsers
     {
         public Assigned_Annotations_ToUsers_TB Selected_Assigned_Annotation { get; set; }
         public List<AnnotatedTexts_Tags> Annotated_Tags { get; set; }

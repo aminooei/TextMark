@@ -818,3 +818,5 @@ C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.cs
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.dll
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.pdb
 C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\TextMark.genruntimeconfig.cache
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Assigned_AnnotationsTB\ExportDetails.cshtml.g.cs
+C:\Users\Amin\source\repos\TextMark\TextMark\obj\Debug\netcoreapp3.1\Razor\Views\Admin_Assigned_TextClassificationsTB\ExportDetails.cshtml.g.cs

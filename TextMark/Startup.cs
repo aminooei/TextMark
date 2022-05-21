@@ -44,8 +44,8 @@ namespace TextMark
             });
 
 
-            //services.AddAuthentication("AILand_Cookie")
-            //    .AddCookie("AILand_Cookie", config => 
+            //services.AddAuthentication("TextMark_Cookie")
+            //    .AddCookie("TextMark_Cookie", config => 
             //    {
             //        config.Cookie.Name = "Users_Cookie";
             //        config.LoginPath = "/Login"; 

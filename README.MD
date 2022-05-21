@@ -2,9 +2,19 @@
 
 TextMark is an open source text annotation tool for humans. It provides annotation features for text classification, and text annotation tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
 
-## Demo
+### Docker Demo
 
-You can download and try the annotation demo on Docker on your PC. To install it on your PC, just run the "docker-Compose up" command and it will automatically download all the requirments and their dependencies. 
+You can download and try the annotation demo on Docker on your PC. To install it on your PC, follow the step in bellow: 
+
+You need to install Git and to clone the repository:
+
+```bash
+git clone https://github.com/aminooei/TextMark
+cd TextMark
+docker-compose up
+```
+After running the above mentioned commands, access <http://localhost:8080/>.
+
 
 You may also download and run this demo project locally on your PC in Microsoft Visual Studio 2019, OR just run it in IIS.
 
@@ -17,19 +27,6 @@ To run this project locally on your PC IIS, you need to edit the appsettings.jso
 
 To read the user manual, first you need to run the project and login to the Admin section by using the below information: 
 [Username: Admin] ---- [Password: 12345]. 
-
-
-### Docker Compose
-
-You need to install Git and to clone the repository:
-
-```bash
-git clone https://github.com/aminooei/TextMark
-cd TextMark
-docker-compose up
-```
-After running the above mentioned commands, access <http://localhost:8080/>.
-
 
 
 ## Contribution

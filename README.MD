@@ -25,13 +25,10 @@ You need to install Git and to clone the repository:
 
 ```bash
 git clone https://github.com/aminooei/TextMark
-cd TxetMark
+cd TextMark
+docker-compose up
 ```
-
-_Note for Windows developers:_ Be sure to configure git to correctly handle line endings or you may encounter `status code 127` errors while running the services in future steps. Running with the git config options below will ensure your git directory correctly handles line endings.
-
-
-After running the following command, access <http://localhost:8080/>.
+After running the above mentioned commands, access <http://localhost:8080/>.
 
 
 

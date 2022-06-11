@@ -1,19 +1,19 @@
 # TextMark
 
-TextMark is an open source text annotation tool for humans. It provides annotation features for text classification, and text annotation tasks. So, you can create labeled data for sentiment analysis, named entity recognition, text summarization and so on. Just create a project, upload data and start annotating. You can build a dataset in hours.
+TextMark is an open source text annotation tool. It provides annotation features for text classification, and token classification tasks (e.g. NER). So, you can create labeled data for sentiment analysis, named entity recognition, extractive text summarization and so on. Just create a project, upload data files and start annotating. You can build a dataset in hours.
 
 ### Docker Demo
 
-You can download and try the annotation demo on Docker on your PC. To install it on your PC, follow the step in bellow: 
+You can download and try the annotation demo on Docker on your machine. To install it on your PC, follow the step in bellow: 
 
-You need to install Git and to clone the repository:
+You need to install Git and Docker and then clone the repository before running the docker-compose:
 
 ```bash
 git clone https://github.com/aminooei/TextMark
 cd TextMark
 docker-compose up
 ```
-After running the above mentioned commands, access <http://localhost:8080/>.
+After running the above commands, open <http://localhost:8080/>.
 
 
 You may also download and run this demo project locally on your PC in Microsoft Visual Studio 2019, OR just run it in IIS.
@@ -31,7 +31,7 @@ To read the user manual, first you need to run the project and login to the Admi
 
 ## Contribution
 
-As with any software, TextMark is under continuous development. If you have requests for features, please file an issue describing your request. Also, if you want to see work towards a specific feature, feel free to contribute by working towards it. The standard procedure is to fork the repository, add a feature, fix a bug, then file a pull request that your changes are to be merged into the main repository and included in the next release.
+As with any software, TextMark is under continuous development. If you have requests for features, please file an issue describing your request. Also, if you want to see work towards a specific feature, feel free to contribute by working towards it. The standard procedure is to fork the repository, add a feature, fix a bug, then file a pull request that your changes are to be merged into the main branch and we will includ it in the next release.
 
 
 

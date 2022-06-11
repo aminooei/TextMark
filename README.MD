@@ -8,9 +8,15 @@ You can download and try the annotation demo on Docker on your machine. To insta
 
 You need to install Git and Docker and then clone the repository before running the docker-compose:
 
-```bash
+```
 git clone https://github.com/aminooei/TextMark
 cd TextMark
+```
+
+To run this project in Docker, you need to edit the `TextMark/appsettings.json` file and uncomment the "Connection String for Docker".
+To run this project locally on your PC IIS, you need to comment out "Connection String for Docker" and uncomment the "Connection String for PC" in that file.
+
+```
 docker-compose up
 ```
 After running the above commands, open <http://localhost:8080/>.
@@ -18,10 +24,8 @@ After running the above commands, open <http://localhost:8080/>.
 
 You may also download and run this demo project locally on your PC in Microsoft Visual Studio 2019, OR just run it in IIS.
 
-```bash
-To run this project in Docker, you need to edit the appsettings.json file and uncomment the "Connection String for Docker".
-To run this project locally on your PC IIS, you need to edit the appsettings.json file and uncomment the "Connection String for PC".
-```
+
+
 
 ## Documentation
 

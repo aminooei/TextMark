@@ -27,6 +27,9 @@ You may also download and run this demo project locally on your PC in Microsoft 
 To login to the Admin section, you should use the below information: 
 [Username: Admin] ---- [Password: 12345]. 
 
+To login to User section, you may use the below information: 
+[Username: User1] ---- [Password: 12345]
+
 
 ## User Manual
 

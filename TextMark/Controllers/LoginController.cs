@@ -133,17 +133,22 @@ namespace TextMark.Controllers
 
         public void Create_User()
         {
+
+            Users_TB UT3 = new Users_TB();
+            UT3.Username = "User1";
+            UT3.Password = "12345";           
+            UT3.Role_ID = 2;
+            _context.Add(UT3);
+
             Users_TB UT2 = new Users_TB();
             UT2.Username = "All Users";
-            UT2.Password = "12345";
-            //UT2.ConfirmPassword = "12345";
+            UT2.Password = "12345";            
             UT2.Role_ID = 2;
             _context.Add(UT2);
 
             Users_TB UT1 = new Users_TB();
             UT1.Username = "ADMIN";
-            UT1.Password = "12345";
-            //UT1.ConfirmPassword = "12345";
+            UT1.Password = "12345";          
             UT1.Role_ID = 1;          
             _context.Add(UT1);            
 

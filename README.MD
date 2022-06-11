@@ -24,13 +24,14 @@ After running the above commands, open <http://localhost:8080/>.
 
 You may also download and run this demo project locally on your PC in Microsoft Visual Studio 2019, OR just run it in IIS.
 
-
-
-
-## Documentation
-
-To read the user manual, first you need to run the project and login to the Admin section by using the below information: 
+To login to the Admin section, you should use the below information: 
 [Username: Admin] ---- [Password: 12345]. 
+
+
+## User Manual
+
+To read the user manual, first you need to run the project demo.  Secondly, in the first prompted page, you can find the User Manual button on top of the page.
+
 
 
 ## Contribution
